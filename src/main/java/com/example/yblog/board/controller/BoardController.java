@@ -1,4 +1,4 @@
-package com.example.yblog.board;
+package com.example.yblog.board.controller;
 
 
 import org.springframework.stereotype.Controller;
