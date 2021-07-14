@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css"> </th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+<script>
+    function showAlert(obj){
+        var html = '<div id="addalert" class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
+            '   <strong>' + obj.message + '</strong>'+
+            '       <button class="close" type="button" data-dismiss="alert" aria-label="Close">'+
+            '           <span aria-hidden="true">×</span>'+
+            '       </button>'
+        '   </div>';
+        $('#alert').append(html);
+        setTimeout(() => $('#addalert').remove(), 3000);
+    }
+    function  sendEmail() {
+        if ($('#email').val() === '') {
+            showAlert({message: '이메일을 입력해주세요', class: "danger"});
+        }else if($('#email').val().indexOf('@') === -1){
+            showAlert({message: '이메일형식이여야 합니다', class: "danger"});
+        } else {
+            //이메일전송하면됨
+            var form =  {
+              'email' : $('#email').val()
+            }
+
+            $.ajax({
+                url: "/sendEmail",
+                type: "POST",
+                dataType:'json',
+                data: JSON.stringify(form),
+                contentType: "application/json;charset=utf-8",
+                success: function (result){
+                    if(result.result == true){
+                        alert("이메일 전송완료")
+                    }
+
+                },error: function (){
+                    alert("문제발생")
+                }
+
+
+            })
+
+
+        }
+    }
+
+
+
+
+
+</script>
+
+
+</th:block>
+
+<div layout:fragment="content">
+    <div class="form-group">
+        <label style="color: #c82333">이메일 인증은 실제 이메일을 사용합니다. 보안 작업이 완료되지않은 사이트니 가입은 신중히 해주세요.</label><br>
+        <label for="email">email:</label>
+        <input type="email" class="form-control" id="email">
+    </div>
+    <button type="button" class="btn btn-dark btn-block" onclick="sendEmail()">인증메일 보내기</button>
+    <div id="alert"></div>
+
+
+</div>
+</html>

@@ -24,7 +24,7 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.5'
-
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.4.2'
     //새로 추가부분
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
