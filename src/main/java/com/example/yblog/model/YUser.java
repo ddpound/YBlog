@@ -16,18 +16,18 @@ import java.sql.Timestamp;
 @Builder // 빌더패턴
 @Entity
 public class YUser {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 오라클이면 시퀸스 , mySql이면 오토인크리먼트로 따라간다는 뜻
     private int id;
 
-    @Column(nullable = false,length = 30)
+    @Column(nullable = false,length = 30,unique = true)
     private String username;
 
     @Column(nullable = false, length = 100)
     private String password;
 
-    @Column(nullable = false,length = 50)
+
+    @Column(nullable = false,length = 50 ,unique = true)
     private  String email;
 
     @CreationTimestamp // 시간이 자동으로 입력
