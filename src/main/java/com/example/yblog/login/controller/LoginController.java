@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "login")
 public class LoginController {
 
+    // 로그인창
     @GetMapping(value = "")
     public String loginView(){
         return "loginJoin/login";

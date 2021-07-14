@@ -61,8 +61,6 @@ public class MailService {
                         .append("&authKey=").append(authkey).append("' target='_blenk'>이메일 인증 확인</a>").toString();
 
                 message.setText(mailContent,true );
-
-
             }
         };
 
