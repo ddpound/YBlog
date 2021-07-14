@@ -28,7 +28,7 @@
       if(resp.data === 1 ){
         alert("회원가입이 완료되었습니다 : "+resp.status)
         location.href = "/main/index"
-      }else  if(resp.data === 1 ){
+      }else  if(resp.data === 0 ){
         alert("이미 있는 이메일입니다 : "+resp.status)
       }else{
         alert("알수없는에러 : "+resp.status)
