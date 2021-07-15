@@ -29,7 +29,7 @@ public class YBoard {
     @Lob
     private String content; // 섬머노트 라이브러리 <html>태그가 섞여서 디자인됨
 
-    @ColumnDefault("0")
+    @Column
     private  int count;
 
     //보드가 Many 유저가 One (한명의 유저가 여러 게시글을 쓸수 있다.)

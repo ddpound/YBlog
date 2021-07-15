@@ -27,18 +27,22 @@
 <div layout:fragment="content">
 
     <div class="form-group text-light font-weight-bold bg-dark text-center">
-        <label for="usr">[제목]</label>
-        <input type="text" class="form-control bg-dark text-light" id="usr">
+        <label for="title">[제목]</label>
+        <input type="text" class="form-control bg-dark text-light" id="title">
     </div>
-    <div id="summernote"></div>
+    <div class="form-group">
+        <label for="content">Content:</label>
+        <textarea class="form-control summernote" rows="5" id="content"></textarea>
+
+    </div>
     <script>
-        $('#summernote').summernote({
+        $('.summernote').summernote({
             placeholder: '글작성 해주세요',
             tabsize: 2,
-            height: 600
+            height: 400
         });
     </script>
-    <button type="button" class="btn btn-warning btn-block" onclick="test()">작성</button>
+    <button type="button" class="btn btn-warning btn-block" onclick="boardWrite()">작성</button>
 
 
 
