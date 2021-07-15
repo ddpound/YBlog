@@ -9,8 +9,8 @@
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-
-    <script>
+<!--시큐리티 로그인을 이용하기위해 주석처리 -->
+   <!-- <script>
         function login(){
             let form = {
                 'username' : $('#username').val(),
@@ -35,23 +35,23 @@
         }
 
 
-    </script>
+    </script>-->
 
 
 
 </th:block>
-
+<!-- 시큐리티는 ajax json전송이 아니라 네임값이 들어가야 하는 폼태그 전송이 맞는거같다 -->
 <div layout:fragment="content">
+    <form action="/auth/login/try" method="post" id="frm">
     <div class="form-group">
         <label for="username">UserName:</label>
-        <input type="text" class="form-control" id="username">
+        <input type="text" class="form-control" id="username" name="username">
     </div>
     <div class="form-group">
         <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password">
+        <input type="password" class="form-control" id="password" name="password">
     </div>
-    <button type="button" class="btn btn-dark btn-block" onclick=" login()">로그인</button>
-
-
+    <button type="button" class="btn btn-dark btn-block" onclick="document.getElementById('frm').submit()">로그인</button>
+    </form>
 </div>
 </html>

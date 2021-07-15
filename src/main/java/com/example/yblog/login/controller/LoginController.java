@@ -10,21 +10,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+// 인증이 안된 사용자들도 접속할수 있게 만드는 경로 를 /auth/**로 할꺼임
 
 @Controller
-@RequestMapping(value = "login")
 public class LoginController {
 
     @Autowired
     LoginService loginService;
 
     // 로그인창
-    @GetMapping(value = "")
+    @GetMapping(value = "/auth/loginForm")
     public String loginView(){
         return "loginJoin/login";
     }
 
-    @PostMapping(value = "try")
+
+    // 시큐리티 과정으로 바꿀꺼니깐 주석처리
+  /*  @PostMapping(value = "try")
     @ResponseBody
     public ResponseDto<Integer> loginTry(@RequestBody YUser yUser, HttpSession session){
         System.out.println("로그인 시도 서버단 유저이름 : "+ yUser.getUsername());
@@ -39,7 +41,7 @@ public class LoginController {
         }
 
 
-    }
+    }*/
 
 
 }

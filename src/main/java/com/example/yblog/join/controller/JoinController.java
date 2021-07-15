@@ -6,29 +6,34 @@ import com.example.yblog.join.service.JoinService;
 import com.example.yblog.model.YUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
+// 인증이 안된 사용자들이 출입할수있는 /auth/** 허용
+// 그냥 주소가 / 이면 index로 가게 혀용
+// static 아래 있는 파일들도 허용해야함
 
 @Controller
-@RequestMapping(value = "join")
 public class JoinController {
 
     @Autowired
     JoinService joinService;
 
+    @Autowired
+    private BCryptPasswordEncoder encode;
 
-    @GetMapping(value = "emailauth")
+
+    @GetMapping(value = "/auth/emailauth")
     public String goEmailAuthView(){
 
         return "loginJoin/emailauth";
     }
 
-    @PostMapping(value = "save")
+    // 회원가입 시에는 인증권한을 시큐리티한테 받아내지 못한 상태니깐 uri 에 auth값이 들어가는게 맞다
+    @PostMapping(value = "/auth/save")
     @ResponseBody
     public ResponseDto<Integer> saveUser(@RequestBody YUser yUser){
-        System.out.println("가져온 유저 이름 : "+yUser.getUsername());
         int resultNum =joinService.saveUser(yUser);
 
         if(resultNum == 1){

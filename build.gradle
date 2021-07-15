@@ -22,9 +22,11 @@ dependencies {
     // 새로 추가부분
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.5'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.4.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.6.RELEASE'
     //잭슨 라이브러리 추가 안시켜줘도 된다
     //새로 추가부분
 

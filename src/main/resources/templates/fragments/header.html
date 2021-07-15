@@ -7,22 +7,25 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">게시판</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
                     <a class="nav-link" href="/board/write">글쓰기</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login"> 로그인</a>
+                <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')} == false">
+                    <a class="nav-link" href="/auth/loginForm"> 로그인</a>
                 </li>
-                <li class="nav-item" >
-                    <a class="nav-link" href="/join/emailauth">회원가입</a>
+                <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')} == false">
+                    <a class="nav-link" href="/auth/emailauth">회원가입</a>
                 </li>
-                <li class="nav-item" th:if="${principal} != null">
-                    <a class="nav-link" href="#" >[[${principal.username}]]</a>
+                <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+                    <a class="nav-link" href="#" >로그인 유저 :  [[${#authentication.name}]]</a>
+                </li>
+                <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+                    <a class="nav-link" href="/logout" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
         </div>
         <div class="mx-auto order-0">
-            <a class="navbar-brand mx-auto" href="/main/index">YBlog</a>
+            <a class="navbar-brand mx-auto" href="/index">YBlog</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                 <span class="navbar-toggler-icon"></span>
             </button>

@@ -4,6 +4,7 @@ import com.example.yblog.model.YUser;
 import com.example.yblog.repository.YUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +13,16 @@ public class JoinService {
     @Autowired
     YUserRepository yUserRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
+
     @Transactional
     public int saveUser(YUser yUser){
         try {
+            String rawPassword = yUser.getPassword();
+            String encPassword = encoder.encode(rawPassword);
+            yUser.setPassword(encPassword);
             yUserRepository.save(yUser);
             return 1;
         }catch (DataIntegrityViolationException  Integrity){

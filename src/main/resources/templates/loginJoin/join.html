@@ -20,7 +20,7 @@
 
     $.ajax({
       type: "POST",
-      url: "/join/save",
+      url: "/auth/save",
       data: JSON.stringify(form),
       contentType : "application/json; charset=utf-8", //body데이터가 어떤 타입인지 (MIME타입)
       dataType: "json" // 요청을 서버로 해서 응답이 왔을때, String문자열임
