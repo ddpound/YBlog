@@ -8,18 +8,49 @@
 <th:block layout:fragment="css"> </th:block>
 
 <!-- index.html 고유 스크립트 추가 -->
-<th:block layout:fragment="script"> </th:block>
+<th:block layout:fragment="script">
+
+    <script>
+        function login(){
+            let form = {
+                'username' : $('#username').val(),
+                'password' : $('#password').val()
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/login/try",
+                data: JSON.stringify(form),
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON"
+            }).done(function (result){
+                alert("로그인완료")
+                location.href="/main/index"
+            }).fail(function (){
+                alert("로그인실패")
+            })
+
+
+
+        }
+
+
+    </script>
+
+
+
+</th:block>
 
 <div layout:fragment="content">
     <div class="form-group">
-        <label for="usr">Name:</label>
-        <input type="text" class="form-control" id="usr">
+        <label for="username">UserName:</label>
+        <input type="text" class="form-control" id="username">
     </div>
     <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input type="password" class="form-control" id="pwd">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password">
     </div>
-    <button type="button" class="btn btn-dark btn-block">로그인</button>
+    <button type="button" class="btn btn-dark btn-block" onclick=" login()">로그인</button>
 
 
 </div>
