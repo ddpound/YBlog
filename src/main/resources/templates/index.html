@@ -16,7 +16,7 @@
     <div class="jumbotron bg-dark mt-2">
         <div class="text-light">
             <h1>YBlogLab [v0.1 - Prototype]</h1>
-            <p>자유롭게 하고싶은걸 만들고,마음대로 올리는 사이트 입니다</p>
+            <p>자유롭게 하고싶은걸 만들고,마음대로 올리는 사이트 입니다 패치노트를 확인해주세요</p>
 
         </div>
         <marquee bgcolor="#343A40" width="500px"><label style="color: whitesmoke" id="marqueeText">현재 상태글을 알려주세요</label> </marquee>
@@ -47,7 +47,7 @@
         <li class="page-item " th:if="${boardsPage.last != true}"><a class="page-link bg-dark text-white" th:href="@{/(page=${boardsPage.number+1})}">Next</a></li>
     </ul>
 
-    <div class="input-group mb-3">
+    <div class="input-group mb-3" th:if="${#authentication.getName()} == 'Y' ">
         <input type="text" class="form-control" id="chagestatus" placeholder="현재상태를 쓰시오">
         <div class="input-group-append">
             <button class="btn btn-primary" type="button" onclick="changemarqueeText()">OK</button>

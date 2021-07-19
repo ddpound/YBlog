@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+
+
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+  <script type="text/javascript" th:src="@{/js/board.js}"></script>
+</th:block>
+
+
+
+<div layout:fragment="content">
+
+  <div class="form-group text-light font-weight-bold bg-dark text-center">
+    <label>[제목]</label>
+    <h3 th:text="${board.getTitle()}"></h3>
+    <div th:if="${board.getUser().getUsername()}== ${#authentication.getName()} or ${#authentication.getName()}== 'Y' ">
+      <script th:inline="javascript">
+        let boardId = [[${board.getId()}]]
+      </script>
+      <button type="button" class="btn btn-outline-warning" id="boardmodify" onclick="gomodifywrite(boardId)">수정</button>
+      <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="boarddelete(boardId)">삭제</button>
+    </div>
+
+  </div>
+  <div class="form-group">
+    <label>Content:</label>
+    <div th:utext="${board.getContent()}"> </div>
+  </div>
+
+
+</div>
+</html>

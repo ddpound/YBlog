@@ -25,9 +25,12 @@ public class MainController {
         model.addAttribute("boards", boardService.boardList(pagealbe));
         model.addAttribute("boardsPage", boardService.boardListPage(pagealbe));
 
-
-
         return "index";
+    }
+
+    @GetMapping("/auth/patchnote")
+    public String patchnote(){
+        return "board/patchnote";
     }
 
 

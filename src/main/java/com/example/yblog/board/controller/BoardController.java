@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -32,6 +33,41 @@ public class BoardController {
 
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
+
+    @GetMapping(value = "details")
+    public String boardDetails(@RequestParam("id") int id , Model model){
+        model.addAttribute("board", boardService.boardDetails(id));
+        return "board/boardDetails";
+    }
+
+    @DeleteMapping(value = "delete/{boardId}")
+    @ResponseBody
+    public ResponseDto<Integer> deleteBoard(@PathVariable("boardId") int id){
+        boardService.delete(id);
+
+        return new ResponseDto<Integer>(HttpStatus.OK,1);
+    }
+
+    @GetMapping(value = "board/gomodify/{boardId}")
+    public String goModifyView(@PathVariable("boardId") int boardId, Model model, @AuthenticationPrincipal PrincipalDetail principal){
+        model.addAttribute("board", boardService.boardDetails(boardId));
+
+        if(principal.getUsername().equals("Y")){
+            return "board/boardModifyDetails";
+        }
+
+        return "index";
+    }
+
+    @PutMapping("modify")
+    @ResponseBody
+    public ResponseDto<Integer> boardModify(@RequestBody YBoard board){
+
+        boardService.boardModify(board);
+        return new ResponseDto<Integer>(HttpStatus.OK,1);
+    }
+
+
 
 
 }

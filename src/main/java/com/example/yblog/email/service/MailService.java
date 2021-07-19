@@ -57,7 +57,7 @@ public class MailService {
                 message.setTo(mail);
                 message.setSubject("YBlogLab 인증메일입니다");
                 String mailContent = new StringBuffer().append("<h1>[이메일 인증]</h1>").append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-                        .append("<a href='http://localhost:8080/auth/signUpConfirm?email=").append(mail)
+                        .append("<a href='http://www.ybloglab.shop/auth/signUpConfirm?email=").append(mail)
                         .append("&authKey=").append(authkey).append("' target='_blenk'>이메일 인증 확인</a>").toString();
 
                 message.setText(mailContent,true );

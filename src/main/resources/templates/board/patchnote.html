@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css"> </th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+</th:block>
+
+<div layout:fragment="content">
+  <div class="card bg-info text-white">
+    <div class="card-body">
+      <h2><label>패치노트</label><br></h2>
+      <h4>- 우분투 서버 20.04버전, 스프링 부트 프로젝트 입니다</h4><br>
+      <h4>- 아직 테스트단계 사이트 입니다.</h4><br>
+      <h4>- 서버 개설 테스트, 프로젝트 배포 테스트를 위한 사이트 입니다.</h4><br>
+      <h4>- 로그인을 하지않으면 읽거나 쓰거나 하지 못합니다(권한으로 막아놨습니다)</h4><br>
+      <h4>- 현재는 아주 간단한 기능들만 있습니다.</h4><br>
+      <h4>- 로그인 , 로그아웃, 회원가입, 이메일 인증</h4><br>
+      <h4>- 글 쓰기, 수정, 삭제</h4><br>
+
+    </div>
+  </div>
+</div>
+</html>
