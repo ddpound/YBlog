@@ -1,15 +1,16 @@
 package com.example.yblog.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 @Data
@@ -37,6 +38,11 @@ public class YBoard {
     @ManyToOne
     @JoinColumn(name = "userId") // board 테이블값에 YUser를 참조하는 userId를 생성한다
     private  YUser user; // DB는 오브젝트를 저장할 수 없다. FK 자바는 오브젝트를 저장할 수 있다.
+
+    @OneToMany(mappedBy = "board" , fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"board"})
+    @OrderBy("id desc")
+    private List<YReply> yreplys;
 
     @CreationTimestamp
     private Timestamp createDate;

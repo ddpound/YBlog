@@ -1,4 +1,7 @@
 function changemarqueeText(){
-    $('#marqueeText').text($('#chagestatus').val())
+    var newstatus = $('#chagestatus').val()
+    location.href = "/board/changeStatus/"+newstatus
+
+
 
 }

@@ -15,12 +15,13 @@
 <div layout:fragment="content">
     <div class="jumbotron bg-dark mt-2">
         <div class="text-light">
-            <h1>YBlogLab [v0.1 - Prototype]</h1>
-            <p>자유롭게 하고싶은걸 만들고,마음대로 올리는 사이트 입니다 패치노트를 확인해주세요</p>
-
+            <h1>YBlogLab [v0.0.1- Prototype]</h1>
+            <p>자유롭게 하고싶은걸 만들고,마음대로 올리는 사이트 입니다.</p>
+            <p>아직 테스트 단계입니다.</p>
         </div>
-        <marquee bgcolor="#343A40" width="500px"><label style="color: whitesmoke" id="marqueeText">현재 상태글을 알려주세요</label> </marquee>
-
+        <div th:if="${nowStatus.getNowStatus()} != null">
+        <marquee bgcolor="#343A40" width="500px"><label th:text="${nowStatus.getNowStatus()}" style="color: whitesmoke" id="marqueeText"></label> </marquee>
+        </div>
     </div>
 
     <table class="table table-dark">
