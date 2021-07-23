@@ -5,7 +5,10 @@
         layout:decorator="layouts/layout"
 >
 <!-- index.html 고유 CSS 추가 -->
-<th:block layout:fragment="css"> </th:block>
+<th:block layout:fragment="css">
+
+
+</th:block>
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -13,35 +16,41 @@
 </th:block>
 
 <div layout:fragment="content">
-    <div class="jumbotron bg-dark mt-2">
-        <div class="text-light">
-            <h1>YBlogLab [v0.0.1- Prototype]</h1>
-            <p>자유롭게 하고싶은걸 만들고,마음대로 올리는 사이트 입니다.</p>
-            <p>아직 테스트 단계입니다.</p>
+    <div class="backContainer" style="margin-top: 13%;">
+    </div>
+    <div class="jumbotron mt-2 text-center" style="background-color: transparent;color: black ">
+        <div style="font-weight: bold; color: whitesmoke;">
+            <p style="letter-spacing: -13px; font-size: 150px; font-family: 한컴돋움">YBlogLab</p>
+            <p>아직 테스트 단계 블로그입니다</p>
         </div>
         <div th:if="${nowStatus.getNowStatus()} != null">
-        <marquee bgcolor="#343A40" width="500px"><label th:text="${nowStatus.getNowStatus()}" style="color: whitesmoke" id="marqueeText"></label> </marquee>
+        <marquee width="500px"><label th:text="${nowStatus.getNowStatus()}" style="background-color: transparent; font-weight: bold;color: black" id="marqueeText"></label> </marquee>
         </div>
     </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <table class="table col-8" style="background-color: transparent; color: whitesmoke;">
+            <thead>
+            <tr style="color: #000000;">
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
 
-    <table class="table table-dark">
-        <thead>
-        <tr>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-        </tr>
-        </thead>
-        <tbody>
+            <tr th:each="items : ${boards}">
+                <td><a th:href=" @{/auth/board/details(id=${items.getId()})}">[[${items.title}]]</a></td>
+                <td th:text="${items.getUser().getUsername()}"></td>
+                <td th:text="${items.getCreateDate()}"></td>
+            </tr>
 
-        <tr th:each="items : ${boards}">
-            <td><a th:href=" @{/board/details(id=${items.getId()})}">[[${items.title}]]</a></td>
-            <td th:text="${items.getUser().getUsername()}"></td>
-            <td th:text="${items.getCreateDate()}"></td>
-        </tr>
+            </tbody>
+        </table>
 
-        </tbody>
-    </table>
+    </div>
+
+
     <ul class="pagination justify-content-center">
 
         <li class="page-item " th:if="${boardsPage.number != 0}"><a class="page-link bg-white text-dark" th:href="@{/(page=${boardsPage.number-1})}">Previous</a></li>
@@ -55,5 +64,8 @@
             <button class="btn btn-danger" type="button">Cancel</button>
         </div>
     </div>
+
+
+
 </div>
 </html>

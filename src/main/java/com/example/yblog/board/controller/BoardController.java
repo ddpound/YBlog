@@ -1,6 +1,5 @@
 package com.example.yblog.board.controller;
 
-
 import com.example.yblog.allstatic.IpHostName;
 import com.example.yblog.board.service.BoardService;
 import com.example.yblog.config.auth.PrincipalDetail;
@@ -41,11 +40,7 @@ public class BoardController {
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
 
-    @GetMapping(value = "details")
-    public String boardDetails(@RequestParam("id") int id , Model model){
-        model.addAttribute("board", boardService.boardDetails(id));
-        return "board/boardDetails";
-    }
+
 
     @DeleteMapping(value = "delete/{boardId}")
     @ResponseBody
@@ -58,8 +53,6 @@ public class BoardController {
     @GetMapping(value = "gomodify/{boardId}")
     public String goModifyView(@PathVariable("boardId") int boardId, Model model, @AuthenticationPrincipal PrincipalDetail principal){
         YBoard insertYboard =  boardService.boardDetails(boardId);
-
-
 
         // 검색완료된 보드의 작성자 값과 현재 principal에 저장된 즉 현재 로그인중인 유저의 닉네임값이 같아야
         // 정리하면 현재 로그인 유저와 작성자가같아야 return 값을 올바르게 해준다
@@ -105,7 +98,7 @@ public class BoardController {
     public ResponseDto<Integer> replyDelte(@PathVariable int replyId,@AuthenticationPrincipal PrincipalDetail principal){
         YReply yReply = boardService.findYReply(replyId);
 
-        if(yReply.getUser().getUsername().equals(principal.getUsername()) || principal.getUsername().equals("Y")){
+        if(yReply.getUser().getUsername().equals(principal.getUsername()) || principal.getUsername().equals(IpHostName.adminUser)){
             boardService.replyDelete(replyId);
             return new ResponseDto<Integer>(HttpStatus.OK,1);
         }

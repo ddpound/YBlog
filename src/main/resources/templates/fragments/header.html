@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="headerFragment">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md text-dark"
+         style=" background-color: transparent;">
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="/">게시판</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/auth/Portfolio">포트폴리오</a>
                 </li>
                 <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
                     <a class="nav-link" href="/board/write">글쓰기</a>
@@ -25,7 +29,7 @@
             </ul>
         </div>
         <div class="mx-auto order-0">
-            <a class="navbar-brand mx-auto" href="/index">YBlog</a>
+            <a class="navbar-brand mx-auto" href="/">YBlog</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                 <span class="navbar-toggler-icon"></span>
             </button>

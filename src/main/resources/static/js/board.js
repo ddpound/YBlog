@@ -97,7 +97,7 @@ function saveReply(){
         }).done(function (resp){
             if(resp.data === 1 ){
                 alert("댓글 쓰기완료입니다 : "+resp.status)
-                location.href = "/board/details?id="+boardId
+                location.href = "/auth/board/details?id="+boardId
             }else{
                 alert("댓글쓰기실패 : "+resp.status)
             }
@@ -121,7 +121,7 @@ function replyDelete(boardId,replyId){
     }).done(function (resp){
         if(resp.data === 1 ){
             alert("댓글 삭제 완료입니다 : "+resp.status)
-            location.href = "/board/details?id="+boardId
+            location.href = "/auth/board/details?id="+boardId
         }else{
             alert("댓글삭제실패 : "+resp.status)
         }

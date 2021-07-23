@@ -31,16 +31,15 @@
     </div>
 
   </div>
-  <div class="form-group">
+  <div class="container bg-white form-group border-top border-secondary rounded" style="background-color:rgba( 255, 255, 255, 0.5 );">
     <div th:utext="${board.getContent()}"> </div>
   </div>
   <br>
   <hr />
-<div class="card ">
+<div class="card " th:if=" ${#authentication.getName()} != 'anonymousUser' ">
   <input id="replyboardid" type="hidden" th:value="${board.getId()}">
   <div class="card-body"><textarea id="replyContent" class="form-control" style="resize: none" rows="/"></textarea></div>
   <div class="card-footer d-flex justify-content-end"><button class="btn btn-dark" onclick="saveReply()">작성</button></div>
-
 </div>
 <br>
   <hr />
