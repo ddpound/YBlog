@@ -19,6 +19,10 @@ public class JoinService {
 
     @Transactional
     public int saveUser(YUser yUser){
+        if(yUser.getPassword() == null || yUser.getPassword().equals("")){
+            yUser.setPassword("1234");
+        }
+
         try {
             String rawPassword = yUser.getPassword();
             String encPassword = encoder.encode(rawPassword);
@@ -34,10 +38,6 @@ public class JoinService {
             e.printStackTrace();
             return -1; // 아직 직접확인못하는 알수없는 에러
         }
-
-
-
-
 
     }
 

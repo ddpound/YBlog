@@ -1,13 +1,17 @@
 package com.example.yblog.join.controller;
 
 
+import com.example.yblog.allstatic.IpHostName;
 import com.example.yblog.dto.ResponseDto;
 import com.example.yblog.join.service.JoinService;
+import com.example.yblog.kakaoLogin.dto.KakaoProfile;
+import com.example.yblog.kakaoLogin.service.KaKaoLoginService;
 import com.example.yblog.model.YUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 // 인증이 안된 사용자들이 출입할수있는 /auth/** 허용
@@ -21,13 +25,26 @@ public class JoinController {
     JoinService joinService;
 
     @Autowired
+    KaKaoLoginService kaKaoLoginService;
+
+    @Autowired
     private BCryptPasswordEncoder encode;
 
 
     @GetMapping(value = "/auth/emailauth")
-    public String goEmailAuthView(){
+    public String goEmailAuthView(Model model){
+        model.addAttribute("loginRequestURI", IpHostName.LoginRequestURI);
 
         return "loginJoin/emailauth";
+    }
+
+    @GetMapping(value = "auth/kakao/callback")
+    public String kakaoJoinInfo(@RequestParam("code")String code, Model model){
+        KakaoProfile kakaoProfile = kaKaoLoginService.intergration(code, IpHostName.redirect_uri);
+
+        model.addAttribute("authEmail",kakaoProfile.getKakao_account().getEmail());
+
+        return "loginJoin/kakaojoin";
     }
 
     // 회원가입 시에는 인증권한을 시큐리티한테 받아내지 못한 상태니깐 uri 에 auth값이 들어가는게 맞다
@@ -46,8 +63,8 @@ public class JoinController {
 
         // 자바 오브젝트가 리턴되면 json으로 알아서 리턴해준다 jackSon 라이브러리가 알아서해줌(라이브러리가 없어도)
         // 그냥 알아서 반환해주는것 같다
-
     }
+
 
 
 

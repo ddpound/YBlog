@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css"> </th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+  <script>
+    function savekakaoUser(){
+      let form = {
+        "email" : $("#email").val(),
+        "username" : $("#username").val()
+      }
+
+      $.ajax({
+        type: "POST",
+        url: "/auth/save",
+        data: JSON.stringify(form),
+        contentType : "application/json; charset=utf-8", //body데이터가 어떤 타입인지 (MIME타입)
+        dataType: "json" // 요청을 서버로 해서 응답이 왔을때, String문자열임
+      }).done(function (resp){
+        if(resp.data === 1 ){
+          alert("회원가입이 완료되었습니다 : "+resp.status)
+          location.href = "/"
+        }else  if(resp.data === 0 ){
+          alert("이미 있는 이메일입니다 : "+resp.status)
+        }else{
+          alert("알수없는에러 : "+resp.status)
+        }
+      }).fail(function (){
+        alert("회원가입 실패 (문제확인 해주세요)")
+      })
+
+    }
+    function handleOnInput(e)  {
+      if(e.value.replace(/[^A-Za-z]/ig, '')==" "){
+        alert("닉네임은 영어로만 지어주세요")
+      }
+      e.value = e.value.replace(/[^A-Za-z]/ig, '')
+
+
+    }
+
+  </script>
+
+</th:block>
+
+<div layout:fragment="content">
+  <label style="color: #c82333">닉네임은 영어로만 지을수 있습니다</label><br>
+  <div class="form-group">
+    <label for="email">email:</label>
+    <input type="text" class="form-control" id="email" readonly="readonly"  th:value="${authEmail}">
+  </div>
+  <div class="form-group">
+    <label for="username">userName:</label>
+    <input type="text" class="form-control" id="username" oninput=" handleOnInput(this)">
+  </div>
+  <button type="button" class="btn btn-dark btn-block" onclick="savekakaoUser()">회원가입</button>
+
+
+</div>
+</html>

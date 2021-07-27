@@ -9,6 +9,7 @@
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
 <script>
     function showAlert(obj){
         var html = '<div id="addalert" class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
@@ -70,6 +71,10 @@
         <input type="email" class="form-control" id="email" name="email">
     </div>
     <button type="button" class="btn btn-dark btn-block" onclick="sendEmail()">인증메일 보내기</button>
+    <script th:inline="javascript">
+        let loginRequestURI = [[${loginRequestURI}]]
+    </script>
+    <button type="button" class="btn btn-dark btn-block" onclick="KaKaoLogin(loginRequestURI)">카카오로 가입하기</button>
     <div id="alert"></div>
 
 </div>

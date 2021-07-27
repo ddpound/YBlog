@@ -26,6 +26,7 @@ public class PatchNoteController {
     public String goPatchNoteMain(Model model, @PageableDefault(sort = "id",
     direction = Sort.Direction.DESC)Pageable pageable){
 
+
         model.addAttribute("boards", patchNoteService.patchNotesList(pageable));
         model.addAttribute("boardsPage",patchNoteService.patchNotePage(pageable));
 

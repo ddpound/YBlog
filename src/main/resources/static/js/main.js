@@ -85,3 +85,13 @@ function  portboardModify(boardId){
     }
 
 }
+
+function KaKaoLogin(loginRequestURI){
+    location.href = loginRequestURI
+}
+
+function kakaoLogin(){
+
+
+}
+

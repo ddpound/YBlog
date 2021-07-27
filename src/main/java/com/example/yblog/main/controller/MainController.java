@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
+
+
+
     @Autowired
     BoardService boardService;
 
@@ -41,6 +44,16 @@ public class MainController {
             //주소값을 바로 받아와 주는 부분 (역시 statusNum 을 통해 딱 한번  업로드 시켜줌)
             System.out.println("Now RequestURL : "+ request.getRequestURL());
             IpHostName.StaticURL = request.getRequestURL().toString();
+            String URL =  request.getRequestURL().toString();
+            String Localredirect_uri = URL+"auth/kakao/callback";
+            String LocalLoginredirect_uri = URL+"auth/kakao/login/callback";
+            String LocalLoginRequestURI = "https://kauth.kakao.com/oauth/authorize?"
+                    + "client_id="+IpHostName.client_id
+                    + "&redirect_uri="+URL+"auth/kakao/callback&response_type=code";
+
+            IpHostName.LoginRequestURI = LocalLoginRequestURI;
+            IpHostName.redirect_uri = Localredirect_uri;
+            IpHostName.Loginredirect_uri = LocalLoginredirect_uri;
             IpHostName.statusNum ++;
         }
 
