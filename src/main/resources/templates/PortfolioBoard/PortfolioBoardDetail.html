@@ -45,14 +45,11 @@
     </table>
     <br>
 
-
-
-
   </div>
   <ul class="pagination justify-content-center">
 
-    <li class="page-item " th:if="${boardsPage.number != 0}"><a class="page-link bg-white text-dark" th:href="@{/(page=${boardsPage.number-1})}">Previous</a></li>
-    <li class="page-item " th:if="${boardsPage.last != true}"><a class="page-link bg-dark text-white" th:href="@{/(page=${boardsPage.number+1})}">Next</a></li>
+    <li class="page-item " th:if="${boardsPage.number != 0}"><a class="page-link bg-white text-dark" th:href="@{/auth/Portfolio/(page=${boardsPage.number-1})}">Previous</a></li>
+    <li class="page-item " th:if="${boardsPage.last != true}"><a class="page-link bg-dark text-white" th:href="@{/auth/Portfolio/(page=${boardsPage.number+1})}">Next</a></li>
   </ul>
   <br>
   <div class="row">

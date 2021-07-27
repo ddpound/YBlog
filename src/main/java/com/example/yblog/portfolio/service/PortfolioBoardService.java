@@ -32,10 +32,38 @@ public class PortfolioBoardService {
     @Transactional
     public void portBoardSave(PortfolioBoard portfolioBoard , PrincipalDetail principal){
         portfolioBoard.setUser(principal.getYUser());
-
         portfolioRepository.save(portfolioBoard);
+    }
+
+    @Transactional(readOnly = true)
+    public  PortfolioBoard detailsPortPolio(int id){
+        return portfolioRepository.findById(id)
+                .orElseThrow(()->{
+                    return new IllegalArgumentException("포트폴리오 글 상세보기 실패, 아이디를 찾을수 없음");
+                });
+    }
+
+    @Transactional
+    public void portBoardModify(PortfolioBoard portfolioBoard){
+        PortfolioBoard eternalPortfolioBoard = portfolioRepository.findById(portfolioBoard.getId())
+                .orElseThrow(()->{
+                    return new IllegalArgumentException("포트폴리오 게시판 수정실패 아이디를 찾을수 없습니다.");
+                });
+        eternalPortfolioBoard.setTitle(portfolioBoard.getTitle());
+        eternalPortfolioBoard.setContent(portfolioBoard.getContent());
+        // 더티체킹
 
     }
+
+    @Transactional
+    public  void portBoardDelete(int portboardId){
+        portfolioRepository.deleteById(portboardId);
+    }
+
+
+
+
+
 
 
 

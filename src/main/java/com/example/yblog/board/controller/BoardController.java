@@ -40,8 +40,6 @@ public class BoardController {
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
 
-
-
     @DeleteMapping(value = "delete/{boardId}")
     @ResponseBody
     public ResponseDto<Integer> deleteBoard(@PathVariable("boardId") int id){

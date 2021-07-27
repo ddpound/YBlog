@@ -4,6 +4,7 @@ package com.example.yblog.main.controller;
 import com.example.yblog.allstatic.IpHostName;
 import com.example.yblog.board.service.BoardService;
 import com.example.yblog.model.Status;
+import com.example.yblog.portfolio.service.PortfolioBoardService;
 import com.example.yblog.status.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -48,11 +49,6 @@ public class MainController {
         model.addAttribute("nowStatus" , statusService.statusReturn(1));
 
         return "index";
-    }
-
-    @GetMapping("/auth/patchnote")
-    public String patchnote(){
-        return "board/patchnote";
     }
 
 
