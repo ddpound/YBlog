@@ -54,7 +54,6 @@ public class JoinController {
     @ResponseBody
     public ResponseDto<Integer> saveUser(@RequestBody YUser yUser){
         int resultNum =joinService.saveUser(yUser);
-        System.out.println("resultNum" + resultNum);
         if(resultNum == 1){
             return new ResponseDto<Integer>(HttpStatus.OK,resultNum);
         }else if (resultNum == 0){ //중복에러시 반환하게만들었다

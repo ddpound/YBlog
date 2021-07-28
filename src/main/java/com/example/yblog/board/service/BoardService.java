@@ -49,6 +49,13 @@ public class BoardService {
 
     @Transactional
     public void delete(int id){
+        YBoard yBoard = yBoardRepository.findById(id)
+                .orElseThrow(()->{
+                    return new IllegalArgumentException("글 상세보기 실패 아이디를 찾을 수 없습니다");
+                });
+
+        yReplyRepository.deleteAllByBoard(yBoard);
+
         yBoardRepository.deleteById(id);
 
     }
@@ -81,6 +88,7 @@ public class BoardService {
 
     @Transactional
     public void replyDelete(int replyId){
+
         yReplyRepository.deleteById(replyId);
     }
 

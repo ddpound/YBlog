@@ -47,3 +47,7 @@ function patchnoteWrite(){
 
 
 }
+
+function SearchUserDelete(){
+    location.href = "/admin/userManageView"
+}

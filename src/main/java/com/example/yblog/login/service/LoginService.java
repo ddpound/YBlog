@@ -1,6 +1,8 @@
 package com.example.yblog.login.service;
 
 import com.example.yblog.model.YUser;
+import com.example.yblog.repository.YBoardRepository;
+import com.example.yblog.repository.YReplyRepository;
 import com.example.yblog.repository.YUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,18 +14,36 @@ public class LoginService {
     @Autowired
     YUserRepository yUserRepository;
 
+    @Autowired
+    YBoardRepository yBoardRepository;
 
+    @Autowired
+    YReplyRepository yReplyRepository;
+
+    @Transactional(readOnly = true)
     public  YUser findEmail(String email){
             return yUserRepository.findByEmail(email)
                     .orElseThrow(()-> new IllegalArgumentException("없는 사용자 입니다"));
 
     }
 
+    @Transactional(readOnly = true)
     public YUser findUsername(String username){
         return yUserRepository.findByUsername(username)
                 .orElseThrow(()->new IllegalArgumentException("없는 닉네임의 사용자입니다"));
     }
 
+    @Transactional
+    public void deleteUser(YUser yUser){
+        YUser localyUser = yUserRepository.findByUsername(yUser.getUsername())
+                .orElseThrow(()->new IllegalArgumentException("삭제할 아이디가 없습니다"));
+
+        yReplyRepository.deleteAllByUser(localyUser);
+        yBoardRepository.deleteAllByUser(localyUser);
+
+        yUserRepository.deleteById(localyUser.getId());
+
+    }
 
 
 

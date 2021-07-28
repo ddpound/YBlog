@@ -18,8 +18,15 @@
 
             $.ajax({
                 type: "DELETE",
-                url: "/user/delete",
-                data: JSON.stringify(form)
+                url: "/auth/user/delete",
+                data: JSON.stringify(form),
+                contentType : "application/json; charset=utf-8",
+                dataType: "json"
+            }).done(function (){
+                console.log("회원삭제 성공입니다")
+                location.href="/logout"
+            }).fail(function (){
+                console.log("회원 삭제 실패했습니다.")
             })
 
         }

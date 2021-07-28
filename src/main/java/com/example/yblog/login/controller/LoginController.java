@@ -60,9 +60,7 @@ public class LoginController {
         YUser yUser =  loginService.findEmail(kakaoProfile.getKakao_account().getEmail());
         if(yUser == null){
            System.out.println("유저가 없습니다");
-        }else{
-            System.out.println(yUser.getUsername());
-            System.out.println(yUser.getPassword());
+            return "redirect:/";
         }
 
         // 먼저 이 카카오 유저가 있는 회원인지를 검사하기로함, 그리고 비밀번호 체크후에
@@ -73,6 +71,7 @@ public class LoginController {
         //세션등록
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(yUser.getUsername() , ysjKey));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
 
         return "redirect:/";
     }

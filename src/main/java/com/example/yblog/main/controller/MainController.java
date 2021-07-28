@@ -16,10 +16,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MainController {
@@ -96,11 +96,20 @@ public class MainController {
             model.addAttribute("YUser", yUser);
             return "user/userinfoPage";
         }
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/auth/user/delete")
+    @ResponseBody
+    public String deleteUser(@RequestBody YUser yUser, @AuthenticationPrincipal PrincipalDetail principal){
+        if(principal.getUsername().equals(yUser.getUsername())){
+            loginService.deleteUser(yUser);
+        }
 
 
 
 
-        return "/";
+        return "{\"result\" : true}";
     }
 
 
