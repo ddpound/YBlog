@@ -32,7 +32,7 @@
           alert("알수없는에러 : "+resp.status)
         }
       }).fail(function (){
-        alert("회원가입 실패 (문제확인 해주세요)")
+        alert("회원가입 실패 (같은 아이디나, 이메일이 있습니다.)")
       })
 
     }
@@ -50,13 +50,13 @@
 </th:block>
 
 <div layout:fragment="content">
-  <label style="color: #c82333">닉네임은 영어로만 지을수 있습니다</label><br>
+  <label style="color: #c82333">닉네임은 영어를 권장합니다, 닉네임은 아직 한번 정하면 바꿀수 없습니다</label><br>
   <div class="form-group">
-    <label for="email">email:</label>
+    <label for="email" style="color: whitesmoke">email:</label>
     <input type="text" class="form-control" id="email" readonly="readonly"  th:value="${authEmail}">
   </div>
   <div class="form-group">
-    <label for="username">userName:</label>
+    <label for="username" style="color: whitesmoke">NickName:</label>
     <input type="text" class="form-control" id="username" oninput=" handleOnInput(this)">
   </div>
   <button type="button" class="btn btn-dark btn-block" onclick="savekakaoUser()">회원가입</button>

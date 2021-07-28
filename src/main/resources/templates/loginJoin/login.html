@@ -36,18 +36,19 @@
 
 </th:block>
 <!-- 시큐리티는 ajax json전송이 아니라 네임값이 들어가야 하는 폼태그 전송이 맞는거같다 -->
+
 <div layout:fragment="content">
-    <form action="/auth/login/try" method="post" id="frm">
-    <div class="form-group align-content-center">
-        <label for="username" class="text-center text-white">UserName</label>
-        <input type="text" class="form-control" id="username" name="username">
+
+    <div class="jumbotron mt-2 text-center" style="background-color: transparent;color: black ">
+        <div style="font-weight: bold; color: whitesmoke;">
+            <p style="letter-spacing: -13px; font-size: 150px; font-family: 한컴돋움">Login</p>
+            <p>처음이시라면 회원가입 부탁드립니다</p>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="password" class="text-center text-white">Password</label>
-        <input type="password" class="form-control" id="password" name="password">
-    </div>
-    <button type="button" class="btn btn-dark btn-block" onclick="document.getElementById('frm').submit()">로그인</button>
-    </form>
-    <button type="button" class="btn btn-dark btn-block" onclick="kakaoLogin()">카카오 로그인</button>
+
+    <script th:inline="javascript">
+        let Loginredirect_uri = [[${Loginredirect_uri}]]
+    </script>
+    <button type="button" style="background-image: url('/img/kakaoLogin.png'); border-color: #FEE500 ;background-size: contain;height: 40px; width: 200px; margin-top: 2%; margin-left: 45%; border-radius: 15px;" onclick="kakaoLogin(Loginredirect_uri)"></button>
 </div>
 </html>

@@ -8,6 +8,7 @@ public class IpHostName {
 
     public static  String client_id = "872113e237ff5335153b82fd5861def5";
 
+    public static  String JoinRequestURI = "";
     public static  String LoginRequestURI = "";
     // 주의 : 노트북과 데스크탑,등등 작업환경을 변경할때마다 포트번호를알맞게 변경해주세요
     public static  String grant_type ="authorization_code";

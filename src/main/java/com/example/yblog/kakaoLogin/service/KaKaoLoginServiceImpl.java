@@ -32,7 +32,7 @@ public class KaKaoLoginServiceImpl implements KaKaoLoginService{
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", IpHostName.grant_type);
         params.add("client_id", IpHostName.client_id);
-        params.add("redirect_uri", IpHostName.redirect_uri);
+        params.add("redirect_uri", redirect_uri);
         params.add("code", code);
 
         HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(params,headers);

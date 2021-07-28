@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css"> </th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script>
+        function DeleteUser(){
+            let form = {
+                "email" : $("#email").val(),
+                "username" : $("#username").val()
+            }
+
+            $.ajax({
+                type: "DELETE",
+                url: "/user/delete",
+                data: JSON.stringify(form)
+            })
+
+        }
+
+    </script>
+
+</th:block>
+
+<div layout:fragment="content">
+    <div class="form-group">
+        <label for="email" style="color: whitesmoke">email:</label>
+        <input type="text" class="form-control" id="email" readonly="readonly"  th:value="${YUser.getEmail()}">
+    </div>
+    <div class="form-group">
+        <label for="username" style="color: whitesmoke" >NickName:</label>
+        <input type="text" class="form-control" id="username" readonly="readonly" th:value="${YUser.getUsername()}">
+    </div>
+    <button type="button" class="btn btn-dark btn-block" onclick="DeleteUser()">삭제하기</button>
+
+
+</div>
+</html>

@@ -3,13 +3,17 @@ package com.example.yblog.main.controller;
 
 import com.example.yblog.allstatic.IpHostName;
 import com.example.yblog.board.service.BoardService;
+import com.example.yblog.config.auth.PrincipalDetail;
+import com.example.yblog.join.service.JoinService;
+import com.example.yblog.login.service.LoginService;
 import com.example.yblog.model.Status;
-import com.example.yblog.portfolio.service.PortfolioBoardService;
+import com.example.yblog.model.YUser;
 import com.example.yblog.status.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +31,10 @@ public class MainController {
 
     @Autowired
     StatusService statusService;
+
+    @Autowired
+    LoginService loginService;
+
 
 
     // 메인
@@ -47,13 +55,21 @@ public class MainController {
             String URL =  request.getRequestURL().toString();
             String Localredirect_uri = URL+"auth/kakao/callback";
             String LocalLoginredirect_uri = URL+"auth/kakao/login/callback";
-            String LocalLoginRequestURI = "https://kauth.kakao.com/oauth/authorize?"
+
+
+            String LocalJoinRequestURI = "https://kauth.kakao.com/oauth/authorize?"
                     + "client_id="+IpHostName.client_id
                     + "&redirect_uri="+URL+"auth/kakao/callback&response_type=code";
+            String LocalLoginRequestURI = "https://kauth.kakao.com/oauth/authorize?"
+                    + "client_id="+IpHostName.client_id
+                    + "&redirect_uri="+URL+"auth/kakao/login/callback&response_type=code";
 
-            IpHostName.LoginRequestURI = LocalLoginRequestURI;
+
+            IpHostName.JoinRequestURI = LocalJoinRequestURI;
             IpHostName.redirect_uri = Localredirect_uri;
             IpHostName.Loginredirect_uri = LocalLoginredirect_uri;
+            IpHostName.LoginRequestURI = LocalLoginRequestURI;
+
             IpHostName.statusNum ++;
         }
 
@@ -71,7 +87,21 @@ public class MainController {
         return "board/boardDetails";
     }
 
+    @GetMapping(value = "user/info")
+    public String UserInfoPage(@RequestParam("username")String username ,@AuthenticationPrincipal PrincipalDetail principal,
+                               Model model){
+        YUser yUser = loginService.findUsername(username);
 
+        if(principal.getYUser().getUsername().equals(yUser.getUsername())){
+            model.addAttribute("YUser", yUser);
+            return "user/userinfoPage";
+        }
+
+
+
+
+        return "/";
+    }
 
 
 }

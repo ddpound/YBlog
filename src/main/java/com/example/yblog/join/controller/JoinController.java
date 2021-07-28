@@ -8,6 +8,7 @@ import com.example.yblog.kakaoLogin.dto.KakaoProfile;
 import com.example.yblog.kakaoLogin.service.KaKaoLoginService;
 import com.example.yblog.model.YUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class JoinController {
 
+
     @Autowired
     JoinService joinService;
 
@@ -33,7 +35,7 @@ public class JoinController {
 
     @GetMapping(value = "/auth/emailauth")
     public String goEmailAuthView(Model model){
-        model.addAttribute("loginRequestURI", IpHostName.LoginRequestURI);
+        model.addAttribute("loginRequestURI", IpHostName.JoinRequestURI);
 
         return "loginJoin/emailauth";
     }
@@ -52,13 +54,13 @@ public class JoinController {
     @ResponseBody
     public ResponseDto<Integer> saveUser(@RequestBody YUser yUser){
         int resultNum =joinService.saveUser(yUser);
-
+        System.out.println("resultNum" + resultNum);
         if(resultNum == 1){
             return new ResponseDto<Integer>(HttpStatus.OK,resultNum);
         }else if (resultNum == 0){ //중복에러시 반환하게만들었다
-            return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultNum);
+            return new ResponseDto<Integer>(HttpStatus.OK,0);
         }else{
-            return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultNum);
+            return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,-1);
         }
 
         // 자바 오브젝트가 리턴되면 json으로 알아서 리턴해준다 jackSon 라이브러리가 알아서해줌(라이브러리가 없어도)

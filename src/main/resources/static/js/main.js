@@ -90,8 +90,8 @@ function KaKaoLogin(loginRequestURI){
     location.href = loginRequestURI
 }
 
-function kakaoLogin(){
-
+function kakaoLogin(Loginredirect_uri){
+    location.href = Loginredirect_uri
 
 }
 

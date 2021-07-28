@@ -2,28 +2,36 @@ package com.example.yblog.login.controller;
 
 
 import com.example.yblog.allstatic.IpHostName;
-import com.example.yblog.dto.ResponseDto;
+
 import com.example.yblog.kakaoLogin.dto.KakaoProfile;
 import com.example.yblog.kakaoLogin.service.KaKaoLoginService;
 import com.example.yblog.login.service.LoginService;
+
 import com.example.yblog.model.YUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
+import java.beans.BeanProperty;
+
 // 인증이 안된 사용자들도 접속할수 있게 만드는 경로 를 /auth/**로 할꺼임
 
 @Controller
 public class LoginController {
+
+    @Value("${ysj.key}")
+    private String ysjKey;
 
     @Autowired
     LoginService loginService;
@@ -31,30 +39,42 @@ public class LoginController {
     @Autowired
     KaKaoLoginService kaKaoLoginService;
 
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+
+
     // 로그인창
     @GetMapping(value = "/auth/loginForm")
-    public String loginView(){
+    public String loginView(Model model){
+        model.addAttribute("Loginredirect_uri", IpHostName.LoginRequestURI);
         return "loginJoin/login";
     }
 
     @GetMapping(value = "/auth/kakao/login/callback")
     public String kakaoLogin(@RequestParam("code") String code, Model model){
 
+        // 여기서 프로파일을 가져온다는 자체가 인증이 끝난 상태를 말하니깐
         KakaoProfile kakaoProfile =  kaKaoLoginService.intergration(code , IpHostName.Loginredirect_uri);
-        RestTemplate rt = new RestTemplate();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type", IpHostName.ContentType);
+        YUser yUser =  loginService.findEmail(kakaoProfile.getKakao_account().getEmail());
+        if(yUser == null){
+           System.out.println("유저가 없습니다");
+        }else{
+            System.out.println(yUser.getUsername());
+            System.out.println(yUser.getPassword());
+        }
 
-        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("", kakaoProfile.getKakao_account().getEmail());
+        // 먼저 이 카카오 유저가 있는 회원인지를 검사하기로함, 그리고 비밀번호 체크후에
+        // Auth Manager가 있고 로그인 처리를 또 해주는 녀석이 있는듯 그걸이용해서
+        // 여기에 그 과정을 넣어주고 인덱스로 날려주면 될듯
+        // 즉 강제세션 부여가 될듯
 
+        //세션등록
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(yUser.getUsername() , ysjKey));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        HttpEntity<MultiValueMap<String, String>> loginRequest = new HttpEntity<>(params,headers);
-        rt.exchange("", HttpMethod.POST,loginRequest, String.class);
-
-
-        return "/";
+        return "redirect:/";
     }
 
     // 시큐리티 과정으로 바꿀꺼니깐 주석처리

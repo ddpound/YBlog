@@ -34,9 +34,15 @@ public class PortfolioBoardController {
     @PostMapping(value = "/portboard/save")
     @ResponseBody
     public ResponseDto<Integer> fortboardSave(@RequestBody PortfolioBoard portfolioBoard, @AuthenticationPrincipal PrincipalDetail principal){
-        portfolioBoardService.portBoardSave(portfolioBoard,principal);
-        System.out.println("Admin Y write portfolio board");
-        return new ResponseDto<Integer>(HttpStatus.OK,1);
+
+        if (principal.getUsername().equals(IpHostName.adminUser)){
+            portfolioBoardService.portBoardSave(portfolioBoard,principal);
+            System.out.println("Admin Y write portfolio board");
+            return new ResponseDto<Integer>(HttpStatus.OK,1);
+        }
+
+
+        return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,-1);
     }
 
     @GetMapping(value = "portboard/write")
@@ -48,9 +54,7 @@ public class PortfolioBoardController {
             return "redirect:/";
         }
 
-
     }
-
     @GetMapping(value = "/auth/portboard/details")
     public String portboardDetails(@RequestParam("id")int id, Model model){
         model.addAttribute("portboard",portfolioBoardService.detailsPortPolio(id));

@@ -6,7 +6,6 @@ import com.example.yblog.config.SecurityConfig;
 import com.example.yblog.email.service.MailService;
 
 
-import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -38,7 +37,7 @@ public class MailController {
         }else{
             System.out.println("Email Authentication Fail");
         }
-        return "loginJoin/join";
+        return "kakaojoin";
     }
 
 }

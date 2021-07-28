@@ -13,6 +13,19 @@ public class LoginService {
     YUserRepository yUserRepository;
 
 
+    public  YUser findEmail(String email){
+            return yUserRepository.findByEmail(email)
+                    .orElseThrow(()-> new IllegalArgumentException("없는 사용자 입니다"));
+
+    }
+
+    public YUser findUsername(String username){
+        return yUserRepository.findByUsername(username)
+                .orElseThrow(()->new IllegalArgumentException("없는 닉네임의 사용자입니다"));
+    }
+
+
+
 
 
     // 스프링 부트 시큐리티 사용으로 인한 아래 로그인 함수 삭제

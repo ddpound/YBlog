@@ -66,15 +66,19 @@
 
 <div layout:fragment="content">
 
-    <div class="form-group">
-        <label for="email">email:</label>
-        <input type="email" class="form-control" id="email" name="email">
+    <div class="jumbotron mt-2 text-center" style="background-color: transparent;color: black ">
+        <div style="font-weight: bold; color: whitesmoke;">
+            <p style="letter-spacing: -13px; font-size: 150px; font-family: 한컴돋움">Join Membership</p>
+            <p>카카오 회원가입으로 간편하게</p>
+        </div>
     </div>
-    <button type="button" class="btn btn-dark btn-block" onclick="sendEmail()">인증메일 보내기</button>
+
+
+    <div class="form-group">
     <script th:inline="javascript">
         let loginRequestURI = [[${loginRequestURI}]]
     </script>
-    <button type="button" class="btn btn-dark btn-block" onclick="KaKaoLogin(loginRequestURI)">카카오로 가입하기</button>
+    <button type="button" style="background-image: url('/img/kakaoJoin.png'); border-color: #FEE500 ;background-size: contain;height: 40px; width: 200px; margin-top: 2%; margin-left: 45%; border-radius: 15px;" onclick="KaKaoLogin(loginRequestURI)"></button>
     <div id="alert"></div>
 
 </div>

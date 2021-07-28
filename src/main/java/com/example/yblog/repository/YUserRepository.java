@@ -14,6 +14,7 @@ public interface YUserRepository extends JpaRepository<YUser,Integer> {
     //  Select *From yuser where username= username
     Optional<YUser> findByUsername(String username);
 
+    Optional<YUser> findByEmail(String email);
     //  스프링 시큐리티 로그인 인증과정을 거칠 예정이니 주석처리 함
     // JPA Naming 전략
     // SELECT * FROM yuser WHERE username = username AND Password=password ; 이런쿼리가 알아서 로직이짜진다
