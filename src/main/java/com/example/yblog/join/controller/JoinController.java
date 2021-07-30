@@ -6,6 +6,7 @@ import com.example.yblog.dto.ResponseDto;
 import com.example.yblog.join.service.JoinService;
 import com.example.yblog.kakaoLogin.dto.KakaoProfile;
 import com.example.yblog.kakaoLogin.service.KaKaoLoginService;
+import com.example.yblog.login.service.LoginService;
 import com.example.yblog.model.YUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,9 @@ public class JoinController {
     JoinService joinService;
 
     @Autowired
+    LoginService loginService;
+
+    @Autowired
     KaKaoLoginService kaKaoLoginService;
 
     @Autowired
@@ -43,6 +47,15 @@ public class JoinController {
     @GetMapping(value = "auth/kakao/callback")
     public String kakaoJoinInfo(@RequestParam("code")String code, Model model){
         KakaoProfile kakaoProfile = kaKaoLoginService.intergration(code, IpHostName.redirect_uri);
+
+        int resultNum = joinService.EmailDuplicateCheckl(kakaoProfile.getKakao_account().getEmail());
+
+        if(resultNum ==1){
+            model.addAttribute("errorM","이미 있는 사용자입니다");
+            return "error/error";
+        }
+
+
 
         model.addAttribute("authEmail",kakaoProfile.getKakao_account().getEmail());
 

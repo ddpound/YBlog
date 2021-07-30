@@ -31,8 +31,14 @@ public class PortfolioBoardService {
 
     @Transactional
     public void portBoardSave(PortfolioBoard portfolioBoard , PrincipalDetail principal){
-        portfolioBoard.setUser(principal.getYUser());
-        portfolioRepository.save(portfolioBoard);
+        if(portfolioBoard.getTitle() != null){
+            portfolioBoard.setUser(principal.getYUser());
+            portfolioRepository.save(portfolioBoard);
+        }else{
+            System.out.println("do not Save because no title");
+        }
+
+
     }
 
     @Transactional(readOnly = true)

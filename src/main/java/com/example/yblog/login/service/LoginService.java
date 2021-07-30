@@ -1,13 +1,18 @@
 package com.example.yblog.login.service;
 
 import com.example.yblog.model.YUser;
+import com.example.yblog.repository.BRLRepository;
 import com.example.yblog.repository.YBoardRepository;
 import com.example.yblog.repository.YReplyRepository;
 import com.example.yblog.repository.YUserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
+@Log4j2
 @Service
 public class LoginService {
 
@@ -19,6 +24,9 @@ public class LoginService {
 
     @Autowired
     YReplyRepository yReplyRepository;
+
+    @Autowired
+    BRLRepository brlRepository;
 
     @Transactional(readOnly = true)
     public  YUser findEmail(String email){
@@ -35,13 +43,18 @@ public class LoginService {
 
     @Transactional
     public void deleteUser(YUser yUser){
-        YUser localyUser = yUserRepository.findByUsername(yUser.getUsername())
-                .orElseThrow(()->new IllegalArgumentException("삭제할 아이디가 없습니다"));
+        Optional<YUser> localyUser = yUserRepository.findByUsername(yUser.getUsername());
+        if(localyUser.isEmpty()){
+            log.info("Fail DeleteUser find not User");
+        }else{
+            brlRepository.deleteAllByUser(localyUser.get());
+            yReplyRepository.deleteAllByUser(localyUser.get());
+            yBoardRepository.deleteAllByUser(localyUser.get());
+            yUserRepository.deleteById(localyUser.get().getId());
+        }
 
-        yReplyRepository.deleteAllByUser(localyUser);
-        yBoardRepository.deleteAllByUser(localyUser);
 
-        yUserRepository.deleteById(localyUser.getId());
+
 
     }
 

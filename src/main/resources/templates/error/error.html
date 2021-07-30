@@ -15,24 +15,20 @@
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </th:block>
 
-<div layout:fragment="content">
-    <div class="backContainer" style="margin-top: 13%;">
-    </div>
-    <div class="jumbotron mt-2 text-center" style="background-color: transparent;color: black ">
-        <div style="font-weight: bold; color: whitesmoke;">
-            <p style="letter-spacing: -8px; font-size: 150px; font-family: 한컴돋움">Error Page</p>
-            <p style="color: orange; letter-spacing: -8px; font-size: 100px; font-family: 'Agency FB'">[[${errorM}]]</p>
+<div layout:fragment="content" style="background-color: white;">
+
+        <div class="backContainer" style="margin-top: 2%;">
+            <div class="jumbotron mt-2 text-center" style="background-color: transparent;color: black ; ">
+            <div style="font-weight: bold; color: whitesmoke;">
+                <p style="color: black; letter-spacing: -8px; font-size: 50px; font-family: '굴림'">[[${errorM}]]</p>
+            </div>
+                <div><img src="/img/error.png" style="width: 800px; height: 600px;"></div>
+            </div>
+
+
         </div>
 
-    </div>
-
-
-    <ul class="pagination justify-content-center">
-    </ul>
-
-
-
-
-
 </div>
+
+
 </html>

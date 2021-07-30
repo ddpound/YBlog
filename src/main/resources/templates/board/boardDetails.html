@@ -7,63 +7,77 @@
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
 
-
+  <style>
+    .boardcontent img{
+      max-width: 100%;
+    }
+  </style>
 </th:block>
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
   <script type="text/javascript" th:src="@{/js/board.js}"></script>
+
 </th:block>
 
 
 
 <div layout:fragment="content">
 
-  <div class="form-group text-light font-weight-bold bg-dark text-center">
-    <label>[제목]</label>
-    <h3 th:text="${board.getTitle()}"></h3>
-    <div th:if="${board.getUser().getUsername()}== ${#authentication.getName()} or ${#authentication.getName()}== 'Y' ">
-      <script th:inline="javascript">
-        let boardId = [[${board.getId()}]]
-      </script>
-      <button type="button" class="btn btn-outline-warning" id="boardmodify" onclick="gomodifywrite(boardId)">수정</button>
-      <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="boarddelete(boardId)">삭제</button>
+
+  <div class="container bg-white form-group border-top border-secondary rounded" style="background-color:rgba( 255, 255, 255, 0.5 );">
+
+    <div class="form-group text-light font-weight-bold bg-dark text-center rounded">
+      <label>[제목]</label>
+      <h3 th:text="${board.getTitle()}"></h3>
+      <div th:if="${board.getUser().getUsername()}== ${#authentication.getName()} or ${#authentication.getName()}== 'Y' ">
+        <script th:inline="javascript">
+          let boardId = [[${board.getId()}]]
+        </script>
+        <button type="button" class="btn btn-outline-warning" id="boardmodify" onclick="gomodifywrite(boardId)">수정</button>
+        <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="boarddelete(boardId)">삭제</button>
+      </div>
     </div>
 
-  </div>
-  <div class="container bg-white form-group border-top border-secondary rounded" style="background-color:rgba( 255, 255, 255, 0.5 );">
-    <div th:utext="${board.getContent()}"> </div>
-  </div>
-  <br>
-  <hr />
-<div class="card " th:if=" ${#authentication.getName()} != 'anonymousUser' ">
-  <input id="replyboardid" type="hidden" th:value="${board.getId()}">
-  <div class="card-body"><textarea id="replyContent" class="form-control" style="resize: none" rows="/"></textarea></div>
-  <div class="card-footer d-flex justify-content-end"><button class="btn btn-dark" onclick="saveReply()">작성</button></div>
-</div>
-<br>
-  <hr />
+    <div class="boardcontent" style="width: 1110px; height: auto;" th:utext="${board.getContent()}"> </div>
+    <br>
+    <hr />
+    <div class="card " th:if=" ${#authentication.getName()} != 'anonymousUser' ">
+      <input id="replyboardid" type="hidden" th:value="${board.getId()}">
+      <div class="card-body"><textarea id="replyContent" class="form-control" style="resize: none" rows="/"></textarea></div>
+      <div class="card-footer d-flex justify-content-end"><button class="btn btn-dark" onclick="saveReply()">작성</button></div>
+    </div>
+    <br>
+    <hr />
 
-  <div class="card">
-    <div class="card-header">댓글 리스트 </div>
-    <ul class="list-group" th:each="reply :${board.getYreplys()}">
-      <script th:inline="javascript">
-        // 보드 Id , Reply id가 들어가야함
-        let replyId = [[${reply.getId()}]]
-      </script>
-      <li class="list-group-item d-flex justify-content-between">
-        <div class="card-body"><label th:text="${reply.getContent()}"></label></div>
-        <div class="d-flex">
-          <div class="font-italic">작성자 :  <label th:text="${reply.getUser().getUsername()}"></label></div>&nbsp;&nbsp;&nbsp;
-          <div th:if="${reply.getUser().getUsername()} == ${#authentication.getName()} or ${#authentication.getName()} == 'Y' ">
-            <button type="button" class="btn btn-danger" onclick="replyDelete(boardId,replyId)">삭제</button>
+    <div class="card" style="margin-bottom: 15px;">
+      <div class="card-header " style="margin-bottom: 15px;">댓글 리스트 </div>
+      <ul class="list-group" th:each="reply :${board.getYreplys()}">
+        <script th:inline="javascript">
+          // 보드 Id , Reply id가 들어가야함
+          let replyId = [[${reply.getId()}]]
+        </script>
+        <li class="list-group-item d-flex justify-content-between">
+          <div class="card-body"><label th:text="${reply.getContent()}"></label></div>
+          <div class="d-flex">
+            <div class="font-italic">작성자 :  <label th:text="${reply.getUser().getUsername()}"></label></div>&nbsp;&nbsp;&nbsp;
+            <div th:if="${reply.getUser().getUsername()} == ${#authentication.getName()} or ${#authentication.getName()} == 'Y' ">
+              <button type="button" class="btn btn-danger" onclick="replyDelete(boardId,replyId)">삭제</button>
+            </div>
+
           </div>
+        </li>
+      </ul>
+      <br><br><br>
 
-        </div>
-      </li>
-    </ul>
+    </div>
+
+
+
+
 
   </div>
+
 
 
 </div>

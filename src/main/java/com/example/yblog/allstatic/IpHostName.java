@@ -19,6 +19,8 @@ public class IpHostName {
 
     public static  String ContentType = "application/x-www-form-urlencoded;charset=utf-8";
 
+    // sql content max length
+    public static int sqlMaxLength = 4194304;
 
 
 }

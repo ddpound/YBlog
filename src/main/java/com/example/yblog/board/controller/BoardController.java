@@ -34,7 +34,11 @@ public class BoardController {
     @PostMapping(value = "save")
     @ResponseBody
     public ResponseDto<Integer> boardSave(@RequestBody YBoard yBoard, @AuthenticationPrincipal PrincipalDetail principal){
+        // 4194304 최대길이 용량이 이럴때 에러가 발생
+        // System.out.println("contentLengh "+ yBoard.getContent().length());
+
         boardService.SaveBoard(yBoard, principal.getYUser());
+
         System.out.println("Try to Save user : "+ principal.getUsername());
 
         return new ResponseDto<Integer>(HttpStatus.OK,1);

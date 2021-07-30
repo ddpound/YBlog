@@ -10,6 +10,7 @@ import com.example.yblog.model.Status;
 import com.example.yblog.model.YUser;
 import com.example.yblog.status.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -24,7 +25,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class MainController {
 
+    @Value("${blogAdmin.adminName}")
+    private String adminName;
 
+    @Value(("${blogAdmin.adminEmail}"))
+    private String adminEmail;
 
     @Autowired
     BoardService boardService;
@@ -35,7 +40,8 @@ public class MainController {
     @Autowired
     LoginService loginService;
 
-
+    @Autowired
+    JoinService joinService;
 
     // 메인
     @GetMapping(value = {"/" , "/index"})
@@ -45,6 +51,20 @@ public class MainController {
         // 메인을 불러오면서 딱 한번 하는 부분
         if(IpHostName.statusNum < 1){
             // 현재 상태글 딱 한번  sql 에 저장해야하는 출력해주는 부분
+            try {
+                if (loginService.findUsername(adminName) != null){
+                    System.out.println("Already Admin");
+                }
+            }catch (Exception e){
+                // 에러 나는거 자체가 유저가 없다는 의미
+                YUser yUser = new YUser();
+                yUser.setEmail(adminEmail);
+                yUser.setUsername(adminName);
+
+                joinService.saveUser(yUser);
+                System.out.println("Save Admin");
+            }
+
             Status status = new Status();
             status.setNowStatus("저장된 정보가 없습니다");
             statusService.SaveStatus(status);

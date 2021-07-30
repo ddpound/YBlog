@@ -20,28 +20,28 @@
 </th:block>
 
 <div layout:fragment="content">
+  <div class="form-group container">
+    <div class="form-group text-light font-weight-bold bg-dark text-center">
+      <label for="title">[제목]</label>
+      <input type="text" class="form-control bg-dark text-light text-center" th:value="${board.getTitle()}" id="title">
+    </div>
+    <textarea class="summernote" rows="5" id="content" th:utext="${board.getContent()}"></textarea>
 
-  <div class="form-group text-light font-weight-bold bg-dark text-center">
-    <label for="title">[제목]</label>
-    <input type="text" class="form-control bg-dark text-light" th:value="${board.getTitle()}" id="title">
+    <script th:inline="javascript">
+      let boardId = [[${board.getId()}]]
+    </script>
+    <button type="button" class="btn btn-warning btn-block" onclick="boardModify(boardId)">수정하기</button>
   </div>
-  <div class="form-group">
-    <label for="content">Content:</label>
-    <textarea class="form-control summernote" rows="5" id="content" th:utext="${board.getContent()}"></textarea>
 
-  </div>
   <script>
     $('.summernote').summernote({
       placeholder: '글작성 해주세요',
-      tabsize: 2,
-      height: 400
+      maxWidth: 1110,
+      width: 1110,
+      height: 600,
+      lang: 'ko-KR'
     });
   </script>
-  <script th:inline="javascript">
-    let boardId = [[${board.getId()}]]
-  </script>
-
-  <button type="button" class="btn btn-warning btn-block" onclick="boardModify(boardId)">수정하기</button>
 
 
 

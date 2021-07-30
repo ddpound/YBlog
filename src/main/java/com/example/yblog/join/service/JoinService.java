@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class JoinService {
 
@@ -27,6 +29,11 @@ public class JoinService {
         if(yUser.getPassword() == null || yUser.getPassword().equals("")){
             yUser.setPassword(ysjKey);
         }
+        if(yUser.getUsername().equals("") || yUser.getUsername()== null ||
+        yUser.getEmail().equals("") || yUser.getEmail() == null){
+            return -1;
+        }
+
 
         try {
             String rawPassword = yUser.getPassword();
@@ -46,6 +53,15 @@ public class JoinService {
 
     }
 
+    // 1이 값이 있다
+    public int EmailDuplicateCheckl(String email){
+        Optional<YUser> yUser = yUserRepository.findByEmail(email);
+        if(yUser.isEmpty()){
+            return 0;
+        }
+        return 1;
+
+    }
 
 
 }

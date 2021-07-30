@@ -6,7 +6,11 @@
 >
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-
+    <style>
+        .boardcontent img{
+            max-width: 100%;
+        }
+    </style>
 
 </th:block>
 
@@ -18,7 +22,7 @@
 
 
 <div layout:fragment="content">
-
+    <div class="container bg-white form-group border-top border-secondary rounded" style="background-color:rgba( 255, 255, 255, 0.5 );">
     <div class="form-group text-light font-weight-bold bg-dark text-center">
         <label>[제목]</label>
         <h3 th:text="${patchboard.getTitle()}"></h3>
@@ -30,14 +34,11 @@
         </div>
 
     </div>
-    <div class="container bg-white form-group border-top border-secondary rounded" style="background-color:rgba( 255, 255, 255, 0.5 );">
-        <div th:utext="${patchboard.getContent()}"> </div>
-    </div>
-    <br>
-    <hr />
 
-    <br>
-    <hr />
+        <div class="boardcontent" style="width: 1110px; height: auto;" th:utext="${patchboard.getContent()}"> </div>
+        <br><br><br><br><br>
+
+    </div>
 
 
 

@@ -1,5 +1,8 @@
 package com.example.yblog.board.service;
 
+import com.example.yblog.admin.service.AdminService;
+import com.example.yblog.handler.GlobalThrowError;
+import com.example.yblog.model.BoardReplyLimit;
 import com.example.yblog.model.YBoard;
 import com.example.yblog.model.YReply;
 import com.example.yblog.model.YUser;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BoardService {
@@ -21,12 +25,52 @@ public class BoardService {
     @Autowired
     private YReplyRepository yReplyRepository;
 
+    @Autowired
+    private GlobalThrowError globalThrowError;
+
+    @Autowired
+    AdminService adminService;
+
+
     @Transactional
     public int SaveBoard(YBoard yBoard, YUser yUser){
-        yBoard.setUser(yUser);
-        yBoard.setCount(0);
-        yBoardRepository.save(yBoard);
-        return 1;
+
+        globalThrowError.ErrorMaxSqlLength(yBoard.getContent().length());
+
+        globalThrowError.ErrorNullBoardTitle(yBoard.getTitle());
+        BoardReplyLimit boardReplyLimit = adminService.findbrlRepositoryUser(yUser);
+
+        if (boardReplyLimit == null){
+            adminService.FirstSaveLimitTable(yUser);
+            yBoard.setUser(yUser);
+
+            yBoard.setCount(0);
+            yBoardRepository.save(yBoard);
+            return 1;
+
+        }else{
+            if(boardReplyLimit.getBoardCount() < 30 ){
+                adminService.BRLimitboardADD(yUser);
+
+                if(yBoard.getTitle() == null){
+                    System.out.println("do not Save because no title");
+                    return -1;
+                }else{
+                    yBoard.setUser(yUser);
+
+                    yBoard.setCount(0);
+                    yBoardRepository.save(yBoard);
+                    return 1;
+
+            }
+
+        }
+            System.out.println("30 up!");
+            return -1;
+
+
+        }
+
     }
     @Transactional(readOnly = true)
     public List<YBoard> boardList(Pageable pageable){
@@ -73,17 +117,55 @@ public class BoardService {
     }
 
     @Transactional
+    public void deleteAllByUser(YUser yUser){
+        List<YBoard> yBoardList = yBoardRepository.findAllByUser(yUser);
+        for(int i =0; i < yBoardList.size() ; i++){
+            yReplyRepository.deleteAllByBoard(yBoardList.get(i));
+        }
+
+        yBoardRepository.deleteAllByUser(yUser);
+    }
+
+    @Transactional
+    public void deleteAllBoard(){
+        yReplyRepository.deleteAll();
+        yBoardRepository.deleteAll();
+
+
+    }
+
+
+    @Transactional
     public void saveReply(YUser yUser,int boardId ,YReply requestYReply){
+
+        BoardReplyLimit boardReplyLimit = adminService.findbrlRepositoryUser(yUser);
 
         YBoard yBoard =  yBoardRepository.findById(boardId)
                 .orElseThrow(()->{
                     return new IllegalArgumentException("댓글쓰기 실패 아이디를 찾을 수 없습니다");
                 }); // 영속화 시키기;
 
-        requestYReply.setUser(yUser);
-        requestYReply.setBoard(yBoard);
 
-        yReplyRepository.save(requestYReply);
+        if (boardReplyLimit == null){
+            adminService.FirstSaveLimitTable(yUser);
+            requestYReply.setUser(yUser);
+            requestYReply.setBoard(yBoard);
+
+            yReplyRepository.save(requestYReply);
+        }else{
+           if(boardReplyLimit.getReplyCount() <30){
+               adminService.BRLimitReplyADD(yUser);
+               requestYReply.setUser(yUser);
+               requestYReply.setBoard(yBoard);
+
+               yReplyRepository.save(requestYReply);
+           }else{
+               System.out.println("30up!!");
+               throw  new IllegalArgumentException("30 count up");
+           }
+
+        }
+
     }
 
     @Transactional

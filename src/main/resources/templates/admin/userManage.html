@@ -20,8 +20,13 @@
 <div layout:fragment="content">
 
     <div class="form-group text-light font-weight-bold bg-dark text-center">
-            <input type="text" id="userName">
-            <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="SearchUser()">삭제</button>
+            <input type="text" id="userName"><br>
+            <button type="button" class="btn btn-outline-danger" id="userdelete" onclick="SearchUserDelete()">해당 유저 삭제</button><br>
+            <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="SearchUserBoardDelete()">해당 유저의 게시판글 삭제</button><br>
+        <button type="button" class="btn btn-outline-danger" id="deleteip" onclick="deleteip()">해당 ip 벤 취소</button><br>
+        <button type="button" class="btn btn-outline-danger" id="boarddeleteall" onclick="UserBoardDeleteAll()">게시판글 모두 삭제</button><br>
+        <button type="button" class="btn btn-outline-danger" id="alldeleteip" onclick="alldeleteip()">벤 ip 모두 취소</button><br>
+
         </div>
 
 

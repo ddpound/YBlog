@@ -24,7 +24,7 @@ public class YBoard {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private int id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false,length = 100)
     private String title;
 
     @Lob

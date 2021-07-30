@@ -19,7 +19,7 @@ function PatchNoteDelete(boardId){
 function patchnoteWrite(){
     var titleName = $("#title").val()
 
-    if(titleName != null){
+    if(titleName != ""){
         let form = {
             title : titleName,
             content : $("#content").val()

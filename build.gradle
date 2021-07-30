@@ -29,6 +29,9 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.6.RELEASE'
     //잭슨 라이브러리 추가 안시켜줘도 된다
 
+    // 대역폭 조절 의존성
+    implementation 'com.giffing.bucket4j.spring.boot.starter:bucket4j-spring-boot-starter:0.2.0'
+
 
 
     //새로 추가부분

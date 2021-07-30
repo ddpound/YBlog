@@ -32,8 +32,14 @@ public class PatchNoteService {
 
     @Transactional
     public void pathNoteSave(PatchNote patchNote, PrincipalDetail principal){
-        patchNote.setUser(principal.getYUser());
-        patchNoteRepository.save(patchNote);
+        if(patchNote.getTitle() == null){
+            System.out.println("do not Save because no Title");
+        }else{
+            patchNote.setUser(principal.getYUser());
+            patchNoteRepository.save(patchNote);
+        }
+
+
     }
 
     @Transactional(readOnly = true)
