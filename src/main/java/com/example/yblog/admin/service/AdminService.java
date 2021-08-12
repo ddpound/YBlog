@@ -1,6 +1,5 @@
 package com.example.yblog.admin.service;
 
-
 import com.example.yblog.model.BanIp;
 import com.example.yblog.model.BoardReplyLimit;
 import com.example.yblog.model.YUser;
@@ -8,8 +7,6 @@ import com.example.yblog.repository.BRLRepository;
 import com.example.yblog.repository.BanIpRespository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +24,6 @@ public class AdminService {
 
 
     // 밴당한 아이피가 있을때 참을 출력
-
     public boolean findIp(String ip){
         // 널일수도 있는 객체
         Optional<BanIp> resultIp = banIpRespository.findById(ip);
@@ -35,9 +31,7 @@ public class AdminService {
         if(resultIp.isEmpty()){
             return false;
         }
-
         return true;
-
     }
 
     public void saveIp(BanIp banIp){

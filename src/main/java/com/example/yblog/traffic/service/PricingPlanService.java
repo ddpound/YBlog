@@ -26,7 +26,7 @@ public class PricingPlanService {
 
     // 사이즈가 커지면 늘리겠지만 그럴일은 없을듯
     private Bucket newBucket(String apiKey) {
-        return Bucket4j.builder().addLimit(Bandwidth.classic(450, Refill.
+        return Bucket4j.builder().addLimit(Bandwidth.classic(550, Refill.
                 intervally(10, Duration.ofSeconds(10)))) .build(); }
 
 
