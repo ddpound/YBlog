@@ -8,14 +8,17 @@ import com.example.yblog.model.YReply;
 import com.example.yblog.model.YUser;
 import com.example.yblog.repository.YBoardRepository;
 import com.example.yblog.repository.YReplyRepository;
+import org.apache.commons.io.FileUtils;
+import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
+import java.io.*;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class BoardService {
@@ -60,8 +63,13 @@ public class BoardService {
 
                     yBoard.setCount(0);
 
-                    ImageSearch(yUser.getUsername());
+                    // 파일 경로 변경해주고 임시파일 -> 저장파일로 옮기는 과정
+                    yBoard.setContent(ImageSearch(yUser.getUsername(), yBoard));
+
                     yBoardRepository.save(yBoard);
+
+                    // 저장 다하고 해당유저의 임시파일을 삭제하는 과정
+                    deletetemporaryStorage(yUser.getUsername());
                     return 1;
 
                 }
@@ -189,22 +197,77 @@ public class BoardService {
 
     // 임시 파일에있던 사진들을 검색 -> 이름변환 옮겨저장함함
 
-    public void ImageSearch(String username){
-        String temporary = "C:\\temporary_storage"; // 임시 파일 저장경로
-        String fileRoot = "C:\\Confirm_SaveImage";	//저장확정 경로
+    // 1. 파일들을 이름 변경해서 본파일로 옮김
+    // 2. contents 안에있는 사진 src값을 변경 (board를)
+    // 3. 임시파일 사진들을 전부 삭제
+    public String ImageSearch(String username , YBoard yBoard)  {
+        String temporary = "C:\\temporary_storage\\"+username; // 임시 파일 저장경로
+
+        String BoardTitleUUID = UUID.randomUUID()+"-"+yBoard.getUser().getId();
+        String fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";	//저장확정 경로
+
+        String chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
 
         File dir = new File(temporary);
         File[] files = dir.listFiles();
+
         for(File f : files) {
-            System.out.println("파일 이름체크");
-            System.out.println("UserName-"+username);
-            if(f.isFile() && f.getName().toUpperCase().startsWith("UserName-"+username)) {
+
+            String SearchfileName ="UserName-"+username;
+
+            if(f.isFile() && f.getName().startsWith(SearchfileName)) {
+                // 이름 변경 -> 파일 이동 -> 오리지널 파일로 이동 url 는 그럼?
+                // DB 이름도 변경해야함 Content 검사해서 변경해서 넣어주기
                 System.out.println(f.getName());
+                String changeFileName =fileRoot+f.getName();
+
+                // 저장할 파일의 경로 (걍로와 이름)
+                File targetFile = new File(changeFileName);
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(f); // 저장할 파일
+                    FileUtils.copyInputStreamToFile(fileInputStream, targetFile); //저장
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 System.out.println("파일 이름체크");
+
             }
+
         }
 
+
+        System.out.println(yBoard.getContent());
+        String ChContent = yBoard.getContent().replace("/temporary_storage/"+username+"/", chfileRoot);
+        System.out.println(ChContent);
+
+        return ChContent;
     }
+
+    public void deletetemporaryStorage(String username){
+        String path = "C:\\temporary_storage\\"+username;
+        File folder = new File(path);
+        try {
+            while(folder.exists()) {
+                File[] folder_list = folder.listFiles(); //파일리스트 얻어오기
+
+                for (int j = 0; j < folder_list.length; j++) {
+                    folder_list[j].delete(); //파일 삭제
+                    System.out.println("All delete Temporary File UserName : "+username);
+
+                }
+
+                if(folder_list.length == 0 && folder.isDirectory()){
+                    folder.delete(); //대상폴더 삭제
+                    System.out.println("All delete Temporary Folder UserName : "+username);
+                }
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
+
 
 
 }
