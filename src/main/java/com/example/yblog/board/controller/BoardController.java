@@ -49,6 +49,9 @@ public class BoardController {
         // 4194304 최대길이 용량이 이럴때 에러가 발생
         // System.out.println("contentLengh "+ yBoard.getContent().length());
 
+        //저장할때 유저네임을 이용해서 임시 저장이미지 저장파일을 영구 저장파일로 보내는로직을 짠 서비스를 만들면될듯
+        // 유저이름, 제목
+
         boardService.SaveBoard(yBoard, principal.getYUser());
 
         System.out.println("Try to Save user : "+ principal.getUsername());
@@ -121,24 +124,24 @@ public class BoardController {
         return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,-1);
     }
 
-    @PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
+    @PostMapping(value="/temporarystorageImagefile", produces = "application/json")
     @ResponseBody
-    public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+    public JsonObject temporarystorageImageupload(@RequestParam("file") MultipartFile multipartFile,@AuthenticationPrincipal PrincipalDetail principal) {
 
         JsonObject jsonObject = new JsonObject();
 
-        String fileRoot = "C:\\summernote_image\\";	//저장될 외부 파일 경로
+        String fileRoot = "C:\\temporary_storage\\";	//저장될 외부 파일 경로
         String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 
-        String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+        String savedFileName = "UserName-"+principal.getUsername()+"-"+UUID.randomUUID() + extension;	//저장될 파일 명
 
         File targetFile = new File(fileRoot + savedFileName);
 
         try {
             InputStream fileStream = multipartFile.getInputStream();
             FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-            jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+            jsonObject.addProperty("url", "/temporary_storage/"+savedFileName);
             jsonObject.addProperty("responseCode", "success");
         } catch (IOException e) {
             FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제

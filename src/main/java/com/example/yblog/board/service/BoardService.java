@@ -14,8 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BoardService {
@@ -33,14 +33,14 @@ public class BoardService {
 
 
     @Transactional
-    public int SaveBoard(YBoard yBoard, YUser yUser){
+    public int SaveBoard(YBoard yBoard, YUser yUser) {
 
         globalThrowError.ErrorMaxSqlLength(yBoard.getContent().length());
 
         globalThrowError.ErrorNullBoardTitle(yBoard.getTitle());
         BoardReplyLimit boardReplyLimit = adminService.findbrlRepositoryUser(yUser);
 
-        if (boardReplyLimit == null){
+        if (boardReplyLimit == null) {
             adminService.FirstSaveLimitTable(yUser);
             yBoard.setUser(yUser);
 
@@ -48,23 +48,25 @@ public class BoardService {
             yBoardRepository.save(yBoard);
             return 1;
 
-        }else{
-            if(boardReplyLimit.getBoardCount() < 30 ){
+        } else {
+            if (boardReplyLimit.getBoardCount() < 30) {
                 adminService.BRLimitboardADD(yUser);
 
-                if(yBoard.getTitle() == null){
+                if (yBoard.getTitle() == null) {
                     System.out.println("do not Save because no title");
                     return -1;
-                }else{
+                } else {
                     yBoard.setUser(yUser);
 
                     yBoard.setCount(0);
+
+                    ImageSearch(yUser.getUsername());
                     yBoardRepository.save(yBoard);
                     return 1;
 
-            }
+                }
 
-        }
+            }
             System.out.println("30 up!");
             return -1;
 
@@ -72,29 +74,31 @@ public class BoardService {
         }
 
     }
+
     @Transactional(readOnly = true)
-    public List<YBoard> boardList(Pageable pageable){
-        Page<YBoard> paging =yBoardRepository.findAll(pageable);
+    public List<YBoard> boardList(Pageable pageable) {
+        Page<YBoard> paging = yBoardRepository.findAll(pageable);
         List<YBoard> listBoard = paging.getContent();
         return listBoard;
     }
+
     @Transactional(readOnly = true)
-    public Page<YBoard> boardListPage(Pageable pageable){
+    public Page<YBoard> boardListPage(Pageable pageable) {
         return yBoardRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
-    public YBoard boardDetails(int id){
+    public YBoard boardDetails(int id) {
         return yBoardRepository.findById(id)
-                .orElseThrow(()->{
+                .orElseThrow(() -> {
                     return new IllegalArgumentException("글 상세보기 실패 아이디를 찾을 수 없습니다");
                 });
     }
 
     @Transactional
-    public void delete(int id){
+    public void delete(int id) {
         YBoard yBoard = yBoardRepository.findById(id)
-                .orElseThrow(()->{
+                .orElseThrow(() -> {
                     return new IllegalArgumentException("글 상세보기 실패 아이디를 찾을 수 없습니다");
                 });
 
@@ -105,9 +109,9 @@ public class BoardService {
     }
 
     @Transactional
-    public void boardModify(YBoard yBoard){
+    public void boardModify(YBoard yBoard) {
         YBoard board = yBoardRepository.findById(yBoard.getId())
-                .orElseThrow(()->{
+                .orElseThrow(() -> {
                     return new IllegalArgumentException("글 찾기 실패 아이디를 찾을 수 없습니다");
                 }); // 영속화 시키기
         board.setTitle(yBoard.getTitle());
@@ -117,9 +121,9 @@ public class BoardService {
     }
 
     @Transactional
-    public void deleteAllByUser(YUser yUser){
+    public void deleteAllByUser(YUser yUser) {
         List<YBoard> yBoardList = yBoardRepository.findAllByUser(yUser);
-        for(int i =0; i < yBoardList.size() ; i++){
+        for (int i = 0; i < yBoardList.size(); i++) {
             yReplyRepository.deleteAllByBoard(yBoardList.get(i));
         }
 
@@ -127,7 +131,7 @@ public class BoardService {
     }
 
     @Transactional
-    public void deleteAllBoard(){
+    public void deleteAllBoard() {
         yReplyRepository.deleteAll();
         yBoardRepository.deleteAll();
 
@@ -136,51 +140,77 @@ public class BoardService {
 
 
     @Transactional
-    public void saveReply(YUser yUser,int boardId ,YReply requestYReply){
+    public void saveReply(YUser yUser, int boardId, YReply requestYReply) {
 
         BoardReplyLimit boardReplyLimit = adminService.findbrlRepositoryUser(yUser);
 
-        YBoard yBoard =  yBoardRepository.findById(boardId)
-                .orElseThrow(()->{
+        YBoard yBoard = yBoardRepository.findById(boardId)
+                .orElseThrow(() -> {
                     return new IllegalArgumentException("댓글쓰기 실패 아이디를 찾을 수 없습니다");
                 }); // 영속화 시키기;
 
 
-        if (boardReplyLimit == null){
+        if (boardReplyLimit == null) {
             adminService.FirstSaveLimitTable(yUser);
             requestYReply.setUser(yUser);
             requestYReply.setBoard(yBoard);
 
             yReplyRepository.save(requestYReply);
-        }else{
-           if(boardReplyLimit.getReplyCount() <30){
-               adminService.BRLimitReplyADD(yUser);
-               requestYReply.setUser(yUser);
-               requestYReply.setBoard(yBoard);
+        } else {
+            if (boardReplyLimit.getReplyCount() < 30) {
+                adminService.BRLimitReplyADD(yUser);
+                requestYReply.setUser(yUser);
+                requestYReply.setBoard(yBoard);
 
-               yReplyRepository.save(requestYReply);
-           }else{
-               System.out.println("30up!!");
-               throw  new IllegalArgumentException("30 count up");
-           }
+                yReplyRepository.save(requestYReply);
+            } else {
+                System.out.println("30up!!");
+                throw new IllegalArgumentException("30 count up");
+            }
 
         }
 
     }
 
     @Transactional
-    public void replyDelete(int replyId){
+    public void replyDelete(int replyId) {
 
         yReplyRepository.deleteById(replyId);
     }
 
     @Transactional
-    public YReply findYReply(int replyId){
+    public YReply findYReply(int replyId) {
 
         return yReplyRepository.findById(replyId)
-                .orElseThrow(()->{
+                .orElseThrow(() -> {
                     return new IllegalArgumentException("댓글찾기 실패");
                 });
     }
 
+    // 임시 파일에있던 사진들을 검색 -> 이름변환 옮겨저장함함
+
+    public void ImageSearch(String username){
+        String temporary = "C:\\temporary_storage"; // 임시 파일 저장경로
+        String fileRoot = "C:\\Confirm_SaveImage";	//저장확정 경로
+
+        File dir = new File(temporary);
+        File[] files = dir.listFiles();
+        for(File f : files) {
+            System.out.println("파일 이름체크");
+            System.out.println("UserName-"+username);
+            if(f.isFile() && f.getName().toUpperCase().startsWith("UserName-"+username)) {
+                System.out.println(f.getName());
+                System.out.println("파일 이름체크");
+            }
+        }
+
+    }
+
+
 }
+
+
+
+
+
+

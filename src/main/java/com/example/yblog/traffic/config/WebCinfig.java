@@ -23,8 +23,12 @@ public class WebCinfig  implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/summernoteImage/**")
-                .addResourceLocations("file:///C:/summernote_image/");
+        registry.addResourceHandler("/temporary_storage/**")
+                .addResourceLocations("file:///C:/temporary_storage/");
+        // 이렇게 리소스 핸들러 추가도 가능한듯 임시 파일, 업로드시 업로드파일 두개를 만들어야하니 알아두자
+        // Confirm_Save (확정 저장 파일 이름)
+        registry.addResourceHandler("/Confirm_SaveImage/**")
+                .addResourceLocations("file:///C:/Confirm_SaveImage/");
     }
 
 
