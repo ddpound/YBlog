@@ -65,12 +65,9 @@
                 // 업로드와 동시에 진행되는 콜백 함수
                 onImageUpload : function(files) {
                     for(i=0;i<files.length;i++){
-                        imageUpload(files[i])
-                        filesArray[i] = files[i]
                         uploadSummernoteImageFile(files[i],this);
                     }
 
-                    console.log(filesArray.length)
 
                 },
                 onPaste: function (e) {

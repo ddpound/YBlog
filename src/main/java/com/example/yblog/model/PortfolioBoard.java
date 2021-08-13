@@ -36,6 +36,8 @@ public class PortfolioBoard {
     @JoinColumn(name = "userId") // board 테이블값에 YUser를 참조하는 userId를 생성한다
     private  YUser user; // DB는 오브젝트를 저장할 수 없다. FK 자바는 오브젝트를 저장할 수 있다.
 
+    @Column(length = 200)
+    private  String imagefileid;
 
     @CreationTimestamp
     private Timestamp createDate;

@@ -6,6 +6,8 @@ import com.example.yblog.config.auth.PrincipalDetail;
 import com.example.yblog.dto.ResponseDto;
 import com.example.yblog.model.PortfolioBoard;
 import com.example.yblog.portfolio.service.PortfolioBoardService;
+import com.google.gson.JsonObject;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,6 +17,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
 
 @Controller
 public class PortfolioBoardController {
@@ -92,6 +100,52 @@ public class PortfolioBoardController {
             return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,-1);
         }
     }
+
+    @PostMapping(value="/portboard/temporarystorageImagefile", produces = "application/json")
+    @ResponseBody
+    public JsonObject temporarystorageImageupload(@RequestParam("file") MultipartFile multipartFile, @AuthenticationPrincipal PrincipalDetail principal) {
+
+        if(principal.getUsername().equals(IpHostName.adminUser)){
+
+        JsonObject jsonObject = new JsonObject();
+
+        String fileRoot = "C:\\temporary_storage\\"+principal.getUsername()+"\\";	//저장될 외부 파일 경로
+        String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+
+        String savedFileName = "UserName-"+principal.getUsername()+"-"+ UUID.randomUUID() + extension;	//저장될 파일 명
+
+        File targetFile = new File(fileRoot + savedFileName);
+
+        try {
+            InputStream fileStream = multipartFile.getInputStream();
+            FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+            jsonObject.addProperty("url", "/temporary_storage/"+principal.getUsername()+"/"+savedFileName);
+            jsonObject.addProperty("responseCode", "success");
+        } catch (IOException e) {
+            FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+            jsonObject.addProperty("responseCode", "error");
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+        }
+
+
+        // 어드민 아이디가 아닐때 null값을 출력
+        return null;
+
+    }
+
+
+    @DeleteMapping(value = "/portboard/temporarydelete")
+    public void temporaryDelete(@AuthenticationPrincipal PrincipalDetail principal){
+
+    }
+
+
+
+
 
 
 }

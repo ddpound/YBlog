@@ -42,13 +42,50 @@
         <button type="button" class="btn btn-warning btn-block" onclick="portboardWrite()">작성</button>
     </div>
     <script>
+        window.onbeforeunload = function () {
+            $.ajax({
+                type: "DELETE",
+                url : "/portboard/temporarydelete"
+            })
+
+            return "감지범위 테스트";
+        };
+
         $('.summernote').summernote({
-            placeholder: '글작성 해주세요',
             maxWidth: 1110,
             width: 1110,
             height: 600,
-            lang: 'ko-KR'
+            lang: 'ko-KR',
+            placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+            callbacks: {
+                //여기 부분이 이미지를 첨부하는 부분
+                // 업로드와 동시에 진행되는 콜백 함수
+                onImageUpload : function(files) {
+                    for(i=0;i<files.length;i++){
+                        portSummernoteImageFile(files[i],this);
+                    }
+
+                },
+                onPaste: function (e) {
+                    var clipboardData = e.originalEvent.clipboardData;
+                    if (clipboardData && clipboardData.items && clipboardData.items.length) {
+                        var item = clipboardData.items[0];
+                        if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+                            e.preventDefault();
+                        }
+                    }
+                }
+            }
         });
+
+        $("div.note-editable").on('drop',function(e){
+            for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
+                portSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
+            }
+            e.preventDefault();
+        })
+
+
     </script>
 
 

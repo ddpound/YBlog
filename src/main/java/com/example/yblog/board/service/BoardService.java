@@ -231,8 +231,6 @@ public class BoardService {
             chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
         }
 
-
-
         File dir = new File(temporary);
         File[] files = dir.listFiles();
         if(files ==null){
