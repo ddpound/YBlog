@@ -44,7 +44,13 @@ public class YBoard {
     @OrderBy("id desc")
     private List<YReply> yreplys;
 
+    @Column(length = 200)
+    private  String imagefileid;
+
+
     @CreationTimestamp
     private Timestamp createDate;
+
+
 
 }

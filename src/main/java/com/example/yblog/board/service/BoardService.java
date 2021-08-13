@@ -63,13 +63,17 @@ public class BoardService {
 
                     yBoard.setCount(0);
 
+                    YBoard chyBoard = new YBoard();
+                    chyBoard = ImageSearch(yUser.getUsername(), yBoard,null,false);
                     // 파일 경로 변경해주고 임시파일 -> 저장파일로 옮기는 과정
-                    yBoard.setContent(ImageSearch(yUser.getUsername(), yBoard));
+
+                    yBoard.setContent(chyBoard.getContent());
+                    yBoard.setImagefileid(chyBoard.getImagefileid());
 
                     yBoardRepository.save(yBoard);
 
                     // 저장 다하고 해당유저의 임시파일을 삭제하는 과정
-                    deletetemporaryStorage(yUser.getUsername());
+                    deletetemporaryStorage(yUser.getUsername(), true);
                     return 1;
 
                 }
@@ -112,6 +116,9 @@ public class BoardService {
 
         yReplyRepository.deleteAllByBoard(yBoard);
 
+        // 관련된 사진파일을 삭제하기
+        deleteConfirmfile(yBoard.getImagefileid());
+
         yBoardRepository.deleteById(id);
 
     }
@@ -122,8 +129,13 @@ public class BoardService {
                 .orElseThrow(() -> {
                     return new IllegalArgumentException("글 찾기 실패 아이디를 찾을 수 없습니다");
                 }); // 영속화 시키기
+        YBoard board1 = ImageSearch(board.getUser().getUsername(), yBoard, board,true);
+
+
         board.setTitle(yBoard.getTitle());
-        board.setContent(yBoard.getContent());
+        board.setContent(board1.getContent());
+
+
         // 해당함수로  Service가 종료와 함게 트랜잭션 종료, 이때 더티체킹으로 자동 업데이트된다
 
     }
@@ -200,41 +212,57 @@ public class BoardService {
     // 1. 파일들을 이름 변경해서 본파일로 옮김
     // 2. contents 안에있는 사진 src값을 변경 (board를)
     // 3. 임시파일 사진들을 전부 삭제
-    public String ImageSearch(String username , YBoard yBoard)  {
+    // modify => 수정이면 참, 거짓이면 새로생성
+    public YBoard ImageSearch(String username , YBoard yBoard, YBoard yBoard1,boolean modify)  {
         String temporary = "C:\\temporary_storage\\"+username; // 임시 파일 저장경로
+        String fileRoot =null;
+        String BoardTitleUUID =null;
+        String chfileRoot =null;
 
-        String BoardTitleUUID = UUID.randomUUID()+"-"+yBoard.getUser().getId();
-        String fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";	//저장확정 경로
+        // 수정인걸 알았으니깐 이미 있는 파일 이름만 가져오면 됨
+        if(modify){
+            BoardTitleUUID = yBoard1.getImagefileid();
+            fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";
+            chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
+        }else{
+            // 지금 새로만드는 파일이니깐 새로운 랜덤 키값을 지정
+            BoardTitleUUID = UUID.randomUUID()+"-"+yBoard.getUser().getId();
+            fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";	//저장확정 경로
+            chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
+        }
 
-        String chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
+
 
         File dir = new File(temporary);
         File[] files = dir.listFiles();
+        if(files ==null){
+            System.out.println("imageis Not add");
+        }else{
+            for(File f : files) {
 
-        for(File f : files) {
+                String SearchfileName ="UserName-"+username;
 
-            String SearchfileName ="UserName-"+username;
+                if(f.isFile() && f.getName().startsWith(SearchfileName)) {
+                    // 이름 변경 -> 파일 이동 -> 오리지널 파일로 이동 url 는 그럼?
+                    // DB 이름도 변경해야함 Content 검사해서 변경해서 넣어주기
+                    System.out.println(f.getName());
+                    String changeFileName =fileRoot+f.getName();
 
-            if(f.isFile() && f.getName().startsWith(SearchfileName)) {
-                // 이름 변경 -> 파일 이동 -> 오리지널 파일로 이동 url 는 그럼?
-                // DB 이름도 변경해야함 Content 검사해서 변경해서 넣어주기
-                System.out.println(f.getName());
-                String changeFileName =fileRoot+f.getName();
+                    // 저장할 파일의 경로 (걍로와 이름)
+                    File targetFile = new File(changeFileName);
+                    try {
+                        FileInputStream fileInputStream = new FileInputStream(f); // 저장할 파일
+                        FileUtils.copyInputStreamToFile(fileInputStream, targetFile); //저장
 
-                // 저장할 파일의 경로 (걍로와 이름)
-                File targetFile = new File(changeFileName);
-                try {
-                    FileInputStream fileInputStream = new FileInputStream(f); // 저장할 파일
-                    FileUtils.copyInputStreamToFile(fileInputStream, targetFile); //저장
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("파일 이름체크");
+
                 }
 
-                System.out.println("파일 이름체크");
-
             }
-
         }
 
 
@@ -242,10 +270,13 @@ public class BoardService {
         String ChContent = yBoard.getContent().replace("/temporary_storage/"+username+"/", chfileRoot);
         System.out.println(ChContent);
 
-        return ChContent;
+        yBoard.setContent(ChContent);
+        yBoard.setImagefileid(BoardTitleUUID);
+
+        return yBoard;
     }
 
-    public void deletetemporaryStorage(String username){
+    public void deletetemporaryStorage(String username, boolean writebool){
         String path = "C:\\temporary_storage\\"+username;
         File folder = new File(path);
         try {
@@ -264,7 +295,39 @@ public class BoardService {
                 }
             }
         } catch (Exception e) {
+            //참이면 글쓴거임
+            if(writebool){
+                System.out.println("write after delete imageFile");
+            }else{
+                // else면 글을 쓰지않고 나갓을때
+                e.getStackTrace();
+            }
+
+
+        }
+    }
+
+    public void deleteConfirmfile(String filename){
+        String path = "C:\\Confirm_SaveImage\\"+filename;
+        File folder = new File(path);
+        try {
+            while(folder.exists()) {
+                File[] folder_list = folder.listFiles(); //파일리스트 얻어오기
+
+                for (int j = 0; j < folder_list.length; j++) {
+                    folder_list[j].delete(); //파일 삭제
+                    System.out.println("All delete Temporary File UserName : "+filename);
+
+                }
+
+                if(folder_list.length == 0 && folder.isDirectory()){
+                    folder.delete(); //대상폴더 삭제
+                    System.out.println("All delete Temporary Folder UserName : "+filename);
+                }
+            }
+        } catch (Exception e) {
             e.getStackTrace();
+
         }
     }
 

@@ -45,7 +45,11 @@
     <script>
         // 즉 이동감지만 이루어지는걸 확인한다면 임시사진글들은 다 삭제하면 되니깐
         window.onbeforeunload = function () {
-            // 그럼 어떻게 구분하지 임시인지 아닌지
+            $.ajax({
+                type: "DELETE",
+                url : "/board/temporarydelete"
+            })
+
             return "감지범위 테스트";
         };
 

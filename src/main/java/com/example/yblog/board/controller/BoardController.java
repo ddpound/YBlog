@@ -153,7 +153,10 @@ public class BoardController {
     }
 
 
-
+    @DeleteMapping(value = "temporarydelete")
+    public void temporaryDelete(@AuthenticationPrincipal PrincipalDetail principal){
+        boardService.deletetemporaryStorage(principal.getUsername(),false);
+    }
 
 
 }
