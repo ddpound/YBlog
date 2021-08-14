@@ -154,8 +154,9 @@ public class BoardController {
 
 
     @DeleteMapping(value = "temporarydelete")
-    public void temporaryDelete(@AuthenticationPrincipal PrincipalDetail principal){
+    public String temporaryDelete(@AuthenticationPrincipal PrincipalDetail principal){
         boardService.deletetemporaryStorage(principal.getUsername(),false);
+        return "redirect:/";
     }
 
 

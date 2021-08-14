@@ -43,15 +43,16 @@
         <button type="button" class="btn btn-warning btn-block" onclick="boardWrite()">작성</button>
     </div>
     <script>
-        // 즉 이동감지만 이루어지는걸 확인한다면 임시사진글들은 다 삭제하면 되니깐
-        window.onbeforeunload = function () {
+        window.addEventListener('beforeunload', (event) => {
+            // 즉 이동감지만 이루어지는걸 확인한다면 임시사진글들은 다 삭제하면 되니깐
+            // 명세에 따라 preventDefault는 호출해야하며, 기본 동작을 방지합니다.
+            event.preventDefault(); // 대표적으로 Chrome에서는 returnValue 설정이 필요합니다.
+            event.returnValue = '작성내용이 없어질수도있습니다. 작성버튼을 눌러주셨으면 나가셔도됩니다!';
             $.ajax({
                 type: "DELETE",
                 url : "/board/temporarydelete"
             })
-
-            return "감지범위 테스트";
-        };
+        });
 
         $('.summernote').summernote({
             maxWidth: 1110,

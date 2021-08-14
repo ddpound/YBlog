@@ -9,7 +9,6 @@ import com.example.yblog.model.YUser;
 import com.example.yblog.repository.YBoardRepository;
 import com.example.yblog.repository.YReplyRepository;
 import org.apache.commons.io.FileUtils;
-import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,12 +42,25 @@ public class BoardService {
         globalThrowError.ErrorNullBoardTitle(yBoard.getTitle());
         BoardReplyLimit boardReplyLimit = adminService.findbrlRepositoryUser(yUser);
 
+        YBoard chyBoard = new YBoard();
+
+        // 오늘 처음으로 글을썼을때
         if (boardReplyLimit == null) {
             adminService.FirstSaveLimitTable(yUser);
-            yBoard.setUser(yUser);
 
+
+            yBoard.setUser(yUser);
             yBoard.setCount(0);
+
+            // 사진과 관련된 코드 세줄
+            chyBoard = ImageSearch(yUser.getUsername(), yBoard,null,false);
+            // 파일 경로 변경해주고 임시파일 -> 저장파일로 옮기는 과정
+            yBoard.setContent(chyBoard.getContent());
+            yBoard.setImagefileid(chyBoard.getImagefileid());
+
             yBoardRepository.save(yBoard);
+
+            deletetemporaryStorage(yUser.getUsername(), true);
             return 1;
 
         } else {
@@ -59,11 +71,11 @@ public class BoardService {
                     System.out.println("do not Save because no title");
                     return -1;
                 } else {
-                    yBoard.setUser(yUser);
 
+                    yBoard.setUser(yUser);
                     yBoard.setCount(0);
 
-                    YBoard chyBoard = new YBoard();
+
                     chyBoard = ImageSearch(yUser.getUsername(), yBoard,null,false);
                     // 파일 경로 변경해주고 임시파일 -> 저장파일로 옮기는 과정
 
@@ -280,17 +292,22 @@ public class BoardService {
         try {
             while(folder.exists()) {
                 File[] folder_list = folder.listFiles(); //파일리스트 얻어오기
+                if(folder_list != null){
+                    for (int j = 0; j < folder_list.length; j++) {
+                        folder_list[j].delete(); //파일 삭제
+                        System.out.println("All delete Temporary File UserName : "+username);
 
-                for (int j = 0; j < folder_list.length; j++) {
-                    folder_list[j].delete(); //파일 삭제
-                    System.out.println("All delete Temporary File UserName : "+username);
+                    }
 
+                    if(folder_list.length == 0 && folder.isDirectory()){
+                        folder.delete(); //대상폴더 삭제
+                        System.out.println("All delete Temporary Folder UserName : "+username);
+                    }
+
+                }else{
+                    System.out.println("imageFolder and file is null");
                 }
 
-                if(folder_list.length == 0 && folder.isDirectory()){
-                    folder.delete(); //대상폴더 삭제
-                    System.out.println("All delete Temporary Folder UserName : "+username);
-                }
             }
         } catch (Exception e) {
             //참이면 글쓴거임
@@ -300,8 +317,6 @@ public class BoardService {
                 // else면 글을 쓰지않고 나갓을때
                 e.getStackTrace();
             }
-
-
         }
     }
 

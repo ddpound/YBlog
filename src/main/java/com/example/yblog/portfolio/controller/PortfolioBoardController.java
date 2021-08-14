@@ -139,8 +139,9 @@ public class PortfolioBoardController {
 
 
     @DeleteMapping(value = "/portboard/temporarydelete")
-    public void temporaryDelete(@AuthenticationPrincipal PrincipalDetail principal){
-
+    public String temporaryDelete(@AuthenticationPrincipal PrincipalDetail principal){
+        portfolioBoardService.deletetemporaryStorage(principal.getUsername(),false);
+        return "redirect:/";
     }
 
 
