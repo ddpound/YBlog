@@ -52,8 +52,6 @@ public class BoardService {
             yBoard.setUser(yUser);
             yBoard.setCount(0);
 
-
-
             // 사진과 관련된 코드 세줄
             chyBoard = ImageSearch(yUser.getUsername(), yBoard,null,false);
 
@@ -67,6 +65,7 @@ public class BoardService {
 
             yBoardRepository.save(yBoard);
 
+            modifyImagefile(yBoard.getContent(),yBoard.getImagefileid());
             deletetemporaryStorage(yUser.getUsername(), true);
             return 1;
 
@@ -98,6 +97,7 @@ public class BoardService {
 
                     yBoardRepository.save(yBoard);
 
+                    modifyImagefile(yBoard.getContent(),yBoard.getImagefileid());
                     // 저장 다하고 해당유저의 임시파일을 삭제하는 과정
                     deletetemporaryStorage(yUser.getUsername(), true);
                     return 1;
@@ -159,12 +159,15 @@ public class BoardService {
                 }); // 영속화 시키기
         YBoard board1 = ImageSearch(board.getUser().getUsername(), yBoard, board,true);
 
-
+        // 해당함수로  Service가 종료와 함게 트랜잭션 종료, 이때 더티체킹으로 자동 업데이트된다
         board.setTitle(yBoard.getTitle());
         board.setContent(board1.getContent());
 
 
-        // 해당함수로  Service가 종료와 함게 트랜잭션 종료, 이때 더티체킹으로 자동 업데이트된다
+        // 이렇게 트랜잭션이 완료되고 여기서 yboard의  content를 받아서 현재 파일에 있는 이미지와 비교해서 없으면
+        // 삭제하고 놔두는 로직을 짜야한다
+        modifyImagefile(board.getContent(), board.getImagefileid());
+
 
     }
 
@@ -257,6 +260,7 @@ public class BoardService {
             // 지금 새로만드는 파일이니깐 새로운 랜덤 키값을 지정
             BoardTitleUUID = UUID.randomUUID()+"-"+yBoard.getUser().getId();
             fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";	//저장확정 경로
+            // 이건 컨텐츠 즉 db 저장될 애들의 값을 바꿔주기위해서 해놓음
             chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
         }
 
@@ -272,12 +276,13 @@ public class BoardService {
 
             for(File f : files) {
 
+                // 파일 이름이 UserName-"username"-"filename"
+                // 이렇게 지정됨
                 String SearchfileName ="UserName-"+username;
 
                 if(f.isFile() && f.getName().startsWith(SearchfileName)) {
                     // 이름 변경 -> 파일 이동 -> 오리지널 파일로 이동 url 는 그럼?
                     // DB 이름도 변경해야함 Content 검사해서 변경해서 넣어주기
-                    System.out.println(f.getName());
                     String changeFileName =fileRoot+f.getName();
 
                     // 저장할 파일의 경로 (걍로와 이름)
@@ -296,12 +301,14 @@ public class BoardService {
         }
 
 
-        System.out.println(yBoard.getContent());
+
         String ChContent = yBoard.getContent().replace("/temporary_storage/"+username+"/", chfileRoot);
-        System.out.println(ChContent);
+
 
         yBoard.setContent(ChContent);
         yBoard.setImagefileid(BoardTitleUUID);
+
+
 
         return yBoard;
     }
@@ -383,6 +390,28 @@ public class BoardService {
     // 수정 로직 안에 파일 점검해서 게시판에 없는 녀석을 찾아내면 될듯
     // 즉 위의 애초에 작성로직에서 리스트를 쭉 받고 없는 녀석이라면 삭제해내는게 먼저
     // 용량을 아끼기위함
+    public void modifyImagefile(String content, String imagefileid){
+        String Confirm_SaveImage = "C:\\Confirm_SaveImage\\"+imagefileid;
+
+        File dir = new File(Confirm_SaveImage);
+        File[] files = dir.listFiles();
+
+        if(files ==null){
+            System.out.println("imageis Not add");
+        }else {
+            for (File f : files) {
+                if(content.contains(f.getName())){
+                    //문자가 포합되어있으니 수정된 파일이 있다는 뜻.
+                }else{
+                    f.delete();
+                }
+            }
+        }
+
+    }
+
+
+
 
 }
 

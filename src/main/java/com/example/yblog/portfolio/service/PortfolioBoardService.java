@@ -51,7 +51,7 @@ public class PortfolioBoardService {
 
             portfolioRepository.save(portfolioBoard);
 
-
+            modifyImagefile(portfolioBoard.getContent(),portfolioBoard.getImagefileid());
             deletetemporaryStorage(principal.getUsername(), true);
 
         }else{
@@ -83,6 +83,9 @@ public class PortfolioBoardService {
         eternalPortfolioBoard.setTitle(portfolioBoard.getTitle());
         eternalPortfolioBoard.setContent(portfolioBoard1.getContent());
         // 더티체킹
+
+        modifyImagefile(eternalPortfolioBoard.getContent(),eternalPortfolioBoard.getImagefileid());
+
 
     }
 
@@ -236,6 +239,27 @@ public class PortfolioBoardService {
 
 
         // 더티체킹
+
+    }
+
+
+    public void modifyImagefile(String content, String imagefileid){
+        String Confirm_SaveImage = "C:\\Confirm_SaveImage\\"+imagefileid;
+
+        File dir = new File(Confirm_SaveImage);
+        File[] files = dir.listFiles();
+
+        if(files ==null){
+            System.out.println("imageis Not add");
+        }else {
+            for (File f : files) {
+                if(content.contains(f.getName())){
+                    //문자가 포합되어있으니 수정된 파일이 있다는 뜻.
+                }else{
+                    f.delete();
+                }
+            }
+        }
 
     }
 
