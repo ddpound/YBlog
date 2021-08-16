@@ -19,6 +19,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,8 +67,36 @@ public class PortfolioBoardController {
 
     }
     @GetMapping(value = "/auth/portboard/details")
-    public String portboardDetails(@RequestParam("id")int id, Model model){
+    public String portboardDetails(@RequestParam("id")int id, Model model, HttpServletRequest request,
+                                   HttpServletResponse response){
+
+        Cookie[] cookies = request.getCookies();
+        int visit =0;
+
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("visitport")){
+                visit =1;
+                if(cookie.getValue().contains(request.getParameter("id"))){
+                    // 이미 있는 쿠키라서 아무것도 안함
+                }else{
+                    cookie.setValue((cookie.getValue()+"_"+request.getParameter("id")));
+                    cookie.setMaxAge(1800);
+                    response.addCookie(cookie);
+                    portfolioBoardService.BoardCountUp(id);
+                }
+
+            }
+        }
+        if(visit==0){
+            Cookie cookie1 = new Cookie("visitport",request.getParameter("id"));
+            cookie1.setMaxAge(1800);
+            response.addCookie(cookie1);
+            portfolioBoardService.BoardCountUp(id);
+        }
+
+
         model.addAttribute("portboard",portfolioBoardService.detailsPortPolio(id));
+
 
         return "PortfolioBoard/portboardDetails";
     }

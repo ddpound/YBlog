@@ -7,7 +7,6 @@ import com.example.yblog.dto.ResponseDto;
 import com.example.yblog.model.YBoard;
 import com.example.yblog.model.YReply;
 import com.example.yblog.status.StatusService;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.apache.commons.io.FileUtils;
@@ -48,10 +47,8 @@ public class BoardController {
     public ResponseDto<Integer> boardSave(@RequestBody YBoard yBoard, @AuthenticationPrincipal PrincipalDetail principal){
         // 4194304 최대길이 용량이 이럴때 에러가 발생
         // System.out.println("contentLengh "+ yBoard.getContent().length());
-
         //저장할때 유저네임을 이용해서 임시 저장이미지 저장파일을 영구 저장파일로 보내는로직을 짠 서비스를 만들면될듯
         // 유저이름, 제목
-
         int resultnum = boardService.SaveBoard(yBoard, principal.getYUser());
         if(resultnum ==1){
             System.out.println("Try to Save user : "+ principal.getUsername());

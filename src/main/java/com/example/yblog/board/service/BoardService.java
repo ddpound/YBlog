@@ -260,7 +260,6 @@ public class BoardService {
             chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
         }
 
-
         File dir = new File(temporary);
         File[] files = dir.listFiles();
 
@@ -381,7 +380,9 @@ public class BoardService {
 
     }
 
-
+    // 수정 로직 안에 파일 점검해서 게시판에 없는 녀석을 찾아내면 될듯
+    // 즉 위의 애초에 작성로직에서 리스트를 쭉 받고 없는 녀석이라면 삭제해내는게 먼저
+    // 용량을 아끼기위함
 
 }
 

@@ -26,6 +26,7 @@
   <div class="form-group text-light font-weight-bold bg-dark text-center">
     <label>[제목]</label>
     <h3 th:text="${portboard.getTitle()}"></h3>
+    <h6>조회수 : <label th:text="${portboard.getCount()}"></label> </h6>
     <div th:if="${portboard.getUser().getUsername()}== ${#authentication.getName()} or ${#authentication.getName()}== 'Y' ">
       <script th:inline="javascript">
         let boardId = [[${portboard.getId()}]]
