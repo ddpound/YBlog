@@ -52,9 +52,14 @@ public class BoardController {
         //저장할때 유저네임을 이용해서 임시 저장이미지 저장파일을 영구 저장파일로 보내는로직을 짠 서비스를 만들면될듯
         // 유저이름, 제목
 
-        boardService.SaveBoard(yBoard, principal.getYUser());
+        int resultnum = boardService.SaveBoard(yBoard, principal.getYUser());
+        if(resultnum ==1){
+            System.out.println("Try to Save user : "+ principal.getUsername());
+        }else if (resultnum == -2){
+            System.out.println("image count 10 over");
+            return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultnum);
+        }
 
-        System.out.println("Try to Save user : "+ principal.getUsername());
 
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }

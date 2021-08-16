@@ -35,7 +35,11 @@ function boardWrite(){
             if(resp.data === 1 ){
                 alert("글쓰기완료입니다 : "+resp.status)
                 location.href = "/"
-            }else{
+            }else if(resp.data ===-2){
+                alert("작성 게시글의 사진 10장이 넘어갔습니다.")
+                location.href = "/"
+            }
+            else{
                 alert("글쓰기실패 : "+resp.status)
             }
         }).fail(function (){

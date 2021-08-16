@@ -13,5 +13,7 @@ public interface YBoardRepository extends JpaRepository<YBoard,Integer> {
 
     void deleteAllByUser(YUser yUser);
 
+    
+
 
 }

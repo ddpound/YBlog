@@ -54,6 +54,11 @@ public class BoardService {
 
             // 사진과 관련된 코드 세줄
             chyBoard = ImageSearch(yUser.getUsername(), yBoard,null,false);
+
+            if(chyBoard ==null){
+                return -2; // 사진 갯수가 10개가 넘어가는 경우
+            }
+
             // 파일 경로 변경해주고 임시파일 -> 저장파일로 옮기는 과정
             yBoard.setContent(chyBoard.getContent());
             yBoard.setImagefileid(chyBoard.getImagefileid());
@@ -78,6 +83,9 @@ public class BoardService {
 
                     chyBoard = ImageSearch(yUser.getUsername(), yBoard,null,false);
                     // 파일 경로 변경해주고 임시파일 -> 저장파일로 옮기는 과정
+                    if(chyBoard ==null){
+                        return -2; // 사진 갯수가 10개가 넘어가는 경우
+                    }
 
                     yBoard.setContent(chyBoard.getContent());
                     yBoard.setImagefileid(chyBoard.getImagefileid());
@@ -113,6 +121,8 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public YBoard boardDetails(int id) {
+
+
         return yBoardRepository.findById(id)
                 .orElseThrow(() -> {
                     return new IllegalArgumentException("글 상세보기 실패 아이디를 찾을 수 없습니다");
@@ -245,6 +255,11 @@ public class BoardService {
 
         File dir = new File(temporary);
         File[] files = dir.listFiles();
+
+        if(files.length >10){
+            return null;
+        }
+
         if(files ==null){
             System.out.println("imageis Not add");
         }else{
@@ -267,8 +282,6 @@ public class BoardService {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                    System.out.println("파일 이름체크");
 
                 }
 
@@ -342,6 +355,22 @@ public class BoardService {
             e.getStackTrace();
 
         }
+    }
+
+    @Transactional
+    public void boardCountUp(int boardid) {
+        YBoard board = yBoardRepository.findById(boardid)
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("글 찾기 실패 아이디를 찾을 수 없습니다");
+                }); // 영속화 시키기
+
+        int countNum = board.getCount();
+
+        board.setCount(countNum+1);
+
+
+        // 해당함수로  Service가 종료와 함게 트랜잭션 종료, 이때 더티체킹으로 자동 업데이트된다
+
     }
 
 

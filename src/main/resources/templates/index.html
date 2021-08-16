@@ -34,14 +34,16 @@
             <tr style="color: whitesmoke;">
                 <th>제목</th>
                 <th>작성자</th>
+                <th>조회수</th>
                 <th>작성일</th>
             </tr>
             </thead>
             <tbody>
 
             <tr th:each="items : ${boards}">
-                <td><a th:href=" @{/auth/board/details(id=${items.getId()})}">[[${items.title}]]</a></td>
+                <td><a th:href=" @{/auth/board/details(id=${items.getId()})}">[[${items.title}]] <label style="color: orange">[ [[${items.getYreplys().size()}]] ]</label> </a></td>
                 <td th:text="${items.getUser().getUsername()}"></td>
+                <td th:text="${items.getCount()}"></td>
                 <td th:text="${items.getCreateDate()}"></td>
             </tr>
 

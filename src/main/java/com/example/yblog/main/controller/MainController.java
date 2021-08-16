@@ -19,7 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -102,8 +104,36 @@ public class MainController {
 
 
     @GetMapping(value = "/auth/board/details")
-    public String boardDetails(@RequestParam("id") int id , Model model){
+    public String boardDetails(@RequestParam("id") int id , Model model, HttpServletRequest request,
+                               HttpServletResponse response){
+
+        Cookie[] cookies = request.getCookies();
+        int visit =0;
+
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("visit")){
+                visit =1;
+                if(cookie.getValue().contains(request.getParameter("id"))){
+
+                }else{
+                    cookie.setValue((cookie.getValue()+"_"+request.getParameter("id")));
+                    cookie.setMaxAge(1800);
+                    response.addCookie(cookie);
+                    boardService.boardCountUp(id);
+                }
+
+            }
+        }
+        if(visit==0){
+            Cookie cookie1 = new Cookie("visit",request.getParameter("id"));
+            cookie1.setMaxAge(1800);
+            response.addCookie(cookie1);
+            boardService.boardCountUp(id);
+        }
+
+
         model.addAttribute("board", boardService.boardDetails(id));
+
         return "board/boardDetails";
     }
 
