@@ -30,6 +30,7 @@
     <div class="form-group text-light font-weight-bold bg-dark text-center rounded">
       <label>[제목]</label>
       <h3 th:text="${board.getTitle()}"></h3>
+      <h6> 작성자 : <label th:text="${board.getUser().getUsername()}"></label> 조회수 : <label th:text="${board.getCount()}"></label></h6>
       <div th:if="${board.getUser().getUsername()}== ${#authentication.getName()} or ${#authentication.getName()}== 'Y' ">
         <script th:inline="javascript">
           let boardId = [[${board.getId()}]]

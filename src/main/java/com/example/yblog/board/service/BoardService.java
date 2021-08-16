@@ -38,8 +38,9 @@ public class BoardService {
     public int SaveBoard(YBoard yBoard, YUser yUser) {
 
         globalThrowError.ErrorMaxSqlLength(yBoard.getContent().length());
-
         globalThrowError.ErrorNullBoardTitle(yBoard.getTitle());
+
+
         BoardReplyLimit boardReplyLimit = adminService.findbrlRepositoryUser(yUser);
 
         YBoard chyBoard = new YBoard();
@@ -48,9 +49,10 @@ public class BoardService {
         if (boardReplyLimit == null) {
             adminService.FirstSaveLimitTable(yUser);
 
-
             yBoard.setUser(yUser);
             yBoard.setCount(0);
+
+
 
             // 사진과 관련된 코드 세줄
             chyBoard = ImageSearch(yUser.getUsername(), yBoard,null,false);
@@ -81,11 +83,15 @@ public class BoardService {
                     yBoard.setCount(0);
 
 
+
                     chyBoard = ImageSearch(yUser.getUsername(), yBoard,null,false);
+
                     // 파일 경로 변경해주고 임시파일 -> 저장파일로 옮기는 과정
-                    if(chyBoard ==null){
+
+                    if(chyBoard == null){
                         return -2; // 사진 갯수가 10개가 넘어가는 경우
                     }
+
 
                     yBoard.setContent(chyBoard.getContent());
                     yBoard.setImagefileid(chyBoard.getImagefileid());
@@ -100,7 +106,7 @@ public class BoardService {
 
             }
             System.out.println("30 up!");
-            return -1;
+            return -3; // 최대 게시글 30개 작성했을때 거절문
 
 
         }
@@ -241,6 +247,7 @@ public class BoardService {
         String BoardTitleUUID =null;
         String chfileRoot =null;
 
+
         // 수정인걸 알았으니깐 이미 있는 파일 이름만 가져오면 됨
         if(modify){
             BoardTitleUUID = yBoard1.getImagefileid();
@@ -253,16 +260,17 @@ public class BoardService {
             chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
         }
 
+
         File dir = new File(temporary);
         File[] files = dir.listFiles();
-
-        if(files.length >10){
-            return null;
-        }
 
         if(files ==null){
             System.out.println("imageis Not add");
         }else{
+            if(files.length >10){
+                return null;
+            }
+
             for(File f : files) {
 
                 String SearchfileName ="UserName-"+username;

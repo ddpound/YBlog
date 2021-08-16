@@ -38,6 +38,8 @@ function boardWrite(){
             }else if(resp.data ===-2){
                 alert("작성 게시글의 사진 10장이 넘어갔습니다.")
                 location.href = "/"
+            }else if(resp.data === -3){
+                alert(" 하루 최대 작성 30 개를 넘어갔습니다 초기화되기를 기다려주세요!")
             }
             else{
                 alert("글쓰기실패 : "+resp.status)

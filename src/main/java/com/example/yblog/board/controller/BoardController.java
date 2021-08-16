@@ -58,6 +58,8 @@ public class BoardController {
         }else if (resultnum == -2){
             System.out.println("image count 10 over");
             return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultnum);
+        }else  if(resultnum == -3){
+            return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultnum);
         }
 
 

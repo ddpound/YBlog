@@ -114,7 +114,7 @@ public class MainController {
             if(cookie.getName().equals("visit")){
                 visit =1;
                 if(cookie.getValue().contains(request.getParameter("id"))){
-
+                    // 이미 있는 쿠키라서 아무것도 안함
                 }else{
                     cookie.setValue((cookie.getValue()+"_"+request.getParameter("id")));
                     cookie.setMaxAge(1800);
