@@ -1,7 +1,7 @@
 package com.example.yblog.login.controller;
 
 
-import com.example.yblog.allstatic.IpHostName;
+import com.example.yblog.allstatic.AllStaticElement;
 
 import com.example.yblog.kakaoLogin.dto.KakaoProfile;
 import com.example.yblog.kakaoLogin.service.KaKaoLoginService;
@@ -10,20 +10,14 @@ import com.example.yblog.login.service.LoginService;
 import com.example.yblog.model.YUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
-import java.beans.BeanProperty;
 
 // 인증이 안된 사용자들도 접속할수 있게 만드는 경로 를 /auth/**로 할꺼임
 
@@ -47,7 +41,7 @@ public class LoginController {
     // 로그인창
     @GetMapping(value = "/auth/loginForm")
     public String loginView(Model model){
-        model.addAttribute("Loginredirect_uri", IpHostName.LoginRequestURI);
+        model.addAttribute("Loginredirect_uri", AllStaticElement.LoginRequestURI);
         return "loginJoin/login";
     }
 
@@ -55,7 +49,7 @@ public class LoginController {
     public String kakaoLogin(@RequestParam("code") String code, Model model){
 
         // 여기서 프로파일을 가져온다는 자체가 인증이 끝난 상태를 말하니깐
-        KakaoProfile kakaoProfile =  kaKaoLoginService.intergration(code , IpHostName.Loginredirect_uri);
+        KakaoProfile kakaoProfile =  kaKaoLoginService.intergration(code , AllStaticElement.Loginredirect_uri);
 
         YUser yUser =  loginService.findEmail(kakaoProfile.getKakao_account().getEmail());
         if(yUser == null){

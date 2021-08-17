@@ -1,7 +1,7 @@
 package com.example.yblog.portfolio.controller;
 
 
-import com.example.yblog.allstatic.IpHostName;
+import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.config.auth.PrincipalDetail;
 import com.example.yblog.dto.ResponseDto;
 import com.example.yblog.model.PortfolioBoard;
@@ -46,7 +46,7 @@ public class PortfolioBoardController {
     @ResponseBody
     public ResponseDto<Integer> fortboardSave(@RequestBody PortfolioBoard portfolioBoard, @AuthenticationPrincipal PrincipalDetail principal){
 
-        if (principal.getUsername().equals(IpHostName.adminUser)){
+        if (principal.getUsername().equals(AllStaticElement.adminUser)){
             portfolioBoardService.portBoardSave(portfolioBoard,principal);
             System.out.println("Admin Y write portfolio board");
             return new ResponseDto<Integer>(HttpStatus.OK,1);
@@ -59,7 +59,7 @@ public class PortfolioBoardController {
     @GetMapping(value = "portboard/write")
     public String gowritePortfolio(@AuthenticationPrincipal PrincipalDetail principal ){
 
-        if (principal.getUsername().equals(IpHostName.adminUser)){
+        if (principal.getUsername().equals(AllStaticElement.adminUser)){
             return "PortfolioBoard/portwrite";
         }else{
             return "redirect:/";
@@ -72,19 +72,25 @@ public class PortfolioBoardController {
 
         Cookie[] cookies = request.getCookies();
         int visit =0;
+        if(cookies == null){
+            Cookie cookie1 = new Cookie("visitport",request.getParameter("id"));
+            cookie1.setMaxAge(1800);
+            response.addCookie(cookie1);
+            portfolioBoardService.BoardCountUp(id);
+        }else{
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("visitport")){
+                    visit =1;
+                    if(cookie.getValue().contains(request.getParameter("id"))){
+                        // 이미 있는 쿠키라서 아무것도 안함
+                    }else{
+                        cookie.setValue((cookie.getValue()+"_"+request.getParameter("id")));
+                        cookie.setMaxAge(1800);
+                        response.addCookie(cookie);
+                        portfolioBoardService.BoardCountUp(id);
+                    }
 
-        for(Cookie cookie : cookies){
-            if(cookie.getName().equals("visitport")){
-                visit =1;
-                if(cookie.getValue().contains(request.getParameter("id"))){
-                    // 이미 있는 쿠키라서 아무것도 안함
-                }else{
-                    cookie.setValue((cookie.getValue()+"_"+request.getParameter("id")));
-                    cookie.setMaxAge(1800);
-                    response.addCookie(cookie);
-                    portfolioBoardService.BoardCountUp(id);
                 }
-
             }
         }
         if(visit==0){
@@ -94,9 +100,7 @@ public class PortfolioBoardController {
             portfolioBoardService.BoardCountUp(id);
         }
 
-
         model.addAttribute("portboard",portfolioBoardService.detailsPortPolio(id));
-
 
         return "PortfolioBoard/portboardDetails";
     }
@@ -110,7 +114,7 @@ public class PortfolioBoardController {
     @PutMapping(value = "/portboard/modify")
     @ResponseBody
     public ResponseDto<Integer> portboardModify(@RequestBody PortfolioBoard portfolioBoard, @AuthenticationPrincipal PrincipalDetail principal){
-        if (principal.getUsername().equals(IpHostName.adminUser)){
+        if (principal.getUsername().equals(AllStaticElement.adminUser)){
             portfolioBoardService.portBoardModify(portfolioBoard);
 
             return new ResponseDto<Integer>(HttpStatus.OK,1);
@@ -124,7 +128,7 @@ public class PortfolioBoardController {
     @DeleteMapping(value = "/portboard/delete/{boardId}")
     @ResponseBody
     public  ResponseDto<Integer> portboardDelete(@PathVariable("boardId")int boardId, @AuthenticationPrincipal PrincipalDetail principal){
-        if (principal.getUsername().equals(IpHostName.adminUser)){
+        if (principal.getUsername().equals(AllStaticElement.adminUser)){
             portfolioBoardService.portBoardDelete(boardId);
             return new ResponseDto<Integer>(HttpStatus.OK,1);
         }else{
@@ -136,30 +140,38 @@ public class PortfolioBoardController {
     @ResponseBody
     public JsonObject temporarystorageImageupload(@RequestParam("file") MultipartFile multipartFile, @AuthenticationPrincipal PrincipalDetail principal) {
 
-        if(principal.getUsername().equals(IpHostName.adminUser)){
+        if(principal.getUsername().equals(AllStaticElement.adminUser)){
+            JsonObject jsonObject = new JsonObject();
+            String fileRoot = null;
 
-        JsonObject jsonObject = new JsonObject();
+            if(AllStaticElement.OsName.equals("window")){
+                // os를 파악해서 매번 반복하지않도록 만들자 (static에 필요사항임)
+                fileRoot = "C:"+File.separator+"temporary_storage\\"+principal.getUsername()+"\\";	//저장될 외부 파일 경로
+            }else{
+                fileRoot = "/home/youseongjung/Templates/temporary_storage/"+principal.getUsername()+File.separator;	//저장될 외부 파일 경로
+            }
 
-        String fileRoot = "C:\\temporary_storage\\"+principal.getUsername()+"\\";	//저장될 외부 파일 경로
-        String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+            String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+            String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 
-        String savedFileName = "UserName-"+principal.getUsername()+"-"+ UUID.randomUUID() + extension;	//저장될 파일 명
+            String savedFileName = "UserName-"+principal.getUsername()+"-"+ UUID.randomUUID() + extension;	//저장될 파일 명
 
-        File targetFile = new File(fileRoot + savedFileName);
+            File targetFile = new File(fileRoot + savedFileName);
 
-        try {
-            InputStream fileStream = multipartFile.getInputStream();
-            FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-            jsonObject.addProperty("url", "/temporary_storage/"+principal.getUsername()+"/"+savedFileName);
-            jsonObject.addProperty("responseCode", "success");
-        } catch (IOException e) {
-            FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
-            jsonObject.addProperty("responseCode", "error");
-            e.printStackTrace();
-        }
+            try {
+                InputStream fileStream = multipartFile.getInputStream();
+                FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+                jsonObject.addProperty("url", "/temporary_storage/"+principal.getUsername()+"/"+savedFileName);
+                jsonObject.addProperty("responseCode", "success");
 
-        return jsonObject;
+            } catch (IOException e) {
+                FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+                jsonObject.addProperty("responseCode", "error");
+                e.printStackTrace();
+
+            }
+
+            return jsonObject;
         }
 
 

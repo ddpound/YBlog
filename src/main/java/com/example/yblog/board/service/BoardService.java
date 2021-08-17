@@ -1,6 +1,7 @@
 package com.example.yblog.board.service;
 
 import com.example.yblog.admin.service.AdminService;
+import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.handler.GlobalThrowError;
 import com.example.yblog.model.BoardReplyLimit;
 import com.example.yblog.model.YBoard;
@@ -245,7 +246,12 @@ public class BoardService {
     // 3. 임시파일 사진들을 전부 삭제
     // modify => 수정이면 참, 거짓이면 새로생성
     public YBoard ImageSearch(String username , YBoard yBoard, YBoard yBoard1,boolean modify)  {
-        String temporary = "C:\\temporary_storage\\"+username; // 임시 파일 저장경로
+        String temporary = null;
+        if(AllStaticElement.OsName.equals("window")){
+            temporary = "C:\\temporary_storage\\"+username; // 임시 파일 저장경로
+        }else{
+            temporary  ="/home/youseongjung/Templates/temporary_storage/"+username;
+        }
         String fileRoot =null;
         String BoardTitleUUID =null;
         String chfileRoot =null;
@@ -254,12 +260,22 @@ public class BoardService {
         // 수정인걸 알았으니깐 이미 있는 파일 이름만 가져오면 됨
         if(modify){
             BoardTitleUUID = yBoard1.getImagefileid();
-            fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";
+            if(AllStaticElement.OsName.equals("window")){
+                fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";
+            }else{
+                fileRoot = "/home/youseongjung/Templates/Confirm_SaveImage/"+BoardTitleUUID+"/";
+            }
+            // 이건 컨텐츠 즉 db 저장될 애들의 값을 바꿔주기위해서 해놓음
             chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
         }else{
             // 지금 새로만드는 파일이니깐 새로운 랜덤 키값을 지정
             BoardTitleUUID = UUID.randomUUID()+"-"+yBoard.getUser().getId();
-            fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";	//저장확정 경로
+
+            if(AllStaticElement.OsName.equals("window")){
+                fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";	//저장확정 경로
+            }else{
+                fileRoot = "/home/youseongjung/Templates/Confirm_SaveImage/"+BoardTitleUUID+"/";
+            }
             // 이건 컨텐츠 즉 db 저장될 애들의 값을 바꿔주기위해서 해놓음
             chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
         }
@@ -314,7 +330,15 @@ public class BoardService {
     }
 
     public void deletetemporaryStorage(String username, boolean writebool){
-        String path = "C:\\temporary_storage\\"+username;
+        String path = null;
+
+        if(AllStaticElement.OsName.equals("window")){
+            path = "C:\\temporary_storage\\"+username; // 임시 파일 저장경로
+        }else{
+            path  ="/home/youseongjung/Templates/temporary_storage/"+username;
+        }
+
+
         File folder = new File(path);
         try {
             while(folder.exists()) {
@@ -348,7 +372,14 @@ public class BoardService {
     }
 
     public void deleteConfirmfile(String filename){
-        String path = "C:\\Confirm_SaveImage\\"+filename;
+        String path = null;
+
+        if(AllStaticElement.OsName.equals("window")){
+            path = "C:\\Confirm_SaveImage\\"+filename; // 임시 파일 저장경로
+        }else{
+            path  ="/home/youseongjung/Templates/Confirm_SaveImage/"+filename;
+        }
+
         File folder = new File(path);
         try {
             while(folder.exists()) {
@@ -391,7 +422,13 @@ public class BoardService {
     // 즉 위의 애초에 작성로직에서 리스트를 쭉 받고 없는 녀석이라면 삭제해내는게 먼저
     // 용량을 아끼기위함
     public void modifyImagefile(String content, String imagefileid){
-        String Confirm_SaveImage = "C:\\Confirm_SaveImage\\"+imagefileid;
+        String Confirm_SaveImage = null;
+
+        if(AllStaticElement.OsName.equals("window")){
+            Confirm_SaveImage = "C:\\Confirm_SaveImage\\"+imagefileid; // 임시 파일 저장경로
+        }else{
+            Confirm_SaveImage  ="/home/youseongjung/Templates/Confirm_SaveImage/"+imagefileid;
+        }
 
         File dir = new File(Confirm_SaveImage);
         File[] files = dir.listFiles();

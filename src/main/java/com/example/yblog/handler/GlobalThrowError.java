@@ -1,13 +1,13 @@
 package com.example.yblog.handler;
 
-import com.example.yblog.allstatic.IpHostName;
+import com.example.yblog.allstatic.AllStaticElement;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GlobalThrowError {
 
     public void ErrorMaxSqlLength(int boardLength){
-        if(boardLength > IpHostName.sqlMaxLength){
+        if(boardLength > AllStaticElement.sqlMaxLength){
             throw new IllegalArgumentException("게시판 글의 용량을 초과하셨습니다 사진은 최대 3mb까지 업로드가능!");
         }
     }

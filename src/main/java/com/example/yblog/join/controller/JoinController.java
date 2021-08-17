@@ -1,7 +1,7 @@
 package com.example.yblog.join.controller;
 
 
-import com.example.yblog.allstatic.IpHostName;
+import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.dto.ResponseDto;
 import com.example.yblog.join.service.JoinService;
 import com.example.yblog.kakaoLogin.dto.KakaoProfile;
@@ -9,7 +9,6 @@ import com.example.yblog.kakaoLogin.service.KaKaoLoginService;
 import com.example.yblog.login.service.LoginService;
 import com.example.yblog.model.YUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -39,14 +38,14 @@ public class JoinController {
 
     @GetMapping(value = "/auth/emailauth")
     public String goEmailAuthView(Model model){
-        model.addAttribute("loginRequestURI", IpHostName.JoinRequestURI);
+        model.addAttribute("loginRequestURI", AllStaticElement.JoinRequestURI);
 
         return "loginJoin/emailauth";
     }
 
     @GetMapping(value = "auth/kakao/callback")
     public String kakaoJoinInfo(@RequestParam("code")String code, Model model){
-        KakaoProfile kakaoProfile = kaKaoLoginService.intergration(code, IpHostName.redirect_uri);
+        KakaoProfile kakaoProfile = kaKaoLoginService.intergration(code, AllStaticElement.redirect_uri);
 
         int resultNum = joinService.EmailDuplicateCheckl(kakaoProfile.getKakao_account().getEmail());
 

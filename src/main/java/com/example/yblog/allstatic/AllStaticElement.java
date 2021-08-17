@@ -1,6 +1,6 @@
 package com.example.yblog.allstatic;
 
-public class IpHostName {
+public class AllStaticElement {
     public static int statusNum=0; // 현재 상태값을 입력하기위한 절대적은 번호 , 1이 끝
 
     public static  String adminUser = "Y";
@@ -21,6 +21,13 @@ public class IpHostName {
 
     // sql content max length
     public static int sqlMaxLength = 4194304;
+
+    // OS 이름 main Controller에서 지정해줌
+    // {linux, window}
+    public static String OsName;
+
+
+
 
 
 }

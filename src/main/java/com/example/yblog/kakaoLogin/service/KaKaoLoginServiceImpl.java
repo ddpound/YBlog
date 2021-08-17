@@ -1,6 +1,6 @@
 package com.example.yblog.kakaoLogin.service;
 
-import com.example.yblog.allstatic.IpHostName;
+import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.kakaoLogin.dto.KakaoProfile;
 import com.example.yblog.kakaoLogin.dto.OAuthToken;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -27,17 +27,17 @@ public class KaKaoLoginServiceImpl implements KaKaoLoginService{
         RestTemplate rt = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type", IpHostName.ContentType);
+        headers.add("Content-type", AllStaticElement.ContentType);
 
         MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", IpHostName.grant_type);
-        params.add("client_id", IpHostName.client_id);
+        params.add("grant_type", AllStaticElement.grant_type);
+        params.add("client_id", AllStaticElement.client_id);
         params.add("redirect_uri", redirect_uri);
         params.add("code", code);
 
         HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(params,headers);
 
-        ResponseEntity<String> response = rt.exchange(IpHostName.OauthToken_request,
+        ResponseEntity<String> response = rt.exchange(AllStaticElement.OauthToken_request,
                 HttpMethod.POST, kakaoTokenRequest,String.class);
 
         return response;
@@ -69,10 +69,10 @@ public class KaKaoLoginServiceImpl implements KaKaoLoginService{
         // httpHeader 오브젝트 생성
         HttpHeaders headers2 = new HttpHeaders();
         headers2.add("Authorization", "Bearer " + outhToken.getAccess_token());
-        headers2.add("Content-type", IpHostName.ContentType);
+        headers2.add("Content-type", AllStaticElement.ContentType);
         HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 = new HttpEntity<>(headers2);
 
-        ResponseEntity<String> response = rt2.exchange(IpHostName.UserInfoSelect,HttpMethod.POST,
+        ResponseEntity<String> response = rt2.exchange(AllStaticElement.UserInfoSelect,HttpMethod.POST,
                 kakaoProfileRequest2,String.class);
 
         return response;

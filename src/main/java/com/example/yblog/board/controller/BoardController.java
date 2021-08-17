@@ -1,6 +1,6 @@
 package com.example.yblog.board.controller;
 
-import com.example.yblog.allstatic.IpHostName;
+import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.board.service.BoardService;
 import com.example.yblog.config.auth.PrincipalDetail;
 import com.example.yblog.dto.ResponseDto;
@@ -97,7 +97,7 @@ public class BoardController {
     // 여기는 수정글
     @GetMapping("changeStatus/{newstatus}")
     public String ChangeStatus(@PathVariable("newstatus") String newstatus,@AuthenticationPrincipal PrincipalDetail principal){
-        if (principal.getUsername().equals(IpHostName.adminUser)){
+        if (principal.getUsername().equals(AllStaticElement.adminUser)){
             statusService.ModifySatus(newstatus);
         }
 
@@ -119,7 +119,7 @@ public class BoardController {
     public ResponseDto<Integer> replyDelte(@PathVariable int replyId,@AuthenticationPrincipal PrincipalDetail principal){
         YReply yReply = boardService.findYReply(replyId);
 
-        if(yReply.getUser().getUsername().equals(principal.getUsername()) || principal.getUsername().equals(IpHostName.adminUser)){
+        if(yReply.getUser().getUsername().equals(principal.getUsername()) || principal.getUsername().equals(AllStaticElement.adminUser)){
             boardService.replyDelete(replyId);
             return new ResponseDto<Integer>(HttpStatus.OK,1);
         }
@@ -133,8 +133,16 @@ public class BoardController {
     public JsonObject temporarystorageImageupload(@RequestParam("file") MultipartFile multipartFile,@AuthenticationPrincipal PrincipalDetail principal) {
 
         JsonObject jsonObject = new JsonObject();
+        String fileRoot = null;
+        if(AllStaticElement.OsName.equals("window")){
+            // os를 파악해서 매번 반복하지않도록 만들자 (static에 필요사항임)
+            fileRoot = "C:"+File.separator+"temporary_storage\\"+principal.getUsername()+"\\";	//저장될 외부 파일 경로
+        }else{
+            fileRoot = "/home/youseongjung/Templates/temporary_storage/"+principal.getUsername()+File.separator;	//저장될 외부 파일 경로
+        }
 
-        String fileRoot = "C:\\temporary_storage\\"+principal.getUsername()+"\\";	//저장될 외부 파일 경로
+        //아래꺼가 기본 윈도우 경로
+        //String fileRoot = "C:\\temporary_storage\\"+principal.getUsername()+"\\";	//저장될 외부 파일 경로
         String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 

@@ -1,7 +1,7 @@
 package com.example.yblog.patchNote.controller;
 
 
-import com.example.yblog.allstatic.IpHostName;
+import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.config.auth.PrincipalDetail;
 import com.example.yblog.dto.ResponseDto;
 import com.example.yblog.model.PatchNote;
@@ -36,7 +36,7 @@ public class PatchNoteController {
 
     @GetMapping(value = "/patchnote/gowrite")
     public String goPatchWrite(@AuthenticationPrincipal PrincipalDetail principal){
-        if (principal.getUsername().equals(IpHostName.adminUser)){
+        if (principal.getUsername().equals(AllStaticElement.adminUser)){
             return "PatchNoteBoard/patchWrite";
         }else {
             return "redirect:/";
@@ -48,7 +48,7 @@ public class PatchNoteController {
     public ResponseDto<Integer> patchNoteSave(@RequestBody PatchNote patchNote,
                                               @AuthenticationPrincipal PrincipalDetail principal){
 
-        if (principal.getUsername().equals(IpHostName.adminUser)){
+        if (principal.getUsername().equals(AllStaticElement.adminUser)){
             patchNoteService.pathNoteSave(patchNote,principal);
             return new ResponseDto<Integer>(HttpStatus.OK,1);
         }else{
@@ -70,7 +70,7 @@ public class PatchNoteController {
     public ResponseDto<Integer> DeletePatchBoard(@PathVariable("boardId")int boardId
     , @AuthenticationPrincipal PrincipalDetail principal){
 
-        if(principal.getUsername().equals(IpHostName.adminUser)){
+        if(principal.getUsername().equals(AllStaticElement.adminUser)){
             patchNoteService.patchNoteDelete(boardId);
             return new ResponseDto<Integer>(HttpStatus.OK,1);
         }

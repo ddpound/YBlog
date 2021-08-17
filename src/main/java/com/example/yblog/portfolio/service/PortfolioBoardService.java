@@ -1,5 +1,6 @@
 package com.example.yblog.portfolio.service;
 
+import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.config.auth.PrincipalDetail;
 import com.example.yblog.model.PortfolioBoard;
 import com.example.yblog.model.YBoard;
@@ -109,7 +110,12 @@ public class PortfolioBoardService {
     // 3. 임시파일 사진들을 전부 삭제
     // modify => 수정이면 참, 거짓이면 새로생성
     public PortfolioBoard ImageSearch(String username , PortfolioBoard portfolioBoard, PortfolioBoard yBoard1, boolean modify)  {
-        String temporary = "C:\\temporary_storage\\"+username; // 임시 파일 저장경로
+        String temporary =null; // 임시 파일 저장경로
+        if(AllStaticElement.OsName.equals("window")){
+            temporary = "C:\\temporary_storage\\"+username; // 임시 파일 저장경로
+        }else{
+            temporary  ="/home/youseongjung/Templates/temporary_storage/"+username;
+        }
         String fileRoot =null;
         String BoardTitleUUID =null;
         String chfileRoot =null;
@@ -117,12 +123,23 @@ public class PortfolioBoardService {
         // 수정인걸 알았으니깐 이미 있는 파일 이름만 가져오면 됨
         if(modify){
             BoardTitleUUID = yBoard1.getImagefileid();
-            fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";
+            if(AllStaticElement.OsName.equals("window")){
+                fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";
+            }else{
+                fileRoot = "/home/youseongjung/Templates/Confirm_SaveImage/"+BoardTitleUUID+"/";
+            }
+
+
             chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
         }else{
             // 지금 새로만드는 파일이니깐 새로운 랜덤 키값을 지정
             BoardTitleUUID = UUID.randomUUID()+"-"+portfolioBoard.getUser().getId();
-            fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";	//저장확정 경로
+            if(AllStaticElement.OsName.equals("window")){
+                fileRoot = "C:\\Confirm_SaveImage\\"+BoardTitleUUID+"\\";	//저장확정 경로
+            }else{
+                fileRoot = "/home/youseongjung/Templates/Confirm_SaveImage/"+BoardTitleUUID+"/";
+            }
+
             chfileRoot = "/Confirm_SaveImage/"+BoardTitleUUID+"/";
         }
 
@@ -151,7 +168,6 @@ public class PortfolioBoardService {
                         e.printStackTrace();
                     }
 
-                    System.out.println("파일 이름체크");
 
                 }
 
@@ -159,9 +175,9 @@ public class PortfolioBoardService {
         }
 
 
-        System.out.println(portfolioBoard.getContent());
+
         String ChContent = portfolioBoard.getContent().replace("/temporary_storage/"+username+"/", chfileRoot);
-        System.out.println(ChContent);
+
 
         portfolioBoard.setContent(ChContent);
         portfolioBoard.setImagefileid(BoardTitleUUID);
@@ -171,7 +187,13 @@ public class PortfolioBoardService {
 
 
     public void deletetemporaryStorage(String username, boolean writebool){
-        String path = "C:\\temporary_storage\\"+username;
+        String path = null;
+        if(AllStaticElement.OsName.equals("window")){
+            path = "C:\\temporary_storage\\"+username; // 임시 파일 저장경로
+        }else{
+            path  ="/home/youseongjung/Templates/temporary_storage/"+username;
+        }
+
         File folder = new File(path);
         try {
             while(folder.exists()) {
@@ -196,15 +218,21 @@ public class PortfolioBoardService {
                 // else면 글을 쓰지않고 나갓을때
                 e.getStackTrace();
             }
-
-
         }
     }
 
 
 
     public void deleteConfirmfile(String filename){
-        String path = "C:\\Confirm_SaveImage\\"+filename;
+        String path = null;
+
+        if(AllStaticElement.OsName.equals("window")){
+            path = "C:\\Confirm_SaveImage\\"+filename; // 임시 파일 저장경로
+        }else{
+            path  ="/home/youseongjung/Templates/Confirm_SaveImage/"+filename;
+        }
+
+
         File folder = new File(path);
         try {
             while(folder.exists()) {
@@ -244,7 +272,13 @@ public class PortfolioBoardService {
 
 
     public void modifyImagefile(String content, String imagefileid){
-        String Confirm_SaveImage = "C:\\Confirm_SaveImage\\"+imagefileid;
+        String Confirm_SaveImage = null;
+
+        if(AllStaticElement.OsName.equals("window")){
+            Confirm_SaveImage = "C:\\Confirm_SaveImage\\"+imagefileid; // 임시 파일 저장경로
+        }else{
+            Confirm_SaveImage  ="/home/youseongjung/Templates/Confirm_SaveImage/"+imagefileid;
+        }
 
         File dir = new File(Confirm_SaveImage);
         File[] files = dir.listFiles();
@@ -260,7 +294,6 @@ public class PortfolioBoardService {
                 }
             }
         }
-
     }
 
 
