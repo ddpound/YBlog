@@ -1,10 +1,8 @@
 package com.example.yblog.login.service;
 
+import com.example.yblog.model.BanEmail;
 import com.example.yblog.model.YUser;
-import com.example.yblog.repository.BRLRepository;
-import com.example.yblog.repository.YBoardRepository;
-import com.example.yblog.repository.YReplyRepository;
-import com.example.yblog.repository.YUserRepository;
+import com.example.yblog.repository.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,10 @@ public class LoginService {
 
     @Autowired
     YReplyRepository yReplyRepository;
+
+    @Autowired
+    BanEmailRepository banEmailRepository;
+
 
     @Autowired
     BRLRepository brlRepository;
@@ -56,6 +58,16 @@ public class LoginService {
 
 
 
+    }
+
+    public boolean checkBanEmail(String email){
+        Optional<BanEmail> banEmail = banEmailRepository.findById(email);
+
+        if(banEmail.isEmpty()){
+            return  false; // 벤을 체크하는 거니깐 0으로 반환 벤 안당한 아이디라는 뜻
+        }
+
+        return true;
     }
 
 

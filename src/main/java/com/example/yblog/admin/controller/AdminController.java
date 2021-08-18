@@ -99,6 +99,18 @@ public class AdminController {
         return "redirect:/admin/userManageView";
     }
 
+    @GetMapping(value = "/admin/emailBan/{userEmail}")
+    public  String userEmailBan(@PathVariable("userEmail")String userEmail ,@AuthenticationPrincipal PrincipalDetail principal){
+
+        if(principal.getUsername().equals(adminName)){
+            adminService.addBanEmail(userEmail);
+        }
+
+
+
+        return "redirect:/admin/userManageView";
+    }
+
 
 
 }

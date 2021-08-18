@@ -1,9 +1,11 @@
 package com.example.yblog.admin.service;
 
+import com.example.yblog.model.BanEmail;
 import com.example.yblog.model.BanIp;
 import com.example.yblog.model.BoardReplyLimit;
 import com.example.yblog.model.YUser;
 import com.example.yblog.repository.BRLRepository;
+import com.example.yblog.repository.BanEmailRepository;
 import com.example.yblog.repository.BanIpRespository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class AdminService {
 
     @Autowired
     BRLRepository brlRepository;
+
+    @Autowired
+    BanEmailRepository banEmailRepository;
 
 
     // 밴당한 아이피가 있을때 참을 출력
@@ -91,6 +96,15 @@ public class AdminService {
             boardReplyLimit.get().setReplyCount(localReplyCount+1);
             // 더티체킹
         }
+
+    }
+
+    @Transactional
+    public void addBanEmail(String email){
+        BanEmail banEmail = new BanEmail();
+        banEmail.setEmail(email);
+
+        banEmailRepository.save(banEmail);
 
     }
 

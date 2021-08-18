@@ -1,6 +1,5 @@
 package com.example.yblog.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +13,10 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Builder
 @Entity
-public class BanIp {
+public class BanEmail {
 
     @Id
-    private String id;
+    private String Email;
 
 
 

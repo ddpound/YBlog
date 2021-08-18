@@ -17,3 +17,7 @@ function deleteip(){
 function alldeleteip(){
     location.href = "/admin/delete/ipall"
 }
+
+function useremailban(){
+    location.href = "/admin/emailBan/"+$("#userName").val()
+}
