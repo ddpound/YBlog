@@ -254,9 +254,9 @@ public class PortfolioBoardService {
 
         }
     }
-
     @Transactional
     public void BoardCountUp(int portfolioBoardId){
+        // 영속화
         PortfolioBoard eternalPortfolioBoard = portfolioRepository.findById(portfolioBoardId)
                 .orElseThrow(()->{
                     return new IllegalArgumentException("포트폴리오 게시판 수정실패 아이디를 찾을수 없습니다.");
@@ -264,12 +264,7 @@ public class PortfolioBoardService {
 
         int countNum = eternalPortfolioBoard.getCount()+1;
         eternalPortfolioBoard.setCount(countNum);
-
-
-        // 더티체킹
-
     }
-
 
     public void modifyImagefile(String content, String imagefileid){
         String Confirm_SaveImage = null;

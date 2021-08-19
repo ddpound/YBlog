@@ -62,11 +62,11 @@ public class LoginController {
         // 여기에 그 과정을 넣어주고 인덱스로 날려주면 될듯
         // 즉 강제세션 부여가 될듯
 
-
         if(loginService.checkBanEmail(yUser.getEmail())){
             System.out.println(yUser.getEmail()+" user is ban");
             return "redirect:/";
         }
+
         //세션등록
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(yUser.getUsername() , ysjKey));
         SecurityContextHolder.getContext().setAuthentication(authentication);

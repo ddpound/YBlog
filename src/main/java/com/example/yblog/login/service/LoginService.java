@@ -55,9 +55,6 @@ public class LoginService {
             yUserRepository.deleteById(localyUser.get().getId());
         }
 
-
-
-
     }
 
     public boolean checkBanEmail(String email){

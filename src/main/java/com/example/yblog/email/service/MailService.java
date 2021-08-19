@@ -48,6 +48,7 @@ public class MailService {
     }
 
     public void mailSend(String mail){
+        // Token 인증 허가 방법 변경 요망
         String authkey = getKey(6);
         StaticAuthKey.authKey = authkey; // 스태틱에 담아놓은 어스키 초기화와 동시에 같이 입력 인증수단임
 

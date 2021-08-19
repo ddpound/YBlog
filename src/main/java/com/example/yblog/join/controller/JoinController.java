@@ -54,8 +54,6 @@ public class JoinController {
             return "error/error";
         }
 
-
-
         model.addAttribute("authEmail",kakaoProfile.getKakao_account().getEmail());
 
         return "loginJoin/kakaojoin";

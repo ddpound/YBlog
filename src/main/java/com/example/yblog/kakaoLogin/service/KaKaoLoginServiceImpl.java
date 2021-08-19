@@ -58,8 +58,6 @@ public class KaKaoLoginServiceImpl implements KaKaoLoginService{
             e.printStackTrace();
         }
 
-
-
         return oAuthToken;
     }
 
