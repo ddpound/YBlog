@@ -45,9 +45,10 @@ public class AuthSkillBoardController {
 
 
     @GetMapping(value = "details/{skillboardId}")
-    public String skillBoardDetails(Model model,@PathVariable("skillboardId") int skillboardId){
+    public String skillBoardDetails(Model model, @PathVariable int skillboardId){
 
         model.addAttribute("board", skillBoardService.skillBoardDetails(skillboardId));
+
 
         return "skillBoard/skillBoardDetails";
     }
