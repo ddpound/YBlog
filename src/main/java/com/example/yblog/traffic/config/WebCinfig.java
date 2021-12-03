@@ -4,7 +4,9 @@ import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.traffic.trafficinterceptor.HttpInterceptor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -18,12 +20,21 @@ public class WebCinfig  implements WebMvcConfigurer {
     @Autowired
     HttpInterceptor httpInterceptor;
 
+    // Device 클래스 사용전의 인터셉터 컨테이너 설정이 필요하다
+    @Bean
+    public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+        return new DeviceResolverHandlerInterceptor();
+    }
+
 
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(httpInterceptor);
+        // Device 설정에 필요한 레지스트리 추가 작업
+        registry.addInterceptor(deviceResolverHandlerInterceptor());
+
     }
 
 

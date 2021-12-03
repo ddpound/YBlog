@@ -57,6 +57,8 @@ public class HttpInterceptor implements HandlerInterceptor {
             log.info("not over");
             return true;
         } else { // 제한 초과
+
+            // 수정(21.11.23 개선바람, 트래픽 제한 초과시, 동시접속자들 동시 벤함)
             log.info("{} traffic over", ip);
 
             BanIp banIp = new BanIp();

@@ -78,6 +78,35 @@
             font-size: 1vw;
         }
 
+        .boardDivs{
+            margin: 2% 20% 20% 10%;
+            text-align: center;
+            font-family: 'Noto Sans KR', sans-serif;
+
+        }
+
+        /* 각각의 게시판 글*/
+        .boardDiv{
+            color: white;
+            border-bottom: solid 2px black;
+            border-top: solid 2px black;
+            margin-top: 2%;
+            background-color: #153040;
+            border-radius: 15px;
+        }
+        /* 라벨이 제목임*/
+        .title{
+            font-size: 1.2vw;
+        }
+
+        .boardDiv span{
+            font-size: 1vw;
+        }
+
+        .boardDivs ul{
+            margin-top: 5%;
+        }
+
     </style>
 
 </th:block>
@@ -90,31 +119,50 @@
 <div layout:fragment="content">
 
     <div class="mainDiv">
+
         <div class="leftDiv">
-            <a href="/"><h1>YBLOGLAB</h1></a>
+            <a href="/"><h1>게시판</h1></a>
+
+            <div class="boardDivs">
+                <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${boards}">
+                <div class="boardDiv" >
+                    <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
+                    <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
+                    <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                </div>
+                </a>
+
+                <ul class="pagination justify-content-center">
+                    <li class="page-item " th:if="${boardsPage.number != 0}"><a class="page-link bg-white text-dark" th:href="@{/auth/boardmain/(page=${boardsPage.number-1})}">Previous</a></li>
+                    <th:block th:each="num : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
+                        <li class="page-item "><a class="page-link bg-white text-dark" th:href="@{/auth/boardmain/(page=${num})}" th:text="${num+1}"></a></li>
+                    </th:block>
+                    <li class="page-item " th:if="${boardsPage.last != true}"><a class="page-link bg-dark text-white" th:href="@{/auth/boardmain/(page=${boardsPage.number+1})}">Next</a></li>
+                </ul>
+            </div>
+
 
         </div>
+
         <div class="rightDiv">
             <div class="divHeader">
                 <a href="/auth/patchnote">공지</a>
                 <a href="/auth/boardmain">자유게시판</a>
-                <a href="/auth/skillboard">기술게시판</a>
+                <a href="#">기술게시판</a>
                 <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
                 <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
             </div>
-
             <div class="divContent">
                 <p>개인적으로 공부하고 얻은 지식과 <br> 다양한 기능들을 보여주는 블로그입니다.</p>
-                <a href="/auth/Portfolio"><p>포트폴리오 보러가기</p></a>
+                <a href="#"><p>포트폴리오 보러가기</p></a>
             </div>
-
             <div class="divFooter">
                 <a href="/"><p>YBLOGLAB</p></a> &nbsp;&nbsp;
                 <a href="https://velog.io/@ddpound"><p>ddpound.log</p></a>
             </div>
-
         </div>
     </div>
+
 
 </div>
 </html>

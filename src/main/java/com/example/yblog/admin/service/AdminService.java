@@ -90,7 +90,6 @@ public class AdminService {
 
         if(boardReplyLimit.isEmpty()){
             log.info("not found table User");
-
         }else{
             int localReplyCount = boardReplyLimit.get().getReplyCount();
             boardReplyLimit.get().setReplyCount(localReplyCount+1);

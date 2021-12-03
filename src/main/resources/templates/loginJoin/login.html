@@ -5,7 +5,53 @@
         layout:decorator="layouts/layout"
 >
 <!-- index.html 고유 CSS 추가 -->
-<th:block layout:fragment="css"> </th:block>
+<th:block layout:fragment="css">
+    <style th:inline="text">
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+        body{
+            width: 100vw;
+            height: 100vh;
+            background-image: url([[@{/img/newBackpiture.jpg}]]);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        p{
+            font-size: 3vw;
+            color: white;
+            font-family: 'Black Han Sans', sans-serif;
+        }
+
+
+
+        .loginMainDiv{
+            margin: 20vh 10vw 20vh 10vw;
+            align-content: center;
+            text-align: center;
+        }
+
+        .loginButton{
+            background-color: #FEE500;
+            background-size: 30vw 10vh;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 45vw;
+            height: 8.5vh;
+            border-radius: 30px;
+            color: #181600;
+            font-size: 2vw;
+            font-family: 'Black Han Sans', sans-serif;
+
+
+        }
+
+
+    </style>
+
+
+</th:block>
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
@@ -39,17 +85,21 @@
 
 <div layout:fragment="content">
 
-    <div class="jumbotron mt-2 text-center" style="background-color: transparent;color: black ">
-        <div style="font-weight: bold; color: whitesmoke;">
-            <p style="letter-spacing: -13px; font-size: 150px; font-family: 한컴돋움">Login</p>
+    <div class="loginMainDiv">
+        <div>
+            <p><a href="/">YBLOGLAB</a></p>
             <p>처음이시라면 회원가입 부탁드립니다</p>
-            <p><label style="color: red">카카오톡 동의 쪽에 꼭 이메일 체크를 해주셔야 회원가입이 가능합니다!!</label></p>
+            <p>카카오톡 동의 쪽에 꼭 이메일 체크를 해주셔야</p>
+            <p>회원가입이 가능합니다!!</p>
         </div>
+
+        <script th:inline="javascript">
+            let Loginredirect_uri = [[${Loginredirect_uri}]]
+        </script>
+        <button class="loginButton" type="button"  onclick="kakaoLogin(Loginredirect_uri)">카카오 로그인</button>
     </div>
 
-    <script th:inline="javascript">
-        let Loginredirect_uri = [[${Loginredirect_uri}]]
-    </script>
-    <button type="button" style="background-image: url('/img/kakaoLogin.png'); border-color: #FEE500 ;background-size: contain;height: 40px; width: 200px; margin-top: 2%; margin-left: 45%; border-radius: 15px;" onclick="kakaoLogin(Loginredirect_uri)"></button>
+
+
 </div>
 </html>

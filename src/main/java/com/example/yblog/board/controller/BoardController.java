@@ -44,7 +44,8 @@ public class BoardController {
 
     @PostMapping(value = "save")
     @ResponseBody
-    public ResponseDto<Integer> boardSave(@RequestBody YBoard yBoard, @AuthenticationPrincipal PrincipalDetail principal){
+    public ResponseDto<Integer> boardSave(@RequestBody YBoard yBoard,
+                                          @AuthenticationPrincipal PrincipalDetail principal){
         // 4194304 최대길이 용량이 이럴때 에러가 발생
         // System.out.println("contentLengh "+ yBoard.getContent().length());
         //저장할때 유저네임을 이용해서 임시 저장이미지 저장파일을 영구 저장파일로 보내는로직을 짠 서비스를 만들면될듯
@@ -130,7 +131,9 @@ public class BoardController {
 
     @PostMapping(value="/temporarystorageImagefile", produces = "application/json")
     @ResponseBody
-    public JsonObject temporarystorageImageupload(@RequestParam("file") MultipartFile multipartFile,@AuthenticationPrincipal PrincipalDetail principal) {
+    public JsonObject temporarystorageImageupload(
+            @RequestParam("file") MultipartFile multipartFile,
+            @AuthenticationPrincipal PrincipalDetail principal) {
 
         JsonObject jsonObject = new JsonObject();
         String fileRoot = null;

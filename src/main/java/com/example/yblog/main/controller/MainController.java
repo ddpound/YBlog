@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,10 +48,11 @@ public class MainController {
     @Autowired
     JoinService joinService;
 
+    Device device;
+
     // 메인
     @GetMapping(value = {"/" , "/index"})
-    public  String mainView(Model model , @PageableDefault(size = 10, sort = "id",direction = Sort.Direction.DESC)Pageable pagealbe,
-                            HttpServletRequest request) {
+    public  String mainView(HttpServletRequest request) {
 
         // 메인을 불러오면서 딱 한번 하는 부분
         if(AllStaticElement.statusNum < 1){
@@ -94,16 +97,37 @@ public class MainController {
             AllStaticElement.Loginredirect_uri = LocalLoginredirect_uri;
             AllStaticElement.LoginRequestURI = LocalLoginRequestURI;
 
-
             AllStaticElement.statusNum ++;
         }
+
+        device = DeviceUtils.getCurrentDevice(request);
+
+        if (device.isMobile() || device.isTablet()){
+            return "mIndex";
+        }
+
+        return "index";
+    }
+
+    // 보드 메인
+    @GetMapping(value = "/auth/boardmain" )
+    public  String mainBoardView(Model model , @PageableDefault(size = 5, sort = "id",direction = Sort.Direction.DESC)Pageable pagealbe,
+                            HttpServletRequest request) {
 
         model.addAttribute("boards", boardService.boardList(pagealbe));
         model.addAttribute("boardsPage", boardService.boardListPage(pagealbe));
         model.addAttribute("nowStatus" , statusService.statusReturn(1));
 
-        return "index";
+        device = DeviceUtils.getCurrentDevice(request);
+
+        if (device.isMobile() || device.isTablet()){
+            return "board/mBoardMain";
+        }
+
+
+        return "board/boardMain";
     }
+
 
 
     @GetMapping(value = "/auth/board/details")
@@ -130,12 +154,10 @@ public class MainController {
                         response.addCookie(cookie);
                         boardService.boardCountUp(id);
                     }
-
                 }
             }
 
         }
-
 
         if(visit==0){
             Cookie cookie1 = new Cookie("visit",request.getParameter("id"));
@@ -168,8 +190,6 @@ public class MainController {
         if(principal.getUsername().equals(yUser.getUsername())){
             loginService.deleteUser(yUser);
         }
-
-
 
 
         return "{\"result\" : true}";

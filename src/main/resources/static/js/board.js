@@ -47,6 +47,8 @@ function boardWrite(){
         }).fail(function (){
             alert("글쓰기 실패 (문제확인 해주세요)")
         })
+    }else if (titleName.length > 40){
+        alert("제목이 너무 깁니다(공백포함 40자까지 가능합니다)")
     }else{
         alert("제목을 입력해주세요")
     }

@@ -42,6 +42,7 @@ public class LoginController {
     @GetMapping(value = "/auth/loginForm")
     public String loginView(Model model){
         model.addAttribute("Loginredirect_uri", AllStaticElement.LoginRequestURI);
+
         return "loginJoin/login";
     }
 

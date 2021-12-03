@@ -140,7 +140,7 @@ public class BoardService {
     public void delete(int id) {
         YBoard yBoard = yBoardRepository.findById(id)
                 .orElseThrow(() -> {
-                    return new IllegalArgumentException("글 상세보기 실패 아이디를 찾을 수 없습니다");
+                    return new IllegalArgumentException("글 삭제 실패 아이디를 찾을 수 없습니다");
                 });
 
         yReplyRepository.deleteAllByBoard(yBoard);
@@ -291,7 +291,6 @@ public class BoardService {
             }
 
             for(File f : files) {
-
                 // 파일 이름이 UserName-"username"-"filename"
                 // 이렇게 지정됨
                 String SearchfileName ="UserName-"+username;
@@ -316,14 +315,11 @@ public class BoardService {
             }
         }
 
-
-
         String ChContent = yBoard.getContent().replace("/temporary_storage/"+username+"/", chfileRoot);
 
 
         yBoard.setContent(ChContent);
         yBoard.setImagefileid(BoardTitleUUID);
-
 
 
         return yBoard;

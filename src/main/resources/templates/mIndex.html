@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+
+    <style th:inline="text">
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        p{
+            color: white;
+        }
+
+        html body{
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .mainDiv{
+            width: 100vw;
+            height: 100vh;
+            background-image: url([[@{/img/newBackpiture.jpg}]]);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+        }
+
+        .mobileDiv h1{
+            color: white;
+            font-size: 4vw;
+            margin: 8.5vw 8.5vh;
+            font-family: 'Black Han Sans', sans-serif;
+        }
+
+
+        .mobileDiv a{
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 4vw;
+            margin-left: 3vw;
+            margin-right: 3vw;
+        }
+
+        .divMContent {
+            margin-top: 35vh;
+            margin-left: 5%;
+
+        }
+
+        .divMContent p, a{
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 3.3vmax;
+        }
+
+
+        .divFooter p{
+            font-family: 'Black Han Sans', sans-serif;
+            font-size: 3vw;
+        }
+
+    </style>
+
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</th:block>
+
+<div layout:fragment="content">
+
+    <div class="mainDiv">
+        <div class="mobileDiv">
+            <a href="/"><h1>YBLOGLAB</h1></a>
+            <a href="/auth/patchnote">공지</a>
+            <a href="/auth/boardmain">게시판</a>
+            <a href="#">기술게시판</a>
+            <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
+            <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
+
+
+            <div class="divMContent">
+                <p>개인적으로 공부하고 얻은 지식과 <br> 다양한 기능들을 보여주는 블로그입니다.</p>
+                <a href="/auth/Portfolio"><p>포트폴리오 보러가기</p></a>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+</div>
+</html>

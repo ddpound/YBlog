@@ -6,9 +6,50 @@
 >
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
-    <style>
+    <style th:inline="text">
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+        body{
+            background-color: #153040;
+        }
+
         .boardcontent img{
             max-width: 100%;
+        }
+
+        .boardMainBox{
+            margin: 0 0 0 0;
+            text-align: center;
+            background-color: white;
+            width: 100vw;
+            height: auto;
+
+        }
+
+        .titleInfodiv {
+            background-color: #153040;
+            width: 100%;
+            height: auto;
+            color : white;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1vw;
+        }
+
+
+        .boardcontent img{
+            max-width: 100%;
+        }
+
+
+        .headerbar{
+            background-color: black;
+            text-align: center;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1vw;
+        }
+
+        .headerbar a{
+            margin: 0 5vw;
         }
     </style>
 
@@ -22,9 +63,14 @@
 
 
 <div layout:fragment="content">
-    <div class="container bg-white form-group border-top border-secondary rounded" style="background-color:rgba( 255, 255, 255, 0.5 );">
-    <div class="form-group text-light font-weight-bold bg-dark text-center">
-        <label>[제목]</label>
+    <div class="boardMainBox" >
+        <div class="headerbar">
+            <a href="/">YBLOGLAB</a>
+            <a href="/auth/patchnote">공지</a>
+            <a href="/auth/boardmain">게시판</a>
+            <a href="/auth/Portfolio">포트폴리오</a>
+        </div>
+    <div class="titleInfodiv">
         <h3 th:text="${patchboard.getTitle()}"></h3>
         <div th:if="${patchboard.getUser().getUsername()}== ${#authentication.getName()} or ${#authentication.getName()}== 'Y' ">
             <script th:inline="javascript">
@@ -35,7 +81,7 @@
 
     </div>
 
-        <div class="boardcontent" style="width: 1110px; height: auto;" th:utext="${patchboard.getContent()}"> </div>
+        <div class="boardcontent" th:utext="${patchboard.getContent()}"> </div>
         <br><br><br><br><br>
 
     </div>

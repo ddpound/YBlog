@@ -31,7 +31,6 @@
             var form =  {
               'email' : $('#email').val()
             }
-            console.log("여기까지작동함?")
             $.ajax({
                 url: "/auth/sendEmail",
                 type: "POST",
@@ -42,20 +41,13 @@
                     if(result.result == true){
                         alert("이메일 전송완료")
                     }
-
                 },error: function (){
                     console.log("문제발생")
                     alert("문제발생")
                 }
-
-
             })
-
-
         }
     }
-
-
 
 
 
