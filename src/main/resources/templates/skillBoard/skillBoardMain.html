@@ -122,9 +122,9 @@
     <div class="mainDiv">
 
         <div class="leftDiv">
-            <a href="/"><h1>기술게시판</h1></a>
+            <a href="/auth/skillboard"><h1>기술게시판</h1></a>
 
-            <div class="boardDivs">
+            <div class="boardDivs" th:if="${boards.size() != 0}">
 
                 <a th:href=" @{/auth/skillboard/details/{id}(id = ${board.getId()})}"  th:each="board :${boards}">
                     <script th:inline="javascript">
@@ -149,7 +149,10 @@
                     <button type="button" class="btn btn-warning btn-block" onclick="skillBoardWriteGo()">글작성하기</button>
                 </div>
 
+            </div>
 
+            <div class="boardDivs" th:if="${boards.size() == 0}">
+                <span class="title" style="color: white"> 저장된 글이 없습니다.</span>
             </div>
 
 
@@ -159,7 +162,7 @@
             <div class="divHeader">
                 <a href="/auth/patchnote">공지</a>
                 <a href="/auth/boardmain">자유게시판</a>
-                <a href="#">기술게시판</a>
+                <a href="/auth/skillboard">기술게시판</a>
                 <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
                 <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
             </div>

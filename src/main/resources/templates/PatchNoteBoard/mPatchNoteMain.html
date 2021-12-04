@@ -9,94 +9,57 @@
     <style th:inline="text">
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
         body{
+            overflow: auto;
             background-image: url([[@{/img/newBackpiture.jpg}]]);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-        }
 
+        }
 
         p{
             color: white;
         }
 
-        .mainDiv{
-            width: 100%;
-            height: 100vh;
-        }
-
-        .leftDiv{
+        .boardMainBox{
+            margin: 0 0 0 0;
+            text-align: center;
             width: 100vw;
-            height: 100%;
-        }
-
-        .leftDiv h1{
-            color: white;
-            font-size: 2vw;
-            margin: 50px 50px;
-            font-family: 'Black Han Sans', sans-serif;
+            height: auto;
         }
 
         .mobileHeader{
+            background-color: black;
             text-align: center;
-            margin-top: 15%;
-            margin-left: 4vw;
-            margin-right: 4vw;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 3.2vw;
         }
 
         .mobileHeader a{
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 2vw;
-            margin-left: 3%;
-            margin-right: 3%;
-        }
-
-
-
-        .divContent p{
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 1.3vmax;
-        }
-
-        .divFooter p{
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 1vw;
+            margin: 0 2.5vw;
         }
 
         .boardDivs{
-            margin: 8% 0 0 0;
-            text-align: center;
-            font-size: 2vw;
-            font-family: 'Noto Sans KR', sans-serif;
-
+            width: 100%;
+            height: 100%;
         }
 
         .boardDiv{
-            color: white;
-            border-bottom: solid 2px black;
-            border-top: solid 2px black;
-            width: 100vw;
-            height: 10%;
-            background-color: #153040;
-            border-radius: 15px;
-            margin-top: 3%;
-            font-size: 1vw;
-        }
-        /* 라벨이 제목임*/
-        .title{
-            font-size: 1.2vw;
-        }
-
-
-        .boardDivs ul{
-            margin-top: 25%;
-        }
-
-        .boardDivs span{
-            font-size: 1vw;
+            margin-top: 5%;
+            border-top: solid 2px orange;
+            border-bottom: solid 2px orange;
+            background-color: #1b1e21;
+            text-align: center;
+            font-family: 'Noto Sans KR', sans-serif;
 
         }
+        .boardMainBox ul{
+            margin-top: 15%;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
 
     </style>
 
@@ -109,15 +72,14 @@
 
 <div layout:fragment="content">
 
-    <div class="mainDiv">
+    <div class="boardMainBox">
 
-        <div class="leftDiv">
 
             <div class="mobileHeader">
                 <a href="/">YBLOGLAB</a>
-                <a href="/auth/boardmain">게시판</a>
+                <a href="/auth/boardmain">자유게시판</a>
                 <a href="/auth/patchnote">공지</a>
-                <a href="#">기술게시판</a>
+                <a href="/auth/skillboard">기술게시판</a>
                 <a href="/auth/Portfolio">포트폴리오</a>
             </div>
 
@@ -150,8 +112,6 @@
 
         </div>
 
-    </div>
-
-
 </div>
+
 </html>

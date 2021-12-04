@@ -6,6 +6,7 @@
 >
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
+
     <style th:inline="text">
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
@@ -67,48 +68,54 @@
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <script type="text/javascript" th:src="@{/js/patchnote.js}"></script>
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script type="text/javascript" th:src="@{/js/skillboard.js}"></script>
 </th:block>
 
 <div layout:fragment="content">
 
     <div class="boardMainBox">
 
-            <div class="mobileHeader">
-                <a href="/">YBLOGLAB</a>
-                <a href="/auth/boardmain">자유게시판</a>
-                <a href="/auth/patchnote">공지</a>
-                <a href="/auth/skillboard">기술게시판</a>
-                <a href="/auth/Portfolio">포트폴리오</a>
-            </div>
-
-
+        <div class="mobileHeader">
+            <a href="/">YBLOGLAB</a>
+            <a href="/auth/boardmain">자유게시판</a>
+            <a href="/auth/patchnote">공지</a>
+            <a href="/auth/skillboard">기술게시판</a>
+            <a href="/auth/Portfolio">포트폴리오</a>
+        </div>
             <div class="boardDivs" th:if="${boards.size() != 0}">
-                <a th:href=" @{/auth/portboard/details(id=${board.getId()})}"  th:each="board :${boards}">
+
+                <a th:href=" @{/auth/skillboard/details/{id}(id = ${board.getId()})}"  th:each="board :${boards}">
+                    <script th:inline="javascript">
+
+                    </script>
                     <div class="boardDiv" >
                         <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
-                        <span>작성자 :</span> &nbsp; <span th:text="${board.getUser().getUsername()}"></span>&nbsp;&nbsp;
+                        <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
                         <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
                     </div>
                 </a>
 
                 <ul class="pagination justify-content-center">
-                    <li class="page-item " th:if="${boardsPage.number != 0}"><a class="page-link bg-white text-dark" th:href="@{/auth/Portfolio/(page=${boardsPage.number -1})}">Previous</a></li>
+                    <li class="page-item " th:if="${boardsPage.number != 0}"><a class="page-link bg-white text-dark" th:href="@{/auth/skillboard/(page=${boardsPage.number - 1})}">Previous</a></li>
                     <th:block th:each="num : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
-                        <li class="page-item "><a class="page-link bg-white text-dark" th:href="@{/auth/Portfolio/(page=${num})}" th:text="${num+1}"></a></li>
+                        <li class="page-item "><a class="page-link bg-white text-dark" th:href="@{/auth/skillboard/(page=${num})}" th:text="${num+1}"></a></li>
                     </th:block>
-                    <li class="page-item " th:if="${boardsPage.last != true}"><a class="page-link bg-dark text-white" th:href="@{/auth/Portfolio/(page=${boardsPage.number +1})}">Next</a></li>
+                    <li class="page-item " th:if="${boardsPage.last != true}"><a class="page-link bg-dark text-white" th:href="@{/auth/skillboard/(page=${boardsPage.number + 1})}">Next</a></li>
                 </ul>
+
+                <div class="col-8" th:if="${#authentication.getName()} == 'Y'">
+                    <button type="button" class="btn btn-warning btn-block" onclick="skillBoardWriteGo()">글작성하기</button>
+                </div>
+
+
             </div>
-            <div class="boardDivs" th:if="${boards.size() == 0}">
-                <span class="title"> 저장된 글이 없습니다.</span>
-            </div>
+        <div class="boardDivs" th:if="${boards.size() == 0}">
+            <span class="title" style="color: white"> 저장된 글이 없습니다.</span>
+        </div>
 
         </div>
 
-
-</div>
-
-
+    </div>
 
 </html>

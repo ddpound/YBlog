@@ -12,6 +12,7 @@ import com.example.yblog.status.StatusService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 @Log4j2
 @Controller
@@ -111,12 +113,48 @@ public class MainController {
 
     // 보드 메인
     @GetMapping(value = "/auth/boardmain" )
-    public  String mainBoardView(Model model , @PageableDefault(size = 5, sort = "id",direction = Sort.Direction.DESC)Pageable pagealbe,
+    public  String mainBoardView(Model model , @PageableDefault(size = 5 ,sort = "id",direction = Sort.Direction.DESC)Pageable pageable,
                             HttpServletRequest request) {
 
-        model.addAttribute("boards", boardService.boardList(pagealbe));
-        model.addAttribute("boardsPage", boardService.boardListPage(pagealbe));
+        Page page =  boardService.boardListPage(pageable);
+
+        model.addAttribute("boards", boardService.boardList(pageable));
+        model.addAttribute("boardsPage", page);
         model.addAttribute("nowStatus" , statusService.statusReturn(1));
+
+
+        int firstNumber = pageable.getPageNumber() - 2 ;
+        int lastNumber = pageable.getPageNumber() + 2 ;
+
+        ArrayList<Integer> listNum = new ArrayList<>();
+
+        if(firstNumber < 0 ){
+            firstNumber=0;
+            for(int i =0; i < 6 ;i++){
+                listNum.add(firstNumber+i);
+            }
+        }else if(lastNumber >= page.getTotalPages()){
+            for(int i =4; i != 0 ;i--){
+                listNum.add(page.getTotalPages()-i);
+            }
+        }else {
+            for(int i =0; i < 6 ;i++){
+                listNum.add(firstNumber+i);
+            }
+        }
+
+
+
+
+        model.addAttribute("boardNumList" , listNum );
+
+
+
+        // 현재 페이지를 기준으로 앞으로 3개 뒤로 3개 하면될듯
+
+
+
+
 
         device = DeviceUtils.getCurrentDevice(request);
 

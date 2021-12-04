@@ -159,8 +159,8 @@
         <div class="rightDiv">
             <div class="divHeader">
                 <a href="/auth/patchnote">공지</a>
-                <a href="/auth/boardmain">게시판</a>
-                <a href="#">기술게시판</a>
+                <a href="/auth/boardmain">자유게시판</a>
+                <a href="/auth/skillboard">기술게시판</a>
                 <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
                 <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
             </div>

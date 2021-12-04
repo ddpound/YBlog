@@ -11,24 +11,20 @@
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-        p{
-            color: white;
-        }
-
-        html body{
-            width: 100vw;
-            height: 100vh;
-        }
-
-        .mainDiv{
-            width: 100vw;
-            height: 100vh;
+        body{
+            overflow: auto;
             background-image: url([[@{/img/newBackpiture.jpg}]]);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
 
         }
+
+
+        p{
+            color: white;
+        }
+
 
         .mobileDiv h1{
             color: white;
@@ -77,8 +73,8 @@
         <div class="mobileDiv">
             <a href="/"><h1>YBLOGLAB</h1></a>
             <a href="/auth/patchnote">공지</a>
-            <a href="/auth/boardmain">게시판</a>
-            <a href="#">기술게시판</a>
+            <a href="/auth/boardmain">자유게시판</a>
+            <a href="/auth/skillboard">기술게시판</a>
             <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
             <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
 

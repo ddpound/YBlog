@@ -128,13 +128,14 @@
                 <div class="boardDiv" >
                     <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
                     <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
+                    <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
                     <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
                 </div>
                 </a>
 
                 <ul class="pagination justify-content-center">
                     <li class="page-item " th:if="${boardsPage.number != 0}"><a class="page-link bg-white text-dark" th:href="@{/auth/boardmain/(page=${boardsPage.number-1})}">Previous</a></li>
-                    <th:block th:each="num : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
+                    <th:block th:each="num : ${boardNumList}">
                         <li class="page-item "><a class="page-link bg-white text-dark" th:href="@{/auth/boardmain/(page=${num})}" th:text="${num+1}"></a></li>
                     </th:block>
                     <li class="page-item " th:if="${boardsPage.last != true}"><a class="page-link bg-dark text-white" th:href="@{/auth/boardmain/(page=${boardsPage.number+1})}">Next</a></li>
@@ -148,7 +149,7 @@
             <div class="divHeader">
                 <a href="/auth/patchnote">공지</a>
                 <a href="/auth/boardmain">자유게시판</a>
-                <a href="#">기술게시판</a>
+                <a href="/auth/skillboard">기술게시판</a>
                 <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
                 <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
             </div>

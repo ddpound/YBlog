@@ -36,8 +36,15 @@ public class AuthSkillBoardController {
         model.addAttribute("boards", skillBoardService.skillBoardList(pageable));
         model.addAttribute("boardsPage",skillBoardService.skillBoardPage(pageable));
 
+
+
+
         // 후에 모바일 인식을 위함
         device = DeviceUtils.getCurrentDevice(httpServletRequest);
+
+        if(device.isMobile() || device.isTablet()){
+            return "skillBoard/mSkillBoardMain";
+        }
 
 
         return "skillBoard/skillBoardMain";

@@ -39,16 +39,32 @@
       max-width: 100%;
     }
 
-    .card-header{
-      background-color: #153040;
-      color: white;
-    }
 
     .headerbar{
       background-color: black;
       text-align: center;
       font-family: 'Noto Sans KR', sans-serif;
-      font-size: 1vw;
+      font-size: 1.5vw;
+    }
+
+    /* 여기가 모바일*/
+    @media screen and (max-width: 769px) {
+      .headerbar{
+        background-color: black;
+        text-align: center;
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size: 3vw;
+      }
+    }
+
+    /* 여기가 태블릿*/
+    @media screen and (max-width: 1024px) {
+      .headerbar{
+        background-color: black;
+        text-align: center;
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size: 4vw;
+      }
     }
 
     .headerbar a{

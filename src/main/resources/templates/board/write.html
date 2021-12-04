@@ -30,6 +30,7 @@
         }
 
         .summernote{
+            background-color: white;
             width: 100vw;
             height: 70vh;
         }
@@ -44,9 +45,7 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script type="text/javascript" th:src="@{/js/board.js}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
 
 
 
@@ -62,7 +61,7 @@
             <label for="title">[제목]</label>
             <input type="text" class="form-control bg-dark text-light text-center" id="title">
         </div>
-        <textarea class="summernote" rows="5" id="content" style="resize: none;"></textarea>
+        <textarea  class="summernote" rows="5" id="content" style=" resize: none;"></textarea>
 
         <button type="button" class="btn btn-warning btn-block" onclick="boardWrite()">작성</button>
     </div>
@@ -79,10 +78,8 @@
         });
 
         $('.summernote').summernote({
-
             focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
             lang: "ko-KR",					// 한글 설정
-            placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
             callbacks: {
                 //여기 부분이 이미지를 첨부하는 부분
                 // 업로드와 동시에 진행되는 콜백 함수
