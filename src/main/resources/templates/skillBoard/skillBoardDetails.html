@@ -61,7 +61,7 @@
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
-    <script type="text/javascript" th:src="@{/js/board.js}"></script>
+    <script type="text/javascript" th:src="@{/js/skillboard.js}"></script>
 
 </th:block>
 
@@ -84,42 +84,17 @@
                 <script th:inline="javascript">
                     let boardId = [[${board.getId()}]]
                 </script>
-                <button type="button" class="btn btn-outline-warning" id="boardmodify" onclick="gomodifywrite(boardId)">수정</button>
-                <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="boarddelete(boardId)">삭제</button>
+                <button type="button" class="btn btn-outline-warning" id="boardmodify" onclick="gomodifyskillboard(boardId)">수정</button>
+                <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="skillboardDelete(boardId)">삭제</button>
             </div>
         </div>
 
         <div class="boardcontent" th:utext="${board.getContent()}"> </div>
         <br>
-        <hr />
-        <div class="card " th:if=" ${#authentication.getName()} != 'anonymousUser' ">
-            <input id="replyboardid" type="hidden" th:value="${board.getId()}">
-            <div class="card-body"><textarea id="replyContent" class="form-control" style="resize: none" rows="/"></textarea></div>
-            <div class="card-footer d-flex justify-content-end"><button class="btn btn-dark" onclick="saveReply()">작성</button></div>
-        </div>
-        <br>
-        <hr />
 
-        <div class="card" style="margin-bottom: 15px;">
-            <div class="card-header " style="margin-bottom: 15px;">댓글 리스트 </div>
-            <ul class="list-group" th:each="reply :${board.getSkillBoardReplyList()}">
-                <script th:inline="javascript">
-                    // 보드 Id , Reply id가 들어가야함
-                    let replyId = [[${reply.getId()}]]
-                </script>
-                <li class="list-group-item d-flex justify-content-between">
-                    <div class="card-body"><label th:text="${reply.getContent()}"></label></div>
-                    <div class="d-flex">
-                        <div class="font-italic">작성자 :  <label th:text="${reply.getUser().getUsername()}"></label></div>&nbsp;&nbsp;&nbsp;
-                        <div th:if="${reply.getUser().getUsername()} == ${#authentication.getName()} or ${#authentication.getName()} == 'Y' ">
-                            <button type="button" class="btn btn-danger" onclick="replyDelete(boardId,replyId)">삭제</button>
-                        </div>
 
-                    </div>
-                </li>
-            </ul>
-            <br><br><br>
-        </div>
+
     </div>
 </div>
+
 </html>

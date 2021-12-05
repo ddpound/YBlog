@@ -8,6 +8,7 @@ import com.example.yblog.skillboard.service.SkillBoardService;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -36,6 +37,9 @@ public class SkillBoardController {
     @Autowired
     SkillBoardService skillBoardService;
 
+    @Value("${blogAdmin.adminName}")
+    private String adminName;
+
 
     @GetMapping(value = "writepage")
     public String skillBoardWritePage(){
@@ -55,6 +59,61 @@ public class SkillBoardController {
 
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
+
+    //삭제 과정에서 늘 인증요구를 한번 해야할듯
+    @DeleteMapping(value = "delete/{boardId}")
+    @ResponseBody
+    public ResponseDto<Integer> skillBoardDelete(@PathVariable int boardId,
+                                                 @AuthenticationPrincipal PrincipalDetail principal){
+        // 인증(현재 세션이 어드민인지 아닌지)
+        if(adminName.equals(principal.getUsername())){
+            skillBoardService.deleteSkillBoard(boardId);
+            return new ResponseDto<>(HttpStatus.OK,1);
+        }
+
+        // 인증실패
+        return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR,-1);
+
+    }
+
+
+    @GetMapping(value = "gomodify/{boardId}")
+    public String goModifyPage(@PathVariable int boardId,
+                               @AuthenticationPrincipal PrincipalDetail principal,
+                               Model model){
+        SkillBoard skillBoard = skillBoardService.skillBoardDetails(boardId);
+
+
+        if(principal.getUsername().equals(skillBoard.getUser().getUsername())){
+            model.addAttribute("board", skillBoard);
+
+            return "skillboard/skillBoardModify";
+        }
+
+        // 수정하기 창으로 가기 실패한다면
+        return "redirect:/";
+    }
+
+    @PutMapping(value = "modify")
+    @ResponseBody
+    public ResponseDto<Integer> skillBoardModify(@RequestBody SkillBoard skillBoard,
+                                                 @AuthenticationPrincipal PrincipalDetail principal){
+
+
+
+        if(principal.getUsername().equals(adminName)){
+
+            System.out.println(skillBoard);
+            skillBoardService.skillBoardModify(skillBoard);
+
+            return new ResponseDto<Integer>(HttpStatus.OK,1);
+        }
+
+        return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,-1);
+
+    }
+
+
 
     // 글 올릴때 사진 비동기로 로컬 파일에 올려줌
 

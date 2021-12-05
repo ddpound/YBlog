@@ -56,7 +56,6 @@ function boardWrite(){
 }
 
 function boarddelete(boardId){
-
     $.ajax({
         type: "DELETE",
         url: "/board/delete/"+boardId,
@@ -67,7 +66,6 @@ function boarddelete(boardId){
     }).fail(function (resp){
         alert("삭제가 실패하였습니다")
     })
-
 }
 
 function gomodifywrite(boardId){

@@ -1,6 +1,7 @@
 package com.example.yblog.skillboard.service;
 
 import com.example.yblog.allstatic.AllStaticElement;
+import com.example.yblog.handler.GlobalThrowError;
 import com.example.yblog.model.SkillBoard;
 import com.example.yblog.model.SkillBoardReply;
 import com.example.yblog.model.YBoard;
@@ -28,6 +29,9 @@ public class SkillBoardService {
 
     @Autowired
     private SkillBoardReplyRepository skillBoardReplyRepository;
+
+    @Autowired
+    private GlobalThrowError globalThrowError;
 
 
     @Transactional
@@ -89,11 +93,18 @@ public class SkillBoardService {
 
     @Transactional
     public void skillBoardModify(SkillBoard skillBoard){
+
         SkillBoard board = skillBoardRepository.findById(skillBoard.getId())
                 .orElseThrow(()->{
                     return new IllegalArgumentException("글 상세보기 실패, 아이디를 찾을수없음");
                 });
-        SkillBoard skillBoard1 = imageSearch(skillBoard.getUser().getUsername(),skillBoard,board,true);
+        // 어째서인지 영속화를 진행하면 skillBoard의 값이 작동하지 않음
+
+        // 위의 영속화된 애를 사용하면 문제없는듯
+        SkillBoard skillBoard1 = imageSearch(board.getUser().getUsername(), skillBoard, board ,true);
+
+        // 여기서 아주 중요한 에러를 찾아냄 영속화에 대한 개념부족인거같은데 아래와 같은 코드면 에러발생함
+        // SkillBoard skillBoard1 = imageSearch(skillBoard.getUser().getUsername(), skillBoard, board ,true);
 
         //더티체킹
         board.setTitle(skillBoard.getTitle());
@@ -125,6 +136,8 @@ public class SkillBoardService {
     // 이미지를 검색하고, 게시판에 저장된 이미지 값을 변경하고
     public SkillBoard imageSearch(String username, SkillBoard skillBoard, SkillBoard skillBoard1, boolean modify){
         String temporary = null;
+
+
 
         // 접속 os에 따른 저장 경로 변경
         if(AllStaticElement.OsName.equals("window")){

@@ -145,14 +145,14 @@
                     <li class="page-item " th:if="${boardsPage.last != true}"><a class="page-link bg-dark text-white" th:href="@{/auth/skillboard/(page=${boardsPage.number + 1})}">Next</a></li>
                 </ul>
 
-                <div class="col-8" th:if="${#authentication.getName()} == 'Y'">
-                    <button type="button" class="btn btn-warning btn-block" onclick="skillBoardWriteGo()">글작성하기</button>
-                </div>
-
             </div>
 
             <div class="boardDivs" th:if="${boards.size() == 0}">
                 <span class="title" style="color: white"> 저장된 글이 없습니다.</span>
+            </div>
+
+            <div class="col-8" th:if="${#authentication.getName()} == 'Y'">
+                <button type="button" class="btn btn-warning btn-block" onclick="skillBoardWriteGo()">글작성하기</button>
             </div>
 
 

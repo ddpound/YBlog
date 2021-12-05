@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+
+    <style th:inline="text">
+        body{
+            overflow: auto;
+            background-image: url([[@{/img/newBackpiture.jpg}]]);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+        }
+
+    </style>
+
+
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/skillboard.js}"></script>
+
+</th:block>
+
+<div layout:fragment="content">
+    <div class="form-group container">
+        <div class="form-group text-light font-weight-bold bg-dark text-center">
+            <label for="title">[제목]</label>
+            <input type="text" class="form-control bg-dark text-light text-center" th:value="${board.getTitle()}" id="title">
+        </div>
+        <textarea class="summernote" rows="5" id="content" th:utext="${board.getContent()}"></textarea>
+
+        <script th:inline="javascript">
+            let boardId = [[${board.getId()}]]
+        </script>
+        <button type="button" class="btn btn-warning btn-block" onclick="skillboardModify(boardId)">수정하기</button>
+    </div>
+
+    <script>
+        window.onbeforeunload = function () {
+            $.ajax({
+                type: "DELETE",
+                url : "/skillboard/temporarydelete"
+            })
+
+            return "감지범위 테스트";
+        };
+
+        $('.summernote').summernote({
+            maxWidth: 1110,
+            width: 1110,
+            height: 600,
+            lang: 'ko-KR',
+            placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+            callbacks: {
+                //여기 부분이 이미지를 첨부하는 부분
+                // 업로드와 동시에 진행되는 콜백 함수
+                onImageUpload : function(files) {
+                    for(i=0;i<files.length;i++){
+                        skillBoarduploadSummernoteImageFile(files[i],this);
+                    }
+
+                    console.log(filesArray.length)
+
+                },
+                onPaste: function (e) {
+                    var clipboardData = e.originalEvent.clipboardData;
+                    if (clipboardData && clipboardData.items && clipboardData.items.length) {
+                        var item = clipboardData.items[0];
+                        if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+                            e.preventDefault();
+                        }
+                    }
+                }
+            }
+        });
+        $("div.note-editable").on('drop',function(e){
+            for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
+                skillBoarduploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
+            }
+            e.preventDefault();
+        })
+
+
+    </script>
+
+
+
+
+
+
+
+</div>
+</html>
