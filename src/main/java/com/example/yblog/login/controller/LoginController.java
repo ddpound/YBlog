@@ -46,6 +46,7 @@ public class LoginController {
         return "loginJoin/login";
     }
 
+
     @GetMapping(value = "/auth/kakao/login/callback")
     public String kakaoLogin(@RequestParam("code") String code, Model model){
 

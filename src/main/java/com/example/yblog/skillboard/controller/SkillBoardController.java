@@ -81,16 +81,16 @@ public class SkillBoardController {
     public String goModifyPage(@PathVariable int boardId,
                                @AuthenticationPrincipal PrincipalDetail principal,
                                Model model){
+
         SkillBoard skillBoard = skillBoardService.skillBoardDetails(boardId);
 
-
-        if(principal.getUsername().equals(skillBoard.getUser().getUsername())){
+        if(principal.getUsername().equals(adminName)){
             model.addAttribute("board", skillBoard);
-
-            return "skillboard/skillBoardModify";
+            return "skillBoard/skillBoardModify";
         }
 
-        // 수정하기 창으로 가기 실패한다면
+
+
         return "redirect:/";
     }
 

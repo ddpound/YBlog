@@ -66,10 +66,17 @@ public class BoardController {
 
     @DeleteMapping(value = "delete/{boardId}")
     @ResponseBody
-    public ResponseDto<Integer> deleteBoard(@PathVariable("boardId") int id){
-        boardService.delete(id);
+    public ResponseDto<Integer> deleteBoard(@PathVariable("boardId") int id,
+                                            @AuthenticationPrincipal PrincipalDetail principal){
 
-        return new ResponseDto<Integer>(HttpStatus.OK,1);
+        String userName =  boardService.boardDetails(id).getUser().getUsername();
+        if(userName.equals(principal.getUsername())){
+            boardService.delete(id);
+            return new ResponseDto<Integer>(HttpStatus.OK,1);
+        }
+
+        //  인증실패
+        return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,-1);
     }
 
     @GetMapping(value = "gomodify/{boardId}")
