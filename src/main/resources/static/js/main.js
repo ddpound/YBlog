@@ -4,6 +4,11 @@ function changemarqueeText(){
 
 }
 
+function kakaoGoJoinPage(){
+    location.href = "/auth/emailauth"
+}
+
+
 function  portboardWriteGo(){
     location.href = "/portboard/write"
 }

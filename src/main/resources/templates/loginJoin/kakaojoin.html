@@ -5,7 +5,28 @@
         layout:decorator="layouts/layout"
 >
 <!-- index.html 고유 CSS 추가 -->
-<th:block layout:fragment="css"> </th:block>
+<th:block layout:fragment="css">
+
+  <style th:inline="text">
+
+    @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+
+    body{
+      width: 100vw;
+      height: 100vh;
+      background-image: url([[@{/img/newBackpiture.jpg}]]);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+  </style>
+
+
+
+</th:block>
 
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
