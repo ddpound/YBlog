@@ -324,5 +324,19 @@ public class SkillBoardService {
     }
 
 
+    @Transactional
+    public void boardCountUp(int skillboardId) {
+        SkillBoard board = skillBoardRepository.findById(skillboardId)
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("글 찾기 실패 아이디를 찾을 수 없습니다");
+                }); // 영속화 시키기
 
+        int countNum = board.getCount();
+
+        board.setCount(countNum+1);
+
+
+        // 해당함수로  Service가 종료와 함게 트랜잭션 종료, 이때 더티체킹으로 자동 업데이트된다
+
+    }
 }

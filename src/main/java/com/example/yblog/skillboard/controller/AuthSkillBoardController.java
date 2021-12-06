@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 // 보안없이 접근 가능한 컨트롤러
 @Controller
@@ -52,7 +54,45 @@ public class AuthSkillBoardController {
 
 
     @GetMapping(value = "details/{skillboardId}")
-    public String skillBoardDetails(Model model, @PathVariable int skillboardId){
+    public String skillBoardDetails(Model model, @PathVariable int skillboardId,
+                                    HttpServletRequest request,
+                                    HttpServletResponse response){
+
+        String skillboardIdVisit =  Integer.toString(skillboardId);
+        Cookie[] cookies = request.getCookies();
+        int visit =0;
+
+        if(cookies == null){
+            Cookie cookie1 = new Cookie("skillvisit",skillboardIdVisit);
+            cookie1.setMaxAge(1800);
+            response.addCookie(cookie1);
+            skillBoardService.boardCountUp(skillboardId);
+        }else{
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("skillvisit")){
+                    visit =1;
+                    if(cookie.getValue().contains(skillboardIdVisit)){
+                        // 이미 있는 쿠키라서 아무것도 안함
+                    }else{
+                        cookie.setValue((cookie.getValue()+"_"+skillboardIdVisit));
+                        cookie.setMaxAge(1800);
+                        response.addCookie(cookie);
+                        skillBoardService.boardCountUp(skillboardId);
+                    }
+                }
+            }
+
+        }
+
+        if(visit==0){
+            Cookie cookie1 = new Cookie("skillvisit", skillboardIdVisit);
+            cookie1.setMaxAge(1800);
+            response.addCookie(cookie1);
+            skillBoardService.boardCountUp(skillboardId);
+        }
+
+
+
 
         model.addAttribute("board", skillBoardService.skillBoardDetails(skillboardId));
 

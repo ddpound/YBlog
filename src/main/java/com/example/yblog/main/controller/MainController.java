@@ -169,7 +169,8 @@ public class MainController {
 
 
     @GetMapping(value = "/auth/board/details")
-    public String boardDetails(@RequestParam("id") int id , Model model, HttpServletRequest request,
+    public String boardDetails(@RequestParam("id") int id , Model model,
+                               HttpServletRequest request,
                                HttpServletResponse response){
 
         Cookie[] cookies = request.getCookies();
