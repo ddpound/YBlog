@@ -7,6 +7,18 @@
 <!-- index.html 고유 CSS 추가 -->
 <th:block layout:fragment="css">
 
+    <style th:inline="text">
+        body{
+            background-image: url([[@{/img/newBackpiture.jpg}]]);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+
+
+
+    </style>
 
 </th:block>
 
@@ -20,19 +32,17 @@
 <div layout:fragment="content">
 
     <div class="form-group text-light font-weight-bold bg-dark text-center">
-            <input type="text" id="userName"><br>
-            <button type="button" class="btn btn-outline-danger" id="userdelete" onclick="SearchUserDelete()">해당 유저 삭제</button><br>
-            <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="SearchUserBoardDelete()">해당 유저의 게시판글 삭제</button><br>
+        <input type="text" id="userName"><br>
+        <button type="button" class="btn btn-outline-danger" id="userdelete" onclick="SearchUserDelete()">해당 유저 삭제</button><br>
+        <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="SearchUserBoardDelete()">해당 유저의 게시판글 삭제</button><br>
         <button type="button" class="btn btn-outline-danger" id="deleteip" onclick="deleteip()">해당 ip 벤 취소</button><br>
         <button type="button" class="btn btn-outline-danger" id="boarddeleteall" onclick="UserBoardDeleteAll()">게시판글 모두 삭제</button><br>
         <button type="button" class="btn btn-outline-danger" id="alldeleteip" onclick="alldeleteip()">벤 ip 모두 취소</button><br>
         <button type="button" class="btn btn-outline-danger" id="useremailban" onclick="useremailban()">해당 유저 이메일 벤하기</button><br>
-        </div>
-
-
     </div>
 
 
+</div>
 
 
 

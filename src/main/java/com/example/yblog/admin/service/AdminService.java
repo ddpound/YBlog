@@ -7,16 +7,21 @@ import com.example.yblog.model.YUser;
 import com.example.yblog.repository.BRLRepository;
 import com.example.yblog.repository.BanEmailRepository;
 import com.example.yblog.repository.BanIpRespository;
+import com.example.yblog.repository.YUserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Log4j2
 @Service
 public class AdminService {
+
+    @Autowired
+    YUserRepository yUserRepository;
 
     @Autowired
     BanIpRespository banIpRespository;
@@ -26,6 +31,12 @@ public class AdminService {
 
     @Autowired
     BanEmailRepository banEmailRepository;
+
+
+    public List<YUser> findAllUser(){
+        return yUserRepository.findAll();
+    }
+
 
 
     // 밴당한 아이피가 있을때 참을 출력

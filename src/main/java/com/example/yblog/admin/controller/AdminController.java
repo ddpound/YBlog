@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -29,12 +30,22 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
+    @GetMapping(value = "/admin/userManageView/find-all-user")
+    public String findAllUser(@AuthenticationPrincipal PrincipalDetail principal,
+                              Model model){
+
+        if(principal.getUsername().equals(adminName)){
+            model.addAttribute("allUser", adminService.findAllUser());
+
+            return "admin/userManage";
+        }
+        return "redirect:/";
+    }
 
 
     @GetMapping(value = "/admin/userManageView")
     public String goUserDeletePage(@AuthenticationPrincipal PrincipalDetail principal){
         if(principal.getUsername().equals(adminName)){
-
 
 
             // 매니저 보드판 만들기
@@ -112,11 +123,8 @@ public class AdminController {
             adminService.addBanEmail(userEmail);
         }
 
-
-
         return "redirect:/admin/userManageView";
     }
-
 
 
 }

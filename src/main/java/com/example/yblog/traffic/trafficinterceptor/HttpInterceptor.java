@@ -49,7 +49,9 @@ public class HttpInterceptor implements HandlerInterceptor {
         log.info("Enter ip address '{}'",ip);
 
         if(adminService.findIp(ip)){
-            System.out.println(ip + " : is BanIp!!!!!");
+
+            log.info("BanIp '{}'",ip);
+
             return false;
         }
 
