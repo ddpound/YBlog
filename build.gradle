@@ -8,11 +8,15 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
 }
+
+
 
 repositories {
     mavenCentral()
@@ -20,8 +24,12 @@ repositories {
 
 dependencies {
     // 새로 추가부분
+
+    // 타입리프 업데이트시 깨짐 현상 있으니 업뎃 금지
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.5'
@@ -32,21 +40,26 @@ dependencies {
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
     //잭슨 라이브러리 추가 안시켜줘도 된다
     // 대역폭 조절 의존성
-    implementation 'com.giffing.bucket4j.spring.boot.starter:bucket4j-spring-boot-starter:0.2.0'
+   implementation 'com.giffing.bucket4j.spring.boot.starter:bucket4j-spring-boot-starter:0.4.0'
 
     // 모바일 디바이스 구분 의존성
     implementation group: 'org.springframework.mobile', name: 'spring-mobile-device', version: '1.1.5.RELEASE'
+
 
 
     //새로 추가부분
 
 
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.1'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.6.1'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.1'
+
+
+
 
 }
 
@@ -54,3 +67,6 @@ test {
     useJUnitPlatform()
 }
 
+
+// slf4j 업데이트 완료 2.15
+ext['log4j2.version'] = '2.15.0'

@@ -1,4 +1,3 @@
-
 function uploadSummernoteImageFile(file, editor) {
     data = new FormData();
     data.append("file", file);

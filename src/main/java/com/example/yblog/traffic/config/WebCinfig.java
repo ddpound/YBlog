@@ -2,6 +2,8 @@ package com.example.yblog.traffic.config;
 
 import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.traffic.trafficinterceptor.HttpInterceptor;
+
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
