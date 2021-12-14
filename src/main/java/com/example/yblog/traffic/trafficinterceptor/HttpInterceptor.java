@@ -22,6 +22,7 @@ public class HttpInterceptor implements HandlerInterceptor {
     @Autowired
    AdminService adminService;
 
+    // 즉 핸들러가 세번 새로 시작된다
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         Bucket bucket = pricingPlanService.resolveBucket(request);
 
@@ -45,6 +46,7 @@ public class HttpInterceptor implements HandlerInterceptor {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
+
 
         log.info("Enter ip address '{}'",ip);
 

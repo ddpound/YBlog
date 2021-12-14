@@ -5,7 +5,6 @@ import com.example.yblog.admin.service.AdminService;
 import com.example.yblog.board.service.BoardService;
 import com.example.yblog.config.auth.PrincipalDetail;
 import com.example.yblog.login.service.LoginService;
-import com.example.yblog.model.BanIp;
 import com.example.yblog.model.YUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
