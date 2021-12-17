@@ -19,7 +19,6 @@ import java.util.List;
 @Builder // 빌더패턴
 @Entity
 public class YBoard {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private int id;
@@ -52,7 +51,5 @@ public class YBoard {
 
     @CreationTimestamp
     private Timestamp createDate;
-
-
 
 }

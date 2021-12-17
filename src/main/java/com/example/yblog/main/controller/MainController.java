@@ -122,12 +122,9 @@ public class MainController {
         model.addAttribute("boardsPage", page);
         model.addAttribute("nowStatus" , statusService.statusReturn(1));
 
-
         int firstNumber = pageable.getPageNumber() - 2 ;
         int lastNumber = pageable.getPageNumber() + 2 ;
-
         ArrayList<Integer> listNum = new ArrayList<>();
-
         if(firstNumber < 0 ){
             firstNumber=0;
             for(int i =0; i < 6 ;i++){
@@ -143,36 +140,20 @@ public class MainController {
             }
         }
 
-
-
-
         model.addAttribute("boardNumList" , listNum );
-
-
-
-        // 현재 페이지를 기준으로 앞으로 3개 뒤로 3개 하면될듯
-
-
-
-
-
         device = DeviceUtils.getCurrentDevice(request);
 
         if (device.isMobile() || device.isTablet()){
             return "board/mBoardMain";
         }
 
-
         return "board/boardMain";
     }
-
-
 
     @GetMapping(value = "/auth/board/details")
     public String boardDetails(@RequestParam("id") int id , Model model,
                                HttpServletRequest request,
                                HttpServletResponse response){
-
         Cookie[] cookies = request.getCookies();
         int visit =0;
 
@@ -195,17 +176,13 @@ public class MainController {
                     }
                 }
             }
-
         }
-
         if(visit==0){
             Cookie cookie1 = new Cookie("visit",request.getParameter("id"));
             cookie1.setMaxAge(1800);
             response.addCookie(cookie1);
             boardService.boardCountUp(id);
         }
-
-
         model.addAttribute("board", boardService.boardDetails(id));
 
         return "board/boardDetails";

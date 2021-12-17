@@ -68,5 +68,5 @@ test {
 }
 
 
-// slf4j 업데이트 완료 2.15
-ext['log4j2.version'] = '2.15.0'
+// slf4j 업데이트 완료 2.16 버전으로 업데이트 완료
+ext['log4j2.version'] = '2.16.0'
