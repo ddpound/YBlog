@@ -36,7 +36,7 @@ public class AdminController {
         if(principal.getUsername().equals(adminName)){
             model.addAttribute("allUser", adminService.findAllUser());
 
-            return "admin/userManage";
+            return "admin/allUserManage";
         }
         return "redirect:/";
     }

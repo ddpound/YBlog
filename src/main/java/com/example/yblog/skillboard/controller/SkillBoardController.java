@@ -54,7 +54,6 @@ public class SkillBoardController {
                                            @AuthenticationPrincipal PrincipalDetail principalDetail){
 
 
-        System.out.println(skillBoard.getTitle());
         skillBoardService.saveSkillBoard(skillBoard,principalDetail.getYUser());
 
         return new ResponseDto<Integer>(HttpStatus.OK,1);
@@ -103,7 +102,7 @@ public class SkillBoardController {
 
         if(principal.getUsername().equals(adminName)){
 
-            System.out.println(skillBoard);
+
             skillBoardService.skillBoardModify(skillBoard);
 
             return new ResponseDto<Integer>(HttpStatus.OK,1);
@@ -112,8 +111,6 @@ public class SkillBoardController {
         return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,-1);
 
     }
-
-
 
     // 글 올릴때 사진 비동기로 로컬 파일에 올려줌
 

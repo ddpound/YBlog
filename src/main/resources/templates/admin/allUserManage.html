@@ -21,6 +21,18 @@
             height: 100vh;
         }
 
+        .left-div table{
+            margin-top: 10%;
+            margin-left: 25%;
+            background-color: white;
+            text-align: center;
+            border: solid 3px #c69500;
+        }
+
+        .left-div th, td{
+            border: solid 3px #c69500;
+        }
+
         .right-div{
             float: right;
             background-color: black;
@@ -55,6 +67,23 @@
 <div layout:fragment="content">
 
     <div class="left-div">
+
+        <table >
+            <tr>
+                <th>유저 ID</th>
+                <th>유저닉네임</th>
+                <th>유저이메일</th>
+                <th>가입날짜</th>
+            </tr>
+            <tr th:each="user : ${allUser}">
+                <th th:text="${user.getId()}"></th>
+                <th th:text="${user.getUsername()}"></th>
+                <th th:text="${user.getEmail()}"></th>
+                <th th:text="${user.getCreateDate()}"></th>
+            </tr>
+
+
+        </table>
 
 
     </div>
