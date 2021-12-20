@@ -47,7 +47,6 @@ public class AdminController {
         if(principal.getUsername().equals(adminName)){
 
 
-
             // 매니저 보드판 만들기
             // 전체 조회수, 네트워크 접속과정에 관해  공부하기
 

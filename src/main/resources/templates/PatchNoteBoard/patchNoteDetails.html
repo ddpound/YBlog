@@ -91,7 +91,7 @@
             <a href="/auth/Portfolio">포트폴리오</a>
         </div>
     <div class="titleInfodiv">
-        <h3 th:text="${patchboard.getTitle()}"></h3>
+        <h1 th:text="${patchboard.getTitle()}"></h1>
         <div th:if="${patchboard.getUser().getUsername()}== ${#authentication.getName()} or ${#authentication.getName()}== 'Y' ">
             <script th:inline="javascript">
                 let boardId = [[${patchboard.getId()}]]
