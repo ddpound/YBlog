@@ -212,4 +212,15 @@ public class MainController {
     }
 
 
+    // 스프링 ads 최상위 계층 접근시 반환해주는거
+    @RequestMapping(value = "/ads.txt")
+    @ResponseBody
+    public String adstxt(HttpServletResponse response) {
+        String fileName = "ads.txt";
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+        String content = "google.com, pub-6469638109814185, DIRECT, f08c47fec0942fa0";
+        return content;
+    }
+
+
 }

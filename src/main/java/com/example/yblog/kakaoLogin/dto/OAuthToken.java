@@ -47,7 +47,5 @@ public class OAuthToken {
     public void setRefresh_token_expires_in(int refresh_token_expires_in) {
         this.refresh_token_expires_in = refresh_token_expires_in;
     }
-
-
 }
 
