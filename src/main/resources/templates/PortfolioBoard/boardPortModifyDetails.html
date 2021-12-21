@@ -18,6 +18,17 @@
 
     }
 
+    .summernote{
+      background-color: white;
+      width: 100vw;
+      height: 70vh;
+    }
+
+    .summernote img{
+      max-width: 100%;
+    }
+
+
   </style>
 
 
@@ -56,11 +67,7 @@
       return "감지범위 테스트";
     };
     $('.summernote').summernote({
-      maxWidth: 1110,
-      width: 1110,
-      height: 600,
       lang: 'ko-KR',
-      placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
       callbacks: {
         //여기 부분이 이미지를 첨부하는 부분
         // 업로드와 동시에 진행되는 콜백 함수

@@ -83,9 +83,18 @@
 
 </th:block>
 
-<!-- index.html 고유 스크립트 추가 -->
+
 <th:block layout:fragment="script">
   <script type="text/javascript" th:src="@{/js/board.js}"></script>
+
+  <script th:inline="javascript">
+    function myFunction() {
+      document.title = [[${board.getTitle()}]]
+
+    }
+
+    myFunction();
+  </script>
 
 </th:block>
 
