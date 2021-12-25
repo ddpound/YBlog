@@ -89,7 +89,22 @@
 
   <script th:inline="javascript">
     function myFunction() {
-      document.title = [[${board.getTitle()}]]
+      var boardtitle =  [[${board.getTitle()}]]
+
+      document.title = boardtitle
+      document.getElementById("ogTitle").setAttribute("content", boardtitle )
+
+      var description = [[${board.getDescription()}]]
+
+      if(description == "" || description == null){
+        document.getElementById("description").setAttribute("content", "자유게시판글입니다.")
+        document.getElementById("ogDescription").setAttribute("content", "자유게시판글입니다.")
+      }else {
+        document.getElementById("description").setAttribute("content", description)
+        document.getElementById("ogDescription").setAttribute("content", description)
+      }
+
+
 
     }
 

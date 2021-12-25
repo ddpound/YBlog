@@ -46,6 +46,8 @@
         <div class="form-group text-light font-weight-bold bg-dark text-center">
             <label for="title">[제목]</label>
             <input type="text" class="form-control bg-dark text-light text-center" th:value="${board.getTitle()}" id="title">
+            <label for="boardDescription">설명(없어도 괜찮습니다.)</label>
+            <input type="text" class="form-control bg-dark text-light text-center" id="boardDescription">
         </div>
         <textarea class="summernote" rows="5" id="content" th:utext="${board.getContent()}"></textarea>
 

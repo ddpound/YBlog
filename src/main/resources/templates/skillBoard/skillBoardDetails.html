@@ -67,7 +67,17 @@
 
         function myFunction() {
             document.title = [[${board.getTitle()}]]
-            document.getElementsByName("description")[0].setAttribute("content", "개인적으로 공부한 글입니다.")
+
+            var description = [[${board.getDescription()}]]
+
+            if(description == "" || description == null){
+                document.getElementById("description").setAttribute("content", "기술게시판글입니다.")
+                document.getElementById("ogDescription").setAttribute("content", "기술게시판글입니다.")
+            }else {
+                document.getElementById("description").setAttribute("content", description)
+                document.getElementById("ogDescription").setAttribute("content", description)
+            }
+
         }
 
         myFunction();

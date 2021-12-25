@@ -14,14 +14,13 @@ function skillBoardWriteGo(){
 function skillBoardWrite(){
     var skilltitle = $("#title").val()
     var content = $("#content").val()
-
+    var description = $("#boardDescription").val()
 
     let form= {
         title  : skilltitle,
-        content : content
+        content : content,
+        description : description
     }
-
-
 
     $.ajax({
         type: "POST",
@@ -64,11 +63,14 @@ function gomodifyskillboard(boardId){
 
 function  skillboardModify(boardId){
     var titleName= $("#title").val()
+    var description = $("#boardDescription").val()
+
     if( titleName !=null){
         let form = {
             id : boardId,
             title : titleName,
-            content : $("#content").val()
+            content : $("#content").val(),
+            description : description
         }
         $.ajax({
             type: "PUT",

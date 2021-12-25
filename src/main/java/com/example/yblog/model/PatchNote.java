@@ -34,6 +34,12 @@ public class PatchNote {
     @JoinColumn(name = "userId") // board 테이블값에 YUser를 참조하는 userId를 생성한다
     private  YUser user; // DB는 오브젝트를 저장할 수 없다. FK 자바는 오브젝트를 저장할 수 있다.
 
+    // 구글 검색을 위한 설명칸이 필요함을 느낌
+    @Column
+    private String description;
+
+
+
     @CreationTimestamp
     private Timestamp createDate;
 

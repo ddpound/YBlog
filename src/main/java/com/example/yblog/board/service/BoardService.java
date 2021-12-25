@@ -41,6 +41,8 @@ public class BoardService {
         globalThrowError.ErrorMaxSqlLength(yBoard.getContent().length());
         globalThrowError.ErrorNullBoardTitle(yBoard.getTitle());
 
+        System.out.println("설명글 : "+yBoard.getDescription());
+
 
         BoardReplyLimit boardReplyLimit = adminService.findbrlRepositoryUser(yUser);
 
@@ -163,7 +165,7 @@ public class BoardService {
         // 해당함수로  Service가 종료와 함게 트랜잭션 종료, 이때 더티체킹으로 자동 업데이트된다
         board.setTitle(yBoard.getTitle());
         board.setContent(board1.getContent());
-
+        board.setDescription(yBoard.getDescription());
 
         // 이렇게 트랜잭션이 완료되고 여기서 yboard의  content를 받아서 현재 파일에 있는 이미지와 비교해서 없으면
         // 삭제하고 놔두는 로직을 짜야한다

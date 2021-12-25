@@ -18,11 +18,13 @@ function PatchNoteDelete(boardId){
 
 function patchnoteWrite(){
     var titleName = $("#title").val()
+    var description = $("#boardDescription").val()
 
     if(titleName != ""){
         let form = {
             title : titleName,
-            content : $("#content").val()
+            content : $("#content").val(),
+            description : description
         }
         $.ajax({
             type: "POST",

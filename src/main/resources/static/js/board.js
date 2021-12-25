@@ -18,11 +18,13 @@ function uploadSummernoteImageFile(file, editor) {
 
 function boardWrite(){
     var titleName = $("#title").val()
+    var description = $("#boardDescription").val() // 그냥 description 을 사용하면 헤드값에 이미 있기때문에 안남음
 
     if(titleName != ""){
         let form = {
             title : titleName,
-            content : $("#content").val()
+            content : $("#content").val(),
+            description : description
         }
         $.ajax({
             type: "POST",
@@ -74,11 +76,14 @@ function gomodifywrite(boardId){
 
 function  boardModify(boardId){
     var titleName= $("#title").val()
+    var description = $("#boardDescription").val()
+
     if( titleName !=null){
         let form = {
             id : boardId,
             title : titleName,
-            content : $("#content").val()
+            content : $("#content").val(),
+            description : description
         }
         $.ajax({
             type: "PUT",

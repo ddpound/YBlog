@@ -78,6 +78,30 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script type="text/javascript" th:src="@{/js/patchnote.js}"></script>
+
+    <script th:inline="javascript">
+
+        function myFunction() {
+            document.title = [[${patchboard.getTitle()}]]
+
+            var description = [[${patchboard.getDescription()}]]
+
+            if(description == "" || description == null){
+                document.getElementById("description").setAttribute("content", "패치노트글입니다.")
+                document.getElementById("ogDescription").setAttribute("content", "패치노트글입니다.")
+            }else {
+                document.getElementById("description").setAttribute("content", description)
+                document.getElementById("ogDescription").setAttribute("content", description)
+            }
+
+        }
+
+        myFunction();
+
+    </script>
+
+
+
 </th:block>
 
 

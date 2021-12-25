@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/","/auth/**" , "/ads.txt" , "/js/**" , "/index","/css/**","/img/**","/Confirm_SaveImage/**") // 다음 요청에 관한 값들은
+                    .antMatchers("/","/auth/**" , "/ads.txt" , "/sitemap.xml", "/js/**" , "/index","/css/**","/img/**","/Confirm_SaveImage/**") // 다음 요청에 관한 값들은
                     //.mvcMatchers(HttpMethod.POST, "/auth/**", "/" , "/index")
                     .permitAll() // permitAll 어떤 권한자가 들어와도 접속하게 해주며
                     .anyRequest() // 그왜 모든 리퀘스트들 은

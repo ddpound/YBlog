@@ -39,6 +39,11 @@ public class PortfolioBoard {
     @Column(length = 200)
     private  String imagefileid;
 
+    // 구글 검색을 위한 설명칸이 필요함을 느낌
+    @Column
+    private String description;
+
+
     @CreationTimestamp
     private Timestamp createDate;
 

@@ -30,8 +30,6 @@ public class SkillBoardService {
     @Autowired
     private SkillBoardReplyRepository skillBoardReplyRepository;
 
-    @Autowired
-    private GlobalThrowError globalThrowError;
 
 
     @Transactional
@@ -109,6 +107,7 @@ public class SkillBoardService {
         //더티체킹
         board.setTitle(skillBoard.getTitle());
         board.setContent(skillBoard1.getContent());
+        board.setDescription(skillBoard.getDescription());
 
         modifyImagefile(board.getContent(), board.getImagefileid());
 

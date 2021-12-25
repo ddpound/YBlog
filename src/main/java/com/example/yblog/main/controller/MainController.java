@@ -8,6 +8,9 @@ import com.example.yblog.join.service.JoinService;
 import com.example.yblog.login.service.LoginService;
 import com.example.yblog.model.Status;
 import com.example.yblog.model.YUser;
+import com.example.yblog.sitemap.SiteMapService;
+import com.example.yblog.sitemap.Url;
+import com.example.yblog.sitemap.UrlSet;
 import com.example.yblog.status.StatusService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,7 +30,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Log4j2
 @Controller
@@ -49,6 +56,9 @@ public class MainController {
 
     @Autowired
     JoinService joinService;
+
+    @Autowired
+    SiteMapService siteMapService;
 
     Device device;
 
@@ -220,6 +230,13 @@ public class MainController {
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
         String content = "google.com, pub-6469638109814185, DIRECT, f08c47fec0942fa0";
         return content;
+    }
+
+    @RequestMapping(value = "/auth/ysitemap" , produces = MediaType.APPLICATION_XML_VALUE)
+    @ResponseBody
+    public UrlSet siteMapReturn(){
+
+        return siteMapService.getUrlSet();
     }
 
 

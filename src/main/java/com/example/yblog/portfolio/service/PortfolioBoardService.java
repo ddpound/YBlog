@@ -83,6 +83,7 @@ public class PortfolioBoardService {
 
         eternalPortfolioBoard.setTitle(portfolioBoard.getTitle());
         eternalPortfolioBoard.setContent(portfolioBoard1.getContent());
+        eternalPortfolioBoard.setDescription(portfolioBoard.getDescription());
         // 더티체킹
 
         modifyImagefile(eternalPortfolioBoard.getContent(),eternalPortfolioBoard.getImagefileid());
