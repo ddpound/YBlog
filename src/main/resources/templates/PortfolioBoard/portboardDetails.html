@@ -83,13 +83,15 @@
   <script th:inline="javascript">
 
     function myFunction() {
-      document.title = [[${portboard.getTitle()}]]
+      var boardTitle =  [[${portboard.getTitle()}]]
+      document.title = boardTitle
+      document.getElementById("ogTitle").setAttribute("content", boardTitle)
 
       var description = [[${portboard.getDescription()}]]
 
       if(description == "" || description == null){
-        document.getElementById("description").setAttribute("content", "기술게시판글입니다.")
-        document.getElementById("ogDescription").setAttribute("content", "기술게시판글입니다.")
+        document.getElementById("description").setAttribute("content", "포트폴리오글입니다.")
+        document.getElementById("ogDescription").setAttribute("content", "포트폴리오글입니다.")
       }else {
         document.getElementById("description").setAttribute("content", description)
         document.getElementById("ogDescription").setAttribute("content", description)

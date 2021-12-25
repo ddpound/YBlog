@@ -66,8 +66,9 @@
     <script th:inline="javascript">
 
         function myFunction() {
-            document.title = [[${board.getTitle()}]]
-
+            var boardTitle =  [[${board.getTitle()}]]
+            document.title = boardTitle
+            document.getElementById("ogTitle").setAttribute("content", boardTitle)
             var description = [[${board.getDescription()}]]
 
             if(description == "" || description == null){

@@ -82,7 +82,9 @@
     <script th:inline="javascript">
 
         function myFunction() {
-            document.title = [[${patchboard.getTitle()}]]
+            var boardTitle =  [[${patchboard.getTitle()}]]
+            document.title = boardTitle
+            document.getElementById("ogTitle").setAttribute("content", boardTitle)
 
             var description = [[${patchboard.getDescription()}]]
 
