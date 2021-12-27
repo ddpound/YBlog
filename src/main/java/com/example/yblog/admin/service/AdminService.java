@@ -118,4 +118,9 @@ public class AdminService {
 
     }
 
+    @Transactional
+    public void deleteBRLBoard(){
+        brlRepository.deleteAll();
+    }
+
 }

@@ -49,6 +49,7 @@ public class WebCinfig  implements WebMvcConfigurer {
         if(os.contains("win")){
             AllStaticElement.OsName = "window";
             log.info("Now Os Name is window");
+
         }else{
             AllStaticElement.OsName = "linux";
             log.info("Now Os Name is linux");

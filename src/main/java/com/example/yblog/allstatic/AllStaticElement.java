@@ -1,5 +1,7 @@
 package com.example.yblog.allstatic;
 
+import org.springframework.context.ConfigurableApplicationContext;
+
 public class AllStaticElement {
     public static int statusNum=0; // 현재 상태값을 입력하기위한 절대적은 번호 , 1이 끝
 
@@ -27,6 +29,7 @@ public class AllStaticElement {
     public static String OsName;
 
 
+    public static ConfigurableApplicationContext ctx;
 
 
 

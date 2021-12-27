@@ -21,3 +21,23 @@ function alldeleteip(){
 function useremailban(){
     location.href = "/admin/emailBan/"+$("#userName").val()
 }
+
+function all_clear_BRlimit(){
+    location.href = "/admin/all_clear_BRlimit"
+
+}
+
+function logfile(){
+        location.href = "/admin/log.txt"
+
+
+}
+
+function webShutDown(){
+    if(confirm("정말 서버를 종료하시겠습니까?") === true){
+        location.href = "/admin/shut_down"
+    }else{
+        location.href = "/"
+    }
+
+}

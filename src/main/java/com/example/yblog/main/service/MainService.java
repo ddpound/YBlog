@@ -7,6 +7,7 @@ import com.example.yblog.repository.PatchNoteRepository;
 import com.example.yblog.repository.PortfolioRepository;
 import com.example.yblog.repository.SkillBoardRepository;
 import com.example.yblog.repository.YBoardRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import java.util.List;
 
 // 모든 서비스 담당이라 모든 레파지토리 가져와야함
 // 풀테이블 서치 할 예정 (데이터가 많지 않으니)
-
+@Log4j2
 @Service
 public class MainService {
 
@@ -50,36 +51,30 @@ public class MainService {
 
         switch (stBoardCategory){
             case allboard:
-                System.out.println("카테고리는 모든카테고리 입니다");
+                log.info("Search allcategory");
             case yboard:
-                System.out.println("카테고리는 YBOARD입니다");
 
                 model.addAttribute("yboardResult", yBoardRepository.searchBoardTitle(searchWord));
-
-
+                log.info("Search yboard");
                 if (stBoardCategory == BoardCategy.yboard){
                     break;
                 }
             case skillboard:
-                System.out.println("카테고리는 기술 보드");
-
                 model.addAttribute("skillboardResult", skillBoardRepository.searchBoardTitle(searchWord));
 
-
+                log.info("Search skillboard");
                 if (stBoardCategory == BoardCategy.skillboard){
                     break;
                 }
             case portfolio:
-                System.out.println("카테고리는 포트폴리오");
                 model.addAttribute("portfolioboardResult", portfolioRepository.searchBoardTitle(searchWord));
-
+                log.info("Search portfolio");
                 if (stBoardCategory == BoardCategy.portfolio){
                     break;
                 }
             case patchnote:
-                System.out.println("카테고리는 패치노트");
-
                 model.addAttribute("patchNoteboardResult", patchNoteRepository.searchBoardTitle(searchWord));
+                log.info("Search patchnote");
                 if (stBoardCategory == BoardCategy.patchnote){
                     break;
                 }
