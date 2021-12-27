@@ -58,6 +58,20 @@
             font-size: 3vw;
         }
 
+        .search_Div{
+            width: 100vw;
+        }
+        .search_Div input{
+           width: 35%;
+        }
+        .search_Div button{
+            width: 25%;
+        }
+        .search_Div select{
+            width: 15%;
+        }
+
+
     </style>
 
 </th:block>
@@ -80,6 +94,20 @@
 
 
             <div class="divMContent">
+                <a th:if="${#authorization.expr('isAuthenticated()')} == true"
+                   th:href="@{user/info(username=${#authentication.getName()})}"
+                   th:text="${#authentication.getName()}+ '님 반갑습니다!' "></a>
+                <div class="search_Div">
+                    <input id="searchTitle" type="text"> <button onclick="searchBoard()">검색</button>
+                    <select id="categoryBoard" name="cate">
+                        <!--value 값에 들어간건 Enum방식이기에 꼭 틀리지않게 해주셔야합니다-->
+                        <option value="allboard">모두</option>
+                        <option value="yboard">자유게시판</option>
+                        <option value="skillboard">기술게시판</option>
+                        <option value="portfolio">포트폴리오</option>
+                        <option value="patchnote">공지</option>
+                    </select>
+                </div>
                 <p>개인적으로 공부하고 얻은 지식과 <br> 다양한 기능들을 보여주는 블로그입니다.</p>
                 <a href="/auth/Portfolio"><p>포트폴리오 보러가기</p></a>
             </div>

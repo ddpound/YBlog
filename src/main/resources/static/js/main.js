@@ -121,3 +121,13 @@ function portSummernoteImageFile(file, editor) {
         }
     });
 }
+
+function searchBoard(){
+
+    var searchTitle = $("#searchTitle").val()
+    var category = $("#categoryBoard").val()
+
+    location.href ="/auth/search/"+category+"/"+searchTitle
+
+
+}

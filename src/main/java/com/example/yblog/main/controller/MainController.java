@@ -6,6 +6,7 @@ import com.example.yblog.board.service.BoardService;
 import com.example.yblog.config.auth.PrincipalDetail;
 import com.example.yblog.join.service.JoinService;
 import com.example.yblog.login.service.LoginService;
+import com.example.yblog.main.service.MainService;
 import com.example.yblog.model.Status;
 import com.example.yblog.model.YUser;
 import com.example.yblog.sitemap.SiteMapService;
@@ -59,6 +60,9 @@ public class MainController {
 
     @Autowired
     SiteMapService siteMapService;
+
+    @Autowired
+    MainService mainService;
 
     Device device;
 
@@ -238,6 +242,27 @@ public class MainController {
 
         return siteMapService.getUrlSet();
     }
+
+    // 카테고리의 자료형을 반드시 확인할 필요가있음
+    @GetMapping(value = "/auth/search/{category}/{search_word}")
+    public String searchBoard(@PathVariable String category, @PathVariable String search_word,
+                              Model model,
+                              HttpServletRequest request){
+
+
+        mainService.listSearch(search_word, category,model);
+
+        device = DeviceUtils.getCurrentDevice(request);
+
+        if (device.isMobile() || device.isTablet()){
+            return "searchPage/mSearchPageMain";
+        }
+
+
+        return "searchPage/searchPageMain";
+    }
+
+
 
 
 }

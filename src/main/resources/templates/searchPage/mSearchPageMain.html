@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+
+    <style th:inline="text">
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        body{
+            overflow: auto;
+            background-image: url([[@{/img/newBackpiture.jpg}]]);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+        }
+
+        p{
+            color: white;
+        }
+
+        .boardMainBox{
+            margin: 0 0 0 0;
+            text-align: center;
+            width: 100vw;
+            height: auto;
+        }
+
+        .boardMainBox::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .boardMainBox::-webkit-scrollbar-thumb{
+            background-color: #983106;
+            border-radius: 10px;
+        }
+
+        .boardMainBox::-webkit-scrollbar-track{
+            background-color: #153040;
+        }
+
+        .mobileHeader{
+            background-color: black;
+            text-align: center;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 3.2vw;
+        }
+
+        .mobileHeader a{
+            margin: 0 2.5vw;
+        }
+
+        .boardDivs{
+            width: 100%;
+            height: 100%;
+        }
+
+        .boardDiv{
+            margin-top: 5%;
+            border-top: solid 2px orange;
+            border-bottom: solid 2px orange;
+            background-color: #1b1e21;
+            text-align: center;
+            font-family: 'Noto Sans KR', sans-serif;
+
+        }
+        .boardMainBox ul{
+            margin-top: 15%;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+
+
+
+    </style>
+
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+
+
+
+
+
+</th:block>
+
+<div layout:fragment="content">
+
+    <div class="boardMainBox">
+
+        <div class="mobileHeader">
+            <a href="/">YBLOGLAB</a>
+            <a href="/auth/boardmain">자유게시판</a>
+            <a href="/auth/patchnote">공지</a>
+            <a href="/auth/skillboard">기술게시판</a>
+            <a href="/auth/Portfolio">포트폴리오</a>
+        </div>
+
+
+        <a href="/"><h1>검색결과</h1></a>
+
+        <div class="boardDivs" th:if="${yboardResult} != null">
+            <span style="color: white">자유게시판</span>
+            <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${yboardResult}">
+                <div class="boardDiv" >
+                    <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
+                    <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
+                    <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
+                    <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                </div>
+            </a>
+        </div>
+        <div class="boardDivs" th:if="${skillboardResult} != null">
+            <span style="color: white">기술게시판</span>
+            <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${skillboardResult}">
+                <div class="boardDiv" >
+                    <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
+                    <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
+                    <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
+                    <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                </div>
+            </a>
+        </div>
+        <div class="boardDivs" th:if="${portfolioboardResult} != null">
+            <span style="color: white">포트폴리오</span>
+            <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${portfolioboardResult}">
+                <div class="boardDiv" >
+                    <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
+                    <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
+                    <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
+                    <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                </div>
+            </a>
+        </div>
+        <div class="boardDivs" th:if="${patchNoteboardResult} != null">
+            <span style="color: white">공지</span>
+            <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${patchNoteboardResult}">
+                <div class="boardDiv" >
+                    <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
+                    <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
+                    <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
+                    <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                </div>
+            </a>
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+</html>
