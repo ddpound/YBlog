@@ -143,10 +143,10 @@
             <div class="boardDivs">
                 <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${boards}">
                 <div class="boardDiv" >
-                    <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
+                    <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span>   <span th:if="${board.getYreplys().size() != 0}" th:text=" '['+${board.getYreplys().size()} + ']' "></span><br>
                     <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
                     <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
-                    <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                    <span>작성날짜 :</span>&nbsp;  <span th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
                 </div>
                 </a>
 

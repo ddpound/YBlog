@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -52,7 +53,6 @@ public class YBoard {
     // 구글 검색을 위한 설명칸이 필요함을 느낌
     @Column
     private String description;
-
 
 
     @CreationTimestamp

@@ -120,7 +120,7 @@
         </div>
         <div class="boardDivs" th:if="${skillboardResult} != null">
             <span style="color: white">기술게시판</span>
-            <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${skillboardResult}">
+            <a th:href=" @{/auth/skillboard/details/{id}(id = ${board.getId()})}"  th:each="board :${skillboardResult}">
                 <div class="boardDiv" >
                     <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
                     <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
@@ -131,7 +131,7 @@
         </div>
         <div class="boardDivs" th:if="${portfolioboardResult} != null">
             <span style="color: white">포트폴리오</span>
-            <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${portfolioboardResult}">
+            <a th:href=" @{/auth/portboard/details(id=${board.getId()})}"  th:each="board :${portfolioboardResult}">
                 <div class="boardDiv" >
                     <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
                     <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
@@ -142,7 +142,7 @@
         </div>
         <div class="boardDivs" th:if="${patchNoteboardResult} != null">
             <span style="color: white">공지</span>
-            <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${patchNoteboardResult}">
+            <a th:href=" @{/auth/patchnote/details(id=${board.getId()})}"  th:each="board :${patchNoteboardResult}">
                 <div class="boardDiv" >
                     <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
                     <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;

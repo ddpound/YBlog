@@ -146,7 +146,7 @@
           <div class="boardDiv" >
             <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
             <span>작성자 :</span> &nbsp; <span th:text="${board.getUser().getUsername()}"></span>&nbsp;&nbsp;
-            <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+            <span>작성날짜 :</span>&nbsp; <span th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
           </div>
         </a>
 

@@ -127,7 +127,13 @@ function searchBoard(){
     var searchTitle = $("#searchTitle").val()
     var category = $("#categoryBoard").val()
 
-    location.href ="/auth/search/"+category+"/"+searchTitle
+    if (searchTitle === "" || searchTitle ===null){
+        alert("검색어를 하나라도 입력해주세요")
+    }else{
+        location.href ="/auth/search/"+category+"/"+searchTitle
+    }
+
+
 
 
 }

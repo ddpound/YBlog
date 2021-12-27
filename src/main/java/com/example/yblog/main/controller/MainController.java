@@ -249,7 +249,6 @@ public class MainController {
                               Model model,
                               HttpServletRequest request){
 
-
         mainService.listSearch(search_word, category,model);
 
         device = DeviceUtils.getCurrentDevice(request);
