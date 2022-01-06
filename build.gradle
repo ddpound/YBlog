@@ -69,4 +69,4 @@ test {
 
 
 // slf4j 업데이트 완료 2.17 버전으로 업데이트 완료
-ext['log4j2.version'] = '2.17.0'
+ext['log4j2.version'] = '2.17.1'
