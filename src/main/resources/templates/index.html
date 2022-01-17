@@ -12,6 +12,90 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
 
+        .parentMain{
+            width: 1100px;
+            margin: 100px auto;
+
+        }
+
+        .childmain1{
+            width: 1100px;
+            margin: 16px auto;
+            background-color: #c2b2f0;
+            display: flex;
+        }
+
+        .mainImage {
+            width: 500px;
+
+        }
+
+        .mainImage img{
+            width: 500px;
+            height: 500px;
+
+            margin: 12px 0 12px 12px;
+        }
+
+        .descriptionDiv{
+            margin: 12px auto;
+            width: 500px;
+            height: 500px;
+            text-align: center;
+        }
+
+        .decripWrite{
+            width: 500px;
+            margin: 10px auto;
+        }
+
+        .decripWrite .firstLabel{
+            font-size: 50px;
+            font-family: 'Gugi', cursive;
+        }
+
+        .decripWrite label{
+            line-height: 60px;
+            font-size: 22px;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        .search_Div{
+            width: 400px;
+            margin: 10px auto;
+        }
+
+
+        .animaImage{
+            width: 500px;
+        }
+
+
+        @media screen and (max-width: 1100px) {
+            .parentMain{
+                width: 100vw;
+                margin: 100px 0;
+
+            }
+
+
+            .childmain1{
+                width: 100%;
+                display: block;
+                margin: 0 auto;
+            }
+            .mainImage {
+                width: 100%;
+
+            }
+            .mainImage img{
+                width: 100%;
+                height: 500px;
+                margin: 0;
+            }
+
+
+        }
 
 
     </style>
@@ -21,50 +105,102 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+    <script>
+
+    </script>
+
 </th:block>
 
 <div layout:fragment="content">
 
-    <div class="mainDiv">
-        <div class="leftDiv">
-            <!--검색기능 메인에 넣어놓기(검색단어, 게시판)-->
-            <a href="/"><h1>YBLOGLAB</h1></a>
+    <div class="parentMain">
+        <div class="childmain1">
+            <div class="mainImage">
+                <img src="/img/newBackpiture.jpg">
+
+            </div>
+
+            <div class="descriptionDiv">
+                <div class="decripWrite">
+                    <label class="firstLabel">YBLOGLAB</label><label>란?</label><br>
+
+                    <label>포트폴리오와 공부를 위해서</label><br>
+
+                    <label>서버, 백, 프론트, 배포까지 직접 만든 사이트입니다.</label>
+
+                    <label>만든 것에  끝나지 않고 이 블로그를 통해 계속해서 </label><br>
+
+                    <label>다양한 분야들을 공부하고 기록하며</label>
+
+                    <label>발전해 나가는 게 저의 목표입니다.</label><br>
+
+                </div>
+
+                <div class="search_Div">
+                    <input id="searchTitle" type="text"> <button onclick="searchBoard()">검색</button>
+                    <select id="categoryBoard" name="cate">
+                        <!--value 값에 들어간건 Enum방식이기에 꼭 틀리지않게 해주셔야합니다-->
+                        <option value="allboard">모두</option>
+                        <option value="yboard">자유게시판</option>
+                        <option value="skillboard">기술게시판</option>
+                        <option value="portfolio">포트폴리오</option>
+                        <option value="patchnote">공지</option>
+                    </select>
+                </div>
+
+            </div>
 
 
-            <div class="search_Div">
-                <input id="searchTitle" type="text"> <button onclick="searchBoard()">검색</button>
-                <select id="categoryBoard" name="cate">
-                    <!--value 값에 들어간건 Enum방식이기에 꼭 틀리지않게 해주셔야합니다-->
-                    <option value="allboard">모두</option>
-                    <option value="yboard">자유게시판</option>
-                    <option value="skillboard">기술게시판</option>
-                    <option value="portfolio">포트폴리오</option>
-                    <option value="patchnote">공지</option>
-                </select>
+        </div>
+
+
+        <div class="childmain2">
+            <div>
+                <img class="animaImage" src="/img/indexImage/ubuntuLogo.png">
+            </div>
+            <div>
+                서버는 어떻게 만들었나요? 서버컴퓨터의 os는 리눅스의 우분투입니다.
             </div>
 
         </div>
-        <div class="rightDiv">
-            <div class="divHeader">
-                <a href="/auth/patchnote">공지</a>
-                <a href="/auth/boardmain">자유게시판</a>
-                <a href="/auth/skillboard">기술게시판</a>
-                <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
-                <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
-            </div>
 
-            <div class="divContent">
-                <p>개인적으로 공부하고 얻은 지식과 <br> 다양한 기능들을 보여주는 블로그입니다.</p>
-                <a href="/auth/portfolio"><p>포트폴리오 보러가기</p></a>
+        <div class="childmain3">
+            <div>
+                <img class="animaImage" src="/img/indexImage/springbootLogo.png">
             </div>
+            <div>
+                해당 블로그는 스프링부트를 통해 개발했습니다.
+                springframwork.boot 버전 2.5.2를 사용했습니다.
+            </div>
+        </div>
 
-            <div class="divFooter">
-                <a href="/"><p>YBLOGLAB</p></a> &nbsp;&nbsp;
-                <a href="https://velog.io/@ddpound"><p>ddpound.log</p></a>
+        <div class="childmain4">
+            <div>
+                <img class="animaImage" src="/img/indexImage/cssjshtmlLogo.png">
+            </div>
+            <div>
+                해당 블로그는 html, css, javascript로 별다른
+                라이브러리나 프레임워크 없이
+                프론트 작업을 했으나, 포트폴리오를 보시면
+                react로 진행한 프로젝트도 있습니다
             </div>
 
         </div>
+
+        <div class="childmain5">
+            <div>
+                <img class="animaImage" src="/img/indexImage/ybloglabWrite.png">
+            </div>
+            <div>
+                자세한 내용은 github에서 확인해주세요!
+            </div>
+
+        </div>
+
+
     </div>
+
 
 </div>
 </html>

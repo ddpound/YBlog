@@ -15,7 +15,7 @@
   <section class="parentSec">
 
     <section class="topSec">
-      <a href="/"><img src="/img/bloglogo.png"></a>
+      <a href="/"><img class="mainbloglogo" src="/img/bloglogo.png"></a>
     </section>
 
 
@@ -29,8 +29,7 @@
     </section>
 
     <section class="loginBar">
-      <a
-         th:if="${#authorization.expr('isAuthenticated()')} == true"
+      <a th:if="${#authorization.expr('isAuthenticated()')} == true"
          th:href="@{user/info(username=${#authentication.getName()})}"
          th:text="${#authentication.getName()}+ '님 반갑습니다!' "></a>
     </section>

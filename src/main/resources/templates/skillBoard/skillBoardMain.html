@@ -11,116 +11,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-        p{
-            color: white;
-        }
-
-        .mainDiv{
-            width: 100%;
-            height: 100vh;
-        }
-
-        .leftDiv{
-            overflow: auto;
-            width: 70vw;
-            height: 100%;
-            float: left;
-            background-image: url([[@{/img/newBackpiture.jpg}]]);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-right: 1px solid white;
-        }
-
-        .leftDiv::-webkit-scrollbar {
-            width: 7px;
-        }
-
-        .leftDiv::-webkit-scrollbar-thumb{
-            background-color: #983106;
-            border-radius: 10px;
-        }
-
-        .leftDiv::-webkit-scrollbar-track{
-            background-color: #153040;
-        }
-
-
-        .leftDiv h1{
-            color: white;
-            font-size: 2vw;
-            margin: 50px 50px;
-            font-family: 'Black Han Sans', sans-serif;
-        }
-
-        .rightDiv{
-            text-align: center;
-            width: 30vw;
-            height: 100%;
-            background-color: black;
-            display: inline-block;
-        }
-
-        .divHeader{
-            margin-top: 8.5vh;
-        }
-
-        .divHeader a{
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 1vw;
-            margin-left: 5%;
-            margin-right: 5%;
-        }
-
-        .divContent{
-            margin-top: 30vh;
-        }
-
-        .divContent p{
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 1.3vmax;
-        }
-
-        .divFooter{
-            position: absolute;
-            bottom: 2vw;
-            text-align: right;
-            display: inline-block;
-        }
-
-        .divFooter p{
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 1vw;
-        }
-
-        .boardDivs{
-            margin: 2% 20% 20% 10%;
-            text-align: center;
-            font-family: 'Noto Sans KR', sans-serif;
-
-        }
-
-        /* 각각의 게시판 글*/
-        .boardDiv{
-            color: white;
-            border-bottom: solid 2px black;
-            border-top: solid 2px black;
-            margin-top: 2%;
-            background-color: #153040;
-            border-radius: 15px;
-        }
-        /* 라벨이 제목임*/
-        .title{
-            font-size: 1.2vw;
-        }
-
-        .boardDiv span{
-            font-size: 1vw;
-        }
-
-        .boardDivs ul{
-            margin-top: 5%;
-        }
 
     </style>
 
@@ -134,17 +24,9 @@
 
 <div layout:fragment="content">
 
-    <div class="mainDiv">
-
-        <div class="leftDiv">
-            <a href="/auth/skillboard"><h1>기술게시판</h1></a>
-
+    <div class="mainBoardDiv">
             <div class="boardDivs" th:if="${boards.size() != 0}">
-
                 <a th:href=" @{/auth/skillboard/details/{id}(id = ${board.getId()})}"  th:each="board :${boards}">
-                    <script th:inline="javascript">
-
-                    </script>
                     <div class="boardDiv" >
                         <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
                         <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
@@ -153,44 +35,26 @@
                     </div>
                 </a>
 
-                <ul class="pagination justify-content-center">
-                    <li class="page-item " th:if="${boardsPage.number != 0}"><a class="page-link bg-white text-dark" th:href="@{/auth/skillboard/(page=${boardsPage.number - 1})}">Previous</a></li>
+                <ul >
+                    <li  th:if="${boardsPage.number != 0}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number - 1})}">Previous</a></li>
                     <th:block th:each="num : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
-                        <li class="page-item "><a class="page-link bg-white text-dark" th:href="@{/auth/skillboard/(page=${num})}" th:text="${num+1}"></a></li>
+                        <li ><a th:href="@{/auth/skillboard/(page=${num})}" th:text="${num+1}"></a></li>
                     </th:block>
-                    <li class="page-item " th:if="${boardsPage.last != true}"><a class="page-link bg-dark text-white" th:href="@{/auth/skillboard/(page=${boardsPage.number + 1})}">Next</a></li>
+                    <li  th:if="${boardsPage.last != true}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number + 1})}">Next</a></li>
                 </ul>
 
             </div>
 
             <div class="boardDivs" th:if="${boards.size() == 0}">
-                <span class="title" style="color: white"> 저장된 글이 없습니다.</span>
+                <span class="title"> 저장된 글이 없습니다.</span>
             </div>
 
             <div class="col-8" th:if="${#authentication.getName()} == 'Y'">
-                <button type="button" class="btn btn-warning btn-block" onclick="skillBoardWriteGo()">글작성하기</button>
+                <button type="button" onclick="skillBoardWriteGo()">글작성하기</button>
             </div>
 
 
-        </div>
 
-        <div class="rightDiv">
-            <div class="divHeader">
-                <a href="/auth/patchnote">공지</a>
-                <a href="/auth/boardmain">자유게시판</a>
-                <a href="/auth/skillboard">기술게시판</a>
-                <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
-                <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
-            </div>
-            <div class="divContent">
-                <p>개인적으로 공부하고 얻은 지식과 <br> 다양한 기능들을 보여주는 블로그입니다.</p>
-                <a href="/auth/Portfolio"><p>포트폴리오 보러가기</p></a>
-            </div>
-            <div class="divFooter">
-                <a href="/"><p>YBLOGLAB</p></a> &nbsp;&nbsp;
-                <a href="https://velog.io/@ddpound"><p>ddpound.log</p></a>
-            </div>
-        </div>
     </div>
 
 
