@@ -37,7 +37,7 @@ public class PortfolioBoardController {
 
     Device device;
 
-    @GetMapping(value = "/auth/Portfolio")
+    @GetMapping(value = "/auth/portfolio")
     public String goPortfolio(Model model, @PageableDefault(size = 5,sort = "id",
             direction = Sort.Direction.DESC)Pageable pageable, HttpServletRequest request){
 

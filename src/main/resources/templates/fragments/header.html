@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="headerFragment">
-
   <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>-->
     <!-- 서머노트.-->
@@ -13,14 +12,31 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- /서머노트 -->
 
-  <div style="background-color: black; color: white">
-    <a href="/">YBLOGLAB</a>
-    <a href="/auth/patchnote">공지</a>
-    <a href="/auth/boardmain">자유게시판</a>
-    <a href="/auth/skillboard">기술게시판</a>
-    <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
-    <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
-  </div>
+  <section class="parentSec">
+
+    <section class="topSec">
+      <a href="/"><img src="/img/bloglogo.png"></a>
+    </section>
+
+
+    <section class="bottomSec">
+      <a href="/auth/patchnote">공지</a>
+      <a href="/auth/boardmain">자유게시판</a>
+      <a href="/auth/skillboard">기술게시판</a>
+      <a href="/auth/portfolio">포트폴리오</a>
+      <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
+      <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
+    </section>
+
+    <section class="loginBar">
+      <a
+         th:if="${#authorization.expr('isAuthenticated()')} == true"
+         th:href="@{user/info(username=${#authentication.getName()})}"
+         th:text="${#authentication.getName()}+ '님 반갑습니다!' "></a>
+    </section>
+
+  </section>
+
 
 
 </header>

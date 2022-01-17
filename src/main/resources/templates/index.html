@@ -11,87 +11,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-        html, body{
-            overflow: visible;
-            width: 100vw;
-            height: 100vh;
-            margin : 0;
-            padding: 0;
-        }
 
 
-        p{
-            color: white;
-        }
-
-        .mainDiv{
-            width: 100%;
-            height: 100vh;
-        }
-
-        .leftDiv{
-            width: 70vw;
-            height: 100%;
-            float: left;
-            background-image: url([[@{/img/newBackpiture.jpg}]]);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-right: 1px solid white;
-        }
-
-        .leftDiv h1{
-            color: white;
-            font-size: 2vw;
-            margin: 50px 50px;
-            font-family: 'Black Han Sans', sans-serif;
-        }
-
-        .rightDiv{
-            text-align: center;
-            width: 30vw;
-            height: 100%;
-            background-color: black;
-            display: inline-block;
-        }
-
-        .divHeader{
-            margin-top: 8.5vh;
-        }
-
-        .divHeader a{
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 1vw;
-            margin-left: 5%;
-            margin-right: 5%;
-        }
-
-        .divContent{
-            margin-top: 30vh;
-        }
-
-        .divContent p{
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 1.3vmax;
-        }
-
-        .divFooter{
-            position: absolute;
-            bottom: 2vw;
-            text-align: right;
-            display: inline-block;
-        }
-
-        .divFooter p{
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 1vw;
-        }
-
-        .search_Div{
-            width: 100vw;
-            margin-left: 5%;
-            margin-top: 5%;
-        }
 
     </style>
 
@@ -108,12 +29,7 @@
         <div class="leftDiv">
             <!--검색기능 메인에 넣어놓기(검색단어, 게시판)-->
             <a href="/"><h1>YBLOGLAB</h1></a>
-            <a style=" font-size: 1vw;
-            margin-left: 5%;
-            margin-right: 5%;"
-               th:if="${#authorization.expr('isAuthenticated()')} == true"
-               th:href="@{user/info(username=${#authentication.getName()})}"
-               th:text="${#authentication.getName()}+ '님 반갑습니다!' "></a>
+
 
             <div class="search_Div">
                 <input id="searchTitle" type="text"> <button onclick="searchBoard()">검색</button>
@@ -127,7 +43,6 @@
                 </select>
             </div>
 
-
         </div>
         <div class="rightDiv">
             <div class="divHeader">
@@ -140,7 +55,7 @@
 
             <div class="divContent">
                 <p>개인적으로 공부하고 얻은 지식과 <br> 다양한 기능들을 보여주는 블로그입니다.</p>
-                <a href="/auth/Portfolio"><p>포트폴리오 보러가기</p></a>
+                <a href="/auth/portfolio"><p>포트폴리오 보러가기</p></a>
             </div>
 
             <div class="divFooter">

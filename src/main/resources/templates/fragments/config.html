@@ -41,47 +41,121 @@
     <!-- 공통으로 쓰이는 css파일을넣는다.-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-    <!-- jquery-->
+    <!--글씨체 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+    <!-- font-family: 'Gugi', cursive; -->
 
-    <!-- jquery-->
+    <!--도현 글씨체 , 이건 기본 글쓰기나, 읽기때 사용할 폰트임 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <!-- font-family: 'Do Hyeon', sans-serif;  -->
 
     <style >
+
         html, body{
             overflow: visible;
             width: 100vw;
             height: 100vh;
             margin : 0;
             padding: 0;
+
+
         }
 
-        /* 여기가 모바일*/
-        @media screen and (max-width: 769px) {
-            html, body{
-                overflow: auto;
-                width: 100vw;
-                height: 100vh;
-                margin : 0;
-                padding: 0;
-            }
+        header{
+
+
+        }
+        /* 이렇게 굳이 나눈 이유는 header자체는  css flex가 안먹혀서 바꿔줬다*/
+        .parentSec{
+            width: 1100px;
+            margin: 0 auto;
+
+            position: relative;
         }
 
-        /* 여기가 태블릿*/
-        @media screen and (max-width: 1024px) {
-            html, body{
-                overflow: auto;
-                width: 100vw;
-                height: 100vh;
-                margin : 0;
-                padding: 0;
-            }
+         .topSec{
+             height: 100px;
+             width: 200px;
+             left: 0;
+             right: 0;
+             margin: 20px auto;
         }
 
-        a{
-            transition: 0.7s;
+
+         .topSec img{
+             height: 100px;
+         }
+
+
+        .bottomSec{
+            margin: 0 auto;
+            width: 800px;
         }
-        a:link {color: whitesmoke; font-weight: bold; text-decoration: none;}
-        a:visited {color: whitesmoke; font-weight: bold; text-decoration: none;}
-        a:hover {color: darkorange; font-weight: bold; text-decoration: underline;}
+
+        .bottomSec a{
+            position: relative;
+            color: black;
+            margin: 0 10px;
+            font-family: 'Gugi', cursive;
+            font-size: 30px;
+
+            text-decoration: none;
+            line-height: 40px;
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+
+        .bottomSec a::after{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            content: attr(title);
+            color: mediumpurple;
+            border-bottom: 4px solid mediumpurple;
+            max-width: 0;
+            overflow: hidden;
+            transition: all 0.8s;
+        }
+
+        .bottomSec a:hover::after{
+            max-width: 100%;
+        }
+
+        .bottomSec a:visited{
+            text-decoration: none;
+        }
+        .bottomSec a:link{
+            text-decoration: none;
+        }
+
+        .loginBar{
+            /*  로그인시 바가 위에서 아래로 내려오면서 환영합니다. AA님 띄어주기*/
+            /* visibility: hidden; */
+
+            text-align: left;
+        }
+
+        .loginBar a{
+            /*  로그인시 바가 위에서 아래로 내려오면서 환영합니다. AA님 띄어주기*/
+            /* visibility: hidden; */
+            color: black;
+            margin: 0 auto;
+        }
+
+        .loginBar a:visited{
+            text-decoration: none;
+        }
+        .loginBar a:link{
+            text-decoration: none;
+        }
 
     </style>
 
