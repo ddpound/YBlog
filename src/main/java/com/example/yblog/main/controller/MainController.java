@@ -115,12 +115,13 @@ public class MainController {
 
             AllStaticElement.statusNum ++;
         }
-
+        // 모바일이 아닌 하나의 페이지의 반응형을 보자
+        /*
         device = DeviceUtils.getCurrentDevice(request);
 
         if (device.isMobile() || device.isTablet()){
             return "mIndex";
-        }
+        }*/
 
         return "index";
     }

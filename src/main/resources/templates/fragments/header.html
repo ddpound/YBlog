@@ -19,14 +19,17 @@
     </section>
 
 
-    <section class="bottomSec">
-      <a href="/auth/patchnote">공지</a>
-      <a href="/auth/boardmain">자유게시판</a>
-      <a href="/auth/skillboard">기술게시판</a>
-      <a href="/auth/portfolio">포트폴리오</a>
-      <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
-      <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
-    </section>
+    <div class="bottomSec">
+      <div>
+        <a href="/auth/patchnote">공지</a>
+        <a href="/auth/boardmain">자유게시판</a>
+        <a href="/auth/skillboard">기술게시판</a>
+        <a href="/auth/portfolio">포트폴리오</a>
+        <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
+        <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
+      </div>
+
+    </div>
 
     <section class="loginBar">
       <a th:if="${#authorization.expr('isAuthenticated()')} == true"

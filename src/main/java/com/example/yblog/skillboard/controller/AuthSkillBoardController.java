@@ -30,7 +30,7 @@ public class AuthSkillBoardController {
 
     @GetMapping("")
     public String mainView(Model model,
-                           @PageableDefault(size = 5,
+                           @PageableDefault(size = 6,
                                    sort = "id",
                                    direction = Sort.Direction.DESC) Pageable pageable,
                            HttpServletRequest httpServletRequest){
@@ -40,13 +40,13 @@ public class AuthSkillBoardController {
 
 
 
-
-        // 후에 모바일 인식을 위함
+        // 모바일 체크 하지않고 하나의 페이지 에서만 반응형 웹을 만들기위해
+        /*// 후에 모바일 인식을 위함
         device = DeviceUtils.getCurrentDevice(httpServletRequest);
 
         if(device.isMobile() || device.isTablet()){
             return "skillBoard/mSkillBoardMain";
-        }
+        }*/
 
 
         return "skillBoard/skillBoardMain";

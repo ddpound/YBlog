@@ -4,6 +4,20 @@
 
 <footer th:fragment="footerFragment">
 
+    <script>
+
+        function showMenuDiv(){
+            let menuDiv = document.getElementById('menuDiv')
+            menuDiv.style.left = '0';
+
+        }
+        function closeMenuDiv(){
+            let menuDiv = document.getElementById('menuDiv')
+            menuDiv.style.left = '-55vw';
+
+        }
+
+    </script>
 
     <div class="footermainDiv">
         <div class="footerChildDiv1">
@@ -13,5 +27,33 @@
         </div>
 
     </div>
+
+    <div class="toggleDiv">
+        <button onclick="showMenuDiv()"><img src="/img/buttonLogo/toggleHambug.png"></button>
+    </div>
+
+    <div id="menuDiv" class="menuDiv">
+        <div>
+            <h2>YBLOGLAB</h2>
+            <ul>
+                <li><a href="/auth/patchnote" >공지</a></li>
+                <li><a  href="/auth/boardmain">자유게시판</a></li>
+                <li><a href="/auth/skillboard">기술게시판</a></li>
+                <li><a href="/auth/portfolio">포트폴리오</a></li>
+                <li th:if="${#authorization.expr('isAuthenticated()')} == false"><a href="/auth/loginForm">로그인</a></li>
+                <li th:if="${#authorization.expr('isAuthenticated()')} == true"><a  href="/board/write">글쓰기</a></li>
+                <li><button onclick="closeMenuDiv()">닫기</button></li>
+            </ul>
+
+
+        </div>
+
+
+    </div>
+
+    <div class="footerTopButton">
+        Top
+    </div>
+
 </footer>
 </html>
