@@ -17,6 +17,10 @@
 
         }
 
+        function uptop(){
+            window.scrollTo(0,0)
+        }
+
     </script>
 
     <div class="footermainDiv">
@@ -34,25 +38,23 @@
 
     <div id="menuDiv" class="menuDiv">
         <div>
-            <h2>YBLOGLAB</h2>
-            <ul>
-                <li><a href="/auth/patchnote" >공지</a></li>
-                <li><a  href="/auth/boardmain">자유게시판</a></li>
-                <li><a href="/auth/skillboard">기술게시판</a></li>
-                <li><a href="/auth/portfolio">포트폴리오</a></li>
-                <li th:if="${#authorization.expr('isAuthenticated()')} == false"><a href="/auth/loginForm">로그인</a></li>
-                <li th:if="${#authorization.expr('isAuthenticated()')} == true"><a  href="/board/write">글쓰기</a></li>
-                <li><button onclick="closeMenuDiv()">닫기</button></li>
-            </ul>
-
-
+            <h3><a href="/" >YBLOGLAB</a></h3>
+            <a href="/auth/patchnote" >공지</a></li>
+            <a  href="/auth/boardmain">자유게시판</a></li>
+            <a href="/auth/skillboard">기술게시판</a></li>
+            <a href="/auth/portfolio">포트폴리오</a></li>
+            <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a></li>
+            <a  th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a></li>
+            <button onclick="closeMenuDiv()">ClOSE</button></li>
         </div>
+
+
 
 
     </div>
 
     <div class="footerTopButton">
-        Top
+        <button onclick="uptop()">Top</button></li>
     </div>
 
 </footer>

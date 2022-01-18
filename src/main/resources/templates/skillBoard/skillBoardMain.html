@@ -14,11 +14,10 @@
         .mainBoardDiv{
             width: 1100px;
             margin: 100px auto;
+            position: relative;
         }
 
         .mainBoardDiv a{
-            font-size: 30px;
-            font-family: 'Do Hyeon', sans-serif;
             color: black;
             text-decoration: none;
         }
@@ -33,14 +32,71 @@
         }
 
         .boardDivs{
-
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .boardDivs a{
+            width: 50%;
         }
 
         .boardDiv{
-            width: 500px;
+            width: 80%;
             margin: 30px auto;
-            background-color: #c2b2f0;
-            border: 3px solid black;
+        }
+
+        .boardDiv span{
+            display: block;
+        }
+
+        .boardDivs .dateSpan{
+            font-size: 15px;
+            font-family: 'Do Hyeon', sans-serif;
+            border-bottom: solid  2px  #c2b2f0;
+        }
+
+        .boardDivs .spanTitle{
+            font-size: 30px;
+            font-family: 'Do Hyeon', sans-serif;
+
+        }
+
+        .boardDivs .spananother{
+            font-size: 20px;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        .boardThumImage{
+            width: 80%;
+            margin: 30px auto;
+        }
+
+        .boardThumImage img{
+            width: 100%;
+        }
+
+        .boardListNumber{
+            position: absolute;
+            bottom: -20px;
+            width: 100%;
+        }
+
+        .boardListNumber ul,li{
+            list-style: none;
+            display: inline;
+        }
+
+
+        @media screen and (max-width: 1100px){
+            .mainBoardDiv{
+                width: 100vw;
+                margin: 100px 0;
+                position: relative;
+            }
+
+            .boardDivs a{
+                width: 100%;
+            }
         }
 
 
@@ -59,21 +115,28 @@
     <div class="mainBoardDiv">
             <div class="boardDivs" th:if="${boards.size() != 0}">
                 <a th:href=" @{/auth/skillboard/details/{id}(id = ${board.getId()})}"  th:each="board :${boards}">
+                    <!-- 썸네일만 가져와주는 애를 만들고 여기다가 비교해서 있으면 썸넬사진 없으면 기본썸넬 사진 만들자 -->
+                    <div class="boardThumImage">
+                        <img src="/img/thumbnailandimage/defaultthumbnail.png">
+                    </div>
                     <div class="boardDiv" >
-                        <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
-                        <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
-                        <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
-                        <span>작성날짜 :</span>&nbsp;  <span th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
+                       &nbsp;<span class="dateSpan" th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
+                        <span class="spanTitle" th:text="${board.getTitle()}"></span>
+                        <span class="spananother" th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;
+                        <span class="spananother" th:text="${board.getCount()}"></span>
                     </div>
                 </a>
 
-                <ul >
-                    <li  th:if="${boardsPage.number != 0}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number - 1})}">Previous</a></li>
-                    <th:block th:each="num : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
-                        <li ><a th:href="@{/auth/skillboard/(page=${num})}" th:text="${num+1}"></a></li>
-                    </th:block>
-                    <li  th:if="${boardsPage.last != true}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number + 1})}">Next</a></li>
-                </ul>
+                <div class="boardListNumber">
+                    <ul>
+                        <li th:if="${boardsPage.number != 0}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number - 1})}">Previous</a></li>
+                        <th:block th:each="num : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
+                            <li ><a th:href="@{/auth/skillboard/(page=${num})}" th:text="${num+1}"></a></li>
+                        </th:block>
+                        <li  th:if="${boardsPage.last != true}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number + 1})}">Next</a></li>
+                    </ul>
+                </div>
+
 
             </div>
 

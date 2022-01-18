@@ -95,12 +95,6 @@
 
 
     <div class="boardMainBox">
-        <div class="headerbar">
-            <a href="/">YBLOGLAB</a>
-            <a href="/auth/patchnote">공지</a>
-            <a href="/auth/boardmain">게시판</a>
-            <a href="/auth/Portfolio">포트폴리오</a>
-        </div>
         <div class="titleInfodiv">
             <h1 th:text="${board.getTitle()}"></h1>
             <h6> 작성자 : <label th:text="${board.getUser().getUsername()}"></label> 조회수 : <label th:text="${board.getCount()}"></label></h6>
@@ -108,8 +102,8 @@
                 <script th:inline="javascript">
                     let boardId = [[${board.getId()}]]
                 </script>
-                <button type="button" class="btn btn-outline-warning" id="boardmodify" onclick="gomodifyskillboard(boardId)">수정</button>
-                <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="skillboardDelete(boardId)">삭제</button>
+                <button type="button"  id="boardmodify" onclick="gomodifyskillboard(boardId)">수정</button>
+                <button type="button"  id="boarddelete" onclick="skillboardDelete(boardId)">삭제</button>
             </div>
         </div>
 
