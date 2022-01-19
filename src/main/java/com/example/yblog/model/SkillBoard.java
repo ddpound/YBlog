@@ -52,6 +52,12 @@ public class SkillBoard {
     @Column
     private String description;
 
+    // 썸네일이있는게 이쁨 그래서 썸네일 애트리뷰트도 추가함
+    @Column
+    private String thumbnail;
+
+    //카테고리 테이블 만들고 카테고리랑 조인 시킬꺼임
+
 
 
     @CreationTimestamp

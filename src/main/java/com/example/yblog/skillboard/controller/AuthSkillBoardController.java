@@ -49,6 +49,7 @@ public class AuthSkillBoardController {
         }*/
 
 
+
         return "skillBoard/skillBoardMain";
     }
 

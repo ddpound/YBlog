@@ -53,6 +53,11 @@ public class SkillBoardService {
 
             skillBoard.setContent(newSkillBoard.getContent());
             skillBoard.setImagefileid(newSkillBoard.getImagefileid());
+
+            // 해당 게시판의 썸네일 src값을 반환함
+            skillBoard.setThumbnail(thumbNailSrc(skillBoard.getImagefileid()));
+
+
             skillBoardRepository.save(skillBoard);
 
             modifyImagefile(skillBoard.getContent(), skillBoard.getImagefileid());
@@ -109,7 +114,10 @@ public class SkillBoardService {
         board.setContent(skillBoard1.getContent());
         board.setDescription(skillBoard.getDescription());
 
+
+        // 다지우고 체킹해야지
         modifyImagefile(board.getContent(), board.getImagefileid());
+        board.setThumbnail(thumbNailSrc(skillBoard.getImagefileid()));
 
 
     }
@@ -321,8 +329,6 @@ public class SkillBoardService {
         }
 
     }
-
-
     @Transactional
     public void boardCountUp(int skillboardId) {
         SkillBoard board = skillBoardRepository.findById(skillboardId)
@@ -338,4 +344,42 @@ public class SkillBoardService {
         // 해당함수로  Service가 종료와 함게 트랜잭션 종료, 이때 더티체킹으로 자동 업데이트된다
 
     }
+
+
+    // 게시판 id 가져오기, 게시판 사진있는지 파악
+    // 해당 경로파일
+    public String thumbNailSrc(String imageFiled){
+        String savecon;
+        String con;
+
+        if(AllStaticElement.OsName.equals("window")){
+            con = "C:\\Confirm_SaveImage\\"+imageFiled+"\\";
+            savecon = "\\Confirm_SaveImage\\"+imageFiled+"\\";
+        }else{
+            con = "/home/youseongjung/Templates/Confirm_SaveImage/"+imageFiled+"/";
+            savecon = "/Confirm_SaveImage/"+imageFiled+"/";
+        }
+
+        File dir = new File(con);
+        File[] files = dir.listFiles();
+
+        //  값 자체가 비어있을때
+        if(imageFiled.isEmpty()){
+            return "\\img\\thumbnailandimage\\defaultthumbnail.png";
+        }
+
+        // 파일이 있어도 안에 파일은 하나도 없을수가 있음
+        if(files ==null || files.length==0){
+            // 아무 사진파일도 없다는 거니깐 썸네일 없음 기본 썸네일 해줘야함
+            return "\\img\\thumbnailandimage\\defaultthumbnail.png";
+        }else{
+            // 한개라도 있다는 뜻 가장 첫번째 꺼를 반환
+            //테스트 결과 확장자 명까지 가져옴 있는 그대로 가져옴
+            return savecon+files[0].getName();
+        }
+
+
+    }
+
+
 }

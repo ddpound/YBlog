@@ -12,47 +12,41 @@
         @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-        body{
-            background-color: #153040;
+
+        .boardDetailMainBox{
+            width: 1100px;
+            min-height: 500px;
+
+            border-top: solid 3px #c2b2f0;
+
+            margin: 40px auto;
         }
 
-        .boardMainBox{
-            margin: 0 0 0 0;
-            text-align: center;
-            background-color: white;
-            width: 100vw;
-            height: auto;
-
+        .boardDetailMainBox h1{
+            font-size: 20px;
+            font-weight: bold;
         }
 
-        .titleInfodiv {
-            background-color: #153040;
+        .boardDetailMainBox img{
             width: 100%;
-            height: auto;
-            color : white;
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 2vw;
-        }
-
-
-        .boardcontent img{
             max-width: 100%;
         }
 
-        .card-header{
-            background-color: #153040;
-            color: white;
-        }
-
-        .headerbar{
-            background-color: black;
+        .titleInfodiv{
+            margin: 20px auto;
             text-align: center;
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 2.5vh;
+            border-bottom: solid 3px #c2b2f0;
         }
 
-        .headerbar a{
-            margin: 0 5vw;
+
+
+        @media screen and (max-width: 1100px) {
+            .boardDetailMainBox{
+                width: 100vw;
+                min-height: 500px;
+            }
+
+
         }
 
     </style>
@@ -94,7 +88,7 @@
 <div layout:fragment="content">
 
 
-    <div class="boardMainBox">
+    <div class="boardDetailMainBox">
         <div class="titleInfodiv">
             <h1 th:text="${board.getTitle()}"></h1>
             <h6> 작성자 : <label th:text="${board.getUser().getUsername()}"></label> 조회수 : <label th:text="${board.getCount()}"></label></h6>
