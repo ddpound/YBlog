@@ -111,7 +111,10 @@ function saveReply(){
     var replyContent = $("#replyContent").val()
     var boardId = $("#replyboardid").val()
 
-    if(replyContent != null){
+
+    if(replyContent===""){
+        alert("댓글을 입력해주세요")
+    }else{
         let form = {
             content : replyContent
         }
@@ -131,8 +134,6 @@ function saveReply(){
         }).fail(function (){
             alert("댓글 쓰기 실패 (문제확인 해주세요)")
         })
-    }else{
-        alert("댓글을 입력해주세요")
     }
 
 

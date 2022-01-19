@@ -12,71 +12,103 @@
     @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-    body{
-      background-color: #153040;
+
+
+    .boardDetailMainBox{
+      width: 1100px;
+      min-height: 500px;
+
+      border-top: solid 3px #c2b2f0;
+
+      margin: 40px auto;
     }
 
-    .boardMainBox{
-      margin: 0 0 0 0;
-      text-align: center;
-      background-color: white;
-      width: 100vw;
-      height: auto;
-
+    .boardcontent{
+      min-height: 500px;
+      border-bottom: 2px solid  #c2b2f0;
     }
 
-    .titleInfodiv {
-      background-color: #153040;
+    .boardDetailMainBox h1{
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .boardDetailMainBox img{
       width: 100%;
-      height: auto;
-      color : white;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 2vw;
-    }
-
-
-    .boardcontent img{
       max-width: 100%;
     }
 
-    .card-header{
-      background-color: #153040;
-      color: white;
-    }
-
-    .headerbar{
-      background-color: black;
+    .titleInfodiv{
+      margin: 20px auto;
       text-align: center;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 1.5vw;
+      border-bottom: solid 3px #c2b2f0;
     }
 
-    /* 여기가 모바일*/
-    @media screen and (max-width: 769px) {
-      .headerbar{
-        background-color: black;
-        text-align: center;
-        font-family: 'Noto Sans KR', sans-serif;
-        font-size: 3vw;
+    .replyContainer{
+      width: 100%;
+      font-family: 'Do Hyeon', sans-serif;
+      display: flex;
+      margin-top: 20px;
+    }
+
+    .replyDiv{
+      margin: 20px 0;
+      width: 100%;
+    }
+
+    .replyDiv label:nth-child(3){
+      display: block;
+    }
+
+    .replyDeleteButton{
+      height: 35px;
+      margin: auto 0;
+      float: right;
+    }
+
+    .replyDeleteButton button{
+      all: unset;
+    }
+
+    .replyDeleteButton img{
+      width: 30px;
+      height: 30px;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit:cover;
+    }
+
+    .replyAreaContainer{
+      margin-top: 20px;
+      width: 100%;
+      display: flex;
+    }
+    .replyAreaContainer button{
+      all: unset;
+      width: auto;
+      float: right;
+    }
+    .replyAreaContainer img{
+      width: 30px;
+      height: 30px;
+    }
+
+    .replyTextarea{
+      width: 100%;
+      max-width: 100%;
+      resize: none;
+      border-radius: 10px;
+      border: 1px solid whitesmoke;
+    }
+
+
+    @media screen and (max-width: 1100px) {
+      .boardDetailMainBox{
+        width: 100vw;
+        min-height: 500px;
       }
-    }
-
-    /* 여기가 태블릿*/
-    @media screen and (max-width: 1024px) {
-      .headerbar{
-        background-color: black;
-        text-align: center;
-        font-family: 'Noto Sans KR', sans-serif;
-        font-size: 4vw;
-      }
-    }
 
 
-
-
-
-    .headerbar a{
-      margin: 0 5vw;
     }
 
   </style>
@@ -104,8 +136,6 @@
         document.getElementById("ogDescription").setAttribute("content", description)
       }
 
-
-
     }
 
     myFunction();
@@ -118,13 +148,7 @@
 <div layout:fragment="content">
 
 
-  <div class="boardMainBox">
-    <div class="headerbar">
-      <a href="/">YBLOGLAB</a>
-      <a href="/auth/patchnote">공지</a>
-      <a href="/auth/boardmain">게시판</a>
-      <a href="/auth/Portfolio">포트폴리오</a>
-    </div>
+  <div class="boardDetailMainBox">
     <div class="titleInfodiv">
       <h1 th:text="${board.getTitle()}"></h1>
       <h6> 작성자 : <label th:text="${board.getUser().getUsername()}"></label> 조회수 : <label th:text="${board.getCount()}"></label></h6>
@@ -138,36 +162,39 @@
     </div>
 
     <div class="boardcontent" th:utext="${board.getContent()}"> </div>
-    <br>
-    <hr />
-    <div class="card " th:if=" ${#authentication.getName()} != 'anonymousUser' ">
-      <input id="replyboardid" type="hidden" th:value="${board.getId()}">
-      <div class="card-body"><textarea id="replyContent" class="form-control" style="resize: none" rows="/"></textarea></div>
-      <div class="card-footer d-flex justify-content-end"><button class="btn btn-dark" onclick="saveReply()">작성</button></div>
-    </div>
-    <br>
-    <hr />
 
-    <div class="card" style="margin-bottom: 15px;">
-      <div class="card-header " style="margin-bottom: 15px;">댓글 리스트 </div>
-      <ul class="list-group" th:each="reply :${board.getYreplys()}">
+
+    <div class="replyAreaContainer" th:if=" ${#authentication.getName()} != 'anonymousUser' ">
+      <input id="replyboardid" type="hidden" th:value="${board.getId()}">
+      <textarea id="replyContent" class="replyTextarea" placeholder="댓글을 입력해주세요"></textarea>
+      <button onclick="saveReply()"><img src="/img/buttonLogo/writelogo.png"></button>
+    </div>
+
+
+      <div id="replyContainer" class="replyContainer" th:each="reply :${board.getYreplys()}">
         <script th:inline="javascript">
           // 보드 Id , Reply id가 들어가야함
-          let replyId = [[${reply.getId()}]]
-        </script>
-        <li class="list-group-item d-flex justify-content-between">
-          <div class="card-body"><label th:text="${reply.getContent()}"></label></div>
-          <div class="d-flex">
-            <div class="font-italic">작성자 :  <label th:text="${reply.getUser().getUsername()}"></label></div>&nbsp;&nbsp;&nbsp;
-            <div th:if="${reply.getUser().getUsername()} == ${#authentication.getName()} or ${#authentication.getName()} == 'Y' ">
-              <button type="button" class="btn btn-danger" onclick="replyDelete(boardId,replyId)">삭제</button>
-            </div>
+          var replyId = [[${reply.getId()}]]
 
-          </div>
-        </li>
-      </ul>
-      <br><br><br>
-    </div>
+          document.getElementById('replyContainer').id = replyId
+
+        </script>
+
+        <div class="replyDiv">
+          <label th:text="'작성자:' + ${reply.getUser().getUsername()}"></label>
+          <label th:text="${#dates.format(reply.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></label>
+          <label th:text="${reply.getContent()}"></label>
+        </div>
+        <div class="replyDeleteButton" th:if="${reply.getUser().getUsername()} == ${#authentication.getName()} or ${#authentication.getName()} == 'Y' ">
+
+          <button type="button" onclick="replyDelete(boardId,replyId)"><img src="/img/buttonLogo/removelogo.png"></button>
+        </div>
+
+
+
+      </div>
+
+
   </div>
 </div>
 </html>

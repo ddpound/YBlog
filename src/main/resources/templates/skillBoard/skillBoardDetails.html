@@ -22,6 +22,11 @@
             margin: 40px auto;
         }
 
+        .boardcontent{
+            min-height: 500px;
+            border-bottom: 2px solid  #c2b2f0;
+        }
+
         .boardDetailMainBox h1{
             font-size: 20px;
             font-weight: bold;
@@ -96,8 +101,8 @@
                 <script th:inline="javascript">
                     let boardId = [[${board.getId()}]]
                 </script>
-                <button type="button"  id="boardmodify" onclick="gomodifyskillboard(boardId)">수정</button>
-                <button type="button"  id="boarddelete" onclick="skillboardDelete(boardId)">삭제</button>
+                <button type="button" class="btn btn-outline-warning" id="boardmodify" onclick="gomodifyskillboard(boardId)">수정</button>
+                <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="skillboardDelete(boardId)">삭제</button>
             </div>
         </div>
 

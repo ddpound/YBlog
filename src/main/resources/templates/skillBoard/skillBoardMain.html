@@ -103,6 +103,25 @@
             font-family: 'Do Hyeon', sans-serif;
         }
 
+        .writeButton{
+            position: absolute;
+            bottom: -80px;
+
+        }
+
+        .writeButton button{
+            all: unset;
+            width: 40px;
+            height: 40px;
+            float: right;
+        }
+        .writeButton img{
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+
+
 
         @media screen and (max-width: 1100px){
             .mainBoardDiv{
@@ -182,8 +201,8 @@
                 <span class="title"> 저장된 글이 없습니다.</span>
             </div>
 
-            <div class="col-8" th:if="${#authentication.getName()} == 'Y'">
-                <button type="button" onclick="skillBoardWriteGo()">글작성하기</button>
+            <div class="writeButton" th:if="${#authentication.getName()} == 'Y'">
+                <button type="button" onclick="skillBoardWriteGo()"><img src="/img/buttonLogo/writelogo.png"></button>
             </div>
 
 

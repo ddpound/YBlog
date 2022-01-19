@@ -66,6 +66,9 @@ public class BoardService {
             yBoard.setContent(chyBoard.getContent());
             yBoard.setImagefileid(chyBoard.getImagefileid());
 
+            // 해당 게시판의 썸네일 src값을 반환함
+            yBoard.setThumbnail(thumbNailSrc(yBoard.getImagefileid()));
+
             yBoardRepository.save(yBoard);
 
             modifyImagefile(yBoard.getContent(),yBoard.getImagefileid());
@@ -97,6 +100,9 @@ public class BoardService {
 
                     yBoard.setContent(chyBoard.getContent());
                     yBoard.setImagefileid(chyBoard.getImagefileid());
+                    // 해당 게시판의 썸네일 src값을 반환함
+                    yBoard.setThumbnail(thumbNailSrc(yBoard.getImagefileid()));
+
 
                     yBoardRepository.save(yBoard);
 
@@ -170,7 +176,8 @@ public class BoardService {
         // 이렇게 트랜잭션이 완료되고 여기서 yboard의  content를 받아서 현재 파일에 있는 이미지와 비교해서 없으면
         // 삭제하고 놔두는 로직을 짜야한다
         modifyImagefile(board.getContent(), board.getImagefileid());
-
+        // 해당 게시판의 썸네일 src값을 반환함
+        board.setThumbnail(thumbNailSrc(yBoard.getImagefileid()));
 
     }
 
@@ -442,6 +449,41 @@ public class BoardService {
                 }
             }
         }
+
+    }
+
+    // 게시판 id 가져오기, 게시판 사진있는지 파악
+    // 해당 경로파일
+    public String thumbNailSrc(String imageFiled){
+        String savecon;
+        String con;
+
+        if(AllStaticElement.OsName.equals("window")){
+            con = "C:\\Confirm_SaveImage\\"+imageFiled+"\\";
+            savecon = "\\Confirm_SaveImage\\"+imageFiled+"\\";
+        }else{
+            con = "/home/youseongjung/Templates/Confirm_SaveImage/"+imageFiled+"/";
+            savecon = "/Confirm_SaveImage/"+imageFiled+"/";
+        }
+
+        File dir = new File(con);
+        File[] files = dir.listFiles();
+
+        //  값 자체가 비어있을때
+        if(imageFiled.isEmpty()){
+            return "\\img\\thumbnailandimage\\defaultthumbnail.png";
+        }
+
+        // 파일이 있어도 안에 파일은 하나도 없을수가 있음
+        if(files ==null || files.length==0){
+            // 아무 사진파일도 없다는 거니깐 썸네일 없음 기본 썸네일 해줘야함
+            return "\\img\\thumbnailandimage\\defaultthumbnail.png";
+        }else{
+            // 한개라도 있다는 뜻 가장 첫번째 꺼를 반환
+            //테스트 결과 확장자 명까지 가져옴 있는 그대로 가져옴
+            return savecon+files[0].getName();
+        }
+
 
     }
 

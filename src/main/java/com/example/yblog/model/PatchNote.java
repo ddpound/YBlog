@@ -38,6 +38,10 @@ public class PatchNote {
     @Column
     private String description;
 
+    // 썸네일이있는게 이쁨 그래서 썸네일 애트리뷰트도 추가함
+    @Column
+    private String thumbnail;
+
 
 
     @CreationTimestamp
