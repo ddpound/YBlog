@@ -14,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,21 +37,15 @@ public class PortfolioBoardController {
     Device device;
 
     @GetMapping(value = "/auth/portfolio")
-    public String goPortfolio(Model model, @PageableDefault(size = 5,sort = "id",
+    public String goPortfolio(Model model, @PageableDefault(size = 6,sort = "id",
             direction = Sort.Direction.DESC)Pageable pageable, HttpServletRequest request){
 
         model.addAttribute("boards",portfolioBoardService.portboardList(pageable));
         model.addAttribute("boardsPage",portfolioBoardService.portBoardListPage(pageable));
 
 
-        device = DeviceUtils.getCurrentDevice(request);
 
-        if (device.isMobile() || device.isTablet()){
-            return "PortfolioBoard/mPortfolioMainPage";
-        }
-
-
-        return "PortfolioBoard/PortfolioBoardDetail";
+        return "PortfolioBoard/portfolioBoardMain";
     }
 
     @PostMapping(value = "/portboard/save")

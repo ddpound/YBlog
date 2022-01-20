@@ -8,69 +8,49 @@
 <th:block layout:fragment="css">
   <style th:inline="text">
 
-    body{
-      background-color: #153040;
+    .boardDetailMainBox{
+      width: 1100px;
+      min-height: 500px;
+
+      border-top: solid 3px #c2b2f0;
+
+      margin: 40px auto;
     }
 
-    .boardcontent img{
-      max-width: 100%;
+    .boardcontent{
+      min-height: 500px;
+      border-bottom: 2px solid  #c2b2f0;
     }
 
-    .boardMainBox{
-      margin: 0 0 0 0;
-      text-align: center;
-      background-color: white;
-      width: 100vw;
-      height: auto;
 
+
+    .boardDetailMainBox h1{
+      font-size: 20px;
+      font-weight: bold;
     }
 
-    .titleInfodiv {
-      background-color: #153040;
+    .boardDetailMainBox img{
       width: 100%;
-      height: auto;
-      color : white;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 1vw;
-    }
-
-
-    .boardcontent img{
       max-width: 100%;
     }
 
 
-    .headerbar{
-      background-color: black;
+    .titleInfodiv{
+      margin: 20px auto;
       text-align: center;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 1.5vw;
+      border-bottom: solid 3px #c2b2f0;
     }
 
-    /* 여기가 모바일*/
-    @media screen and (max-width: 769px) {
-      .headerbar{
-        background-color: black;
-        text-align: center;
-        font-family: 'Noto Sans KR', sans-serif;
-        font-size: 3vw;
+
+
+    @media screen and (max-width: 1100px) {
+      .boardDetailMainBox{
+        width: 100vw;
+        min-height: 500px;
       }
-    }
 
-    /* 여기가 태블릿*/
-    @media screen and (max-width: 1024px) {
-      .headerbar{
-        background-color: black;
-        text-align: center;
-        font-family: 'Noto Sans KR', sans-serif;
-        font-size: 4vw;
-      }
-    }
 
-    .headerbar a{
-      margin: 0 5vw;
     }
-
 
   </style>
 
@@ -108,31 +88,22 @@
 
 
 <div layout:fragment="content">
-  <div class="boardMainBox" >
-    <div class="headerbar">
-      <a href="/">YBLOGLAB</a>
-      <a href="/auth/patchnote">공지</a>
-      <a href="/auth/boardmain">게시판</a>
-      <a href="/auth/Portfolio">포트폴리오</a>
+  <div class="boardDetailMainBox" >
+    <div class="titleInfodiv">
+      <label>[제목]</label>
+      <h1 th:text="${portboard.getTitle()}"></h1>
+      <h6> 작성자 : <label th:text="${portboard.getUser().getUsername()}"></label> 조회수 : <label th:text="${portboard.getCount()}"></label></h6>
+      <div th:if="${portboard.getUser().getUsername()}== ${#authentication.getName()} or ${#authentication.getName()}== 'Y' ">
+        <script th:inline="javascript">
+          let boardId = [[${portboard.getId()}]]
+        </script>
+        <button type="button" class="btn btn-outline-warning" id="boardmodify" onclick="goModifywritePortfolio(boardId)">수정</button>
+        <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="PortfolioDelete(boardId)">삭제</button>
+      </div>
     </div>
-  <div class="titleInfodiv">
-    <label>[제목]</label>
-    <h1 th:text="${portboard.getTitle()}"></h1>
-    <h6>조회수 : <label th:text="${portboard.getCount()}"></label> </h6>
-    <div th:if="${portboard.getUser().getUsername()}== ${#authentication.getName()} or ${#authentication.getName()}== 'Y' ">
-      <script th:inline="javascript">
-        let boardId = [[${portboard.getId()}]]
-      </script>
-      <button type="button" class="btn btn-outline-warning" id="boardmodify" onclick="goModifywritePortfolio(boardId)">수정</button>
-      <button type="button" class="btn btn-outline-danger" id="boarddelete" onclick="PortfolioDelete(boardId)">삭제</button>
-    </div>
-  </div>
 
     <div class="boardcontent" th:utext="${portboard.getContent()}"> </div>
-    <br><br><br><br><br><br><br>
   </div>
-
-
 
 
 </div>

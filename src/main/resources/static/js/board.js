@@ -141,7 +141,7 @@ function saveReply(){
 }
 
 
-function replyDelete(boardId,replyId){
+function replyDelete(boardId , replyId){
     $.ajax({
         type: "DELETE",
         url: "/board/"+boardId+"/reply/"+replyId,
@@ -156,7 +156,4 @@ function replyDelete(boardId,replyId){
     }).fail(function (){
         alert("댓글 삭제 실패 (문제확인 해주세요)")
     })
-
-
-
 }

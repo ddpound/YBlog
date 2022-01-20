@@ -17,7 +17,7 @@ public class Scheduler {
     @Autowired
     BRLRepository brlRepository;
 
-    @Scheduled(cron = "* * 12 12 12 *")
+    @Scheduled(cron = "10-15 12 12 * * *")
     public void croJobSch(){
         brlRepository.deleteAll();
         log.info("clear All Delete BoardReply Table");

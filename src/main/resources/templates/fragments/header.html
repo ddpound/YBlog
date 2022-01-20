@@ -15,7 +15,19 @@
   <section class="parentSec">
 
     <section class="topSec">
-      <a href="/"><img class="mainbloglogo" src="/img/bloglogo.png"></a>
+      <a href="/"><img id="mainLogo" class="mainbloglogo" src="/img/bloglogo.png"></a>
+
+      <script>
+        var logoImage = document.getElementById('mainLogo')
+        logoImage.addEventListener('mouseover' ,function (){
+          logoImage.setAttribute('src', '/img/YLabLogoHover.png')
+        })
+        logoImage.addEventListener('mouseout' ,function (){
+          logoImage.setAttribute('src', '/img/bloglogo.png')
+        })
+
+      </script>
+
     </section>
 
 
@@ -33,7 +45,7 @@
 
     <section class="loginBar">
       <a th:if="${#authorization.expr('isAuthenticated()')} == true"
-         th:href="@{user/info(username=${#authentication.getName()})}"
+         th:href="@{/user/info(username=${#authentication.getName()})}"
          th:text="${#authentication.getName()}+ '님 반갑습니다!' "></a>
     </section>
 

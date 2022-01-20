@@ -56,5 +56,18 @@ public class PatchNoteService {
     }
 
 
+    @Transactional
+    public void patchNoteCountUp(int patchnoteId){
+        PatchNote patchNote =  patchNoteRepository.findById(patchnoteId)
+                .orElseThrow(()->{
+                    return new IllegalArgumentException("패치노트 글을 찾을수 없습니다");
+                });
+
+        int countNum = patchNote.getCount();
+
+        // 더티체킹
+        patchNote.setCount(countNum+1);
+    }
+
 
 }

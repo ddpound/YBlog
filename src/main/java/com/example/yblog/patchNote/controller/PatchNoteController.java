@@ -18,7 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class PatchNoteController {
@@ -36,11 +38,6 @@ public class PatchNoteController {
         model.addAttribute("boards", patchNoteService.patchNotesList(pageable));
         model.addAttribute("boardsPage",patchNoteService.patchNotePage(pageable));
 
-        device = DeviceUtils.getCurrentDevice(request);
-
-        if (device.isMobile() || device.isTablet()){
-            return "PatchNoteBoard/mPatchNoteMain";
-        }
 
         return "PatchNoteBoard/patchNoteMain";
     }
@@ -71,7 +68,38 @@ public class PatchNoteController {
     }
 
     @GetMapping(value = "/auth/patchnote/details")
-    public String patchNoteDetails(@RequestParam("id")int id, Model model){
+    public String patchNoteDetails(@RequestParam("id")int id, Model model,
+                                   HttpServletRequest request,
+                                   HttpServletResponse response){
+        Cookie[] cookies = request.getCookies();
+        int visit =0;
+        if(cookies == null){
+            Cookie cookie1 = new Cookie("patchvisit",request.getParameter("id"));
+            cookie1.setMaxAge(60*60*24);
+            response.addCookie(cookie1);
+            patchNoteService.patchNoteCountUp(id);
+        }else{
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("patchvisit")){
+                    visit =1;
+                    if(cookie.getValue().contains(request.getParameter("id"))){
+                        // 이미 있는 쿠키라서 아무것도 안함
+                    }else{
+                        cookie.setValue((cookie.getValue()+"_"+request.getParameter("id")));
+                        cookie.setMaxAge(60*60*24);
+                        response.addCookie(cookie);
+                        patchNoteService.patchNoteCountUp(id);
+                    }
+                }
+            }
+        }  if(visit==0){
+            Cookie cookie1 = new Cookie("patchvisit",request.getParameter("id"));
+            cookie1.setMaxAge(60*60*24);
+            response.addCookie(cookie1);
+            patchNoteService.patchNoteCountUp(id);
+        }
+
+
         model.addAttribute("patchboard", patchNoteService.detailsPatchNote(id));
 
         return "PatchNoteBoard/patchNoteDetails";

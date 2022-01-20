@@ -65,7 +65,7 @@ public class AuthSkillBoardController {
 
         if(cookies == null){
             Cookie cookie1 = new Cookie("skillvisit",skillboardIdVisit);
-            cookie1.setMaxAge(1800);
+            cookie1.setMaxAge(60*60*24);
             response.addCookie(cookie1);
             skillBoardService.boardCountUp(skillboardId);
         }else{
@@ -76,7 +76,7 @@ public class AuthSkillBoardController {
                         // 이미 있는 쿠키라서 아무것도 안함
                     }else{
                         cookie.setValue((cookie.getValue()+"_"+skillboardIdVisit));
-                        cookie.setMaxAge(1800);
+                        cookie.setMaxAge(60*60*24);
                         response.addCookie(cookie);
                         skillBoardService.boardCountUp(skillboardId);
                     }
@@ -87,11 +87,10 @@ public class AuthSkillBoardController {
 
         if(visit==0){
             Cookie cookie1 = new Cookie("skillvisit", skillboardIdVisit);
-            cookie1.setMaxAge(1800);
+            cookie1.setMaxAge(60*60*24);
             response.addCookie(cookie1);
             skillBoardService.boardCountUp(skillboardId);
         }
-
 
 
 

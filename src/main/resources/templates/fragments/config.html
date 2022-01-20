@@ -83,18 +83,20 @@
         }
 
 
+
          .topSec img{
              height: 100px;
          }
+
+        .topSec .mainbloglogo:hover{
+            /*content: url("/img/YlabLogoHover.png");*/
+            height: 101px;
+        }
 
          .mainbloglogo{
              transition: all 0.2s;
          }
 
-         .topSec .mainbloglogo:hover{
-             content: url("/img/YlabLogoHover.png");
-             height: 101px;
-         }
 
 
         .bottomSec{
@@ -374,21 +376,29 @@
                 background-color: black;
             }
 
-            .menuDiv a{
+            .menuDivChild{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 50px;
+                left: 10px;
+            }
+
+            .menuDivChild a{
                 font-family: 'Gugi', cursive;
                 color: white;
                 display: block;
-                line-height: 20px;
+                line-height: 50px;
             }
 
 
-            .menuDiv h3{
+            .menuDivChild h3{
                 font-family: 'Gugi', cursive;
                 color: white;
                 display: block;
             }
 
-            .menuDiv button{
+            .menuDivChild button{
                 display: block;
                 margin: 10px 0;
                 border-radius: 30px;
@@ -425,6 +435,7 @@
 
     <!-- 컨텐츠페이지의 스크립트 영역이 들어감 -->
     <th:block layout:fragment="script">
+
 
 
 

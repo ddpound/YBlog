@@ -28,15 +28,16 @@
       border-bottom: 2px solid  #c2b2f0;
     }
 
+    .boardDetailMainBox img{
+      width: 100%;
+      max-width: 100%;
+    }
+
     .boardDetailMainBox h1{
       font-size: 20px;
       font-weight: bold;
     }
 
-    .boardDetailMainBox img{
-      width: 100%;
-      max-width: 100%;
-    }
 
     .titleInfodiv{
       margin: 20px auto;
@@ -172,25 +173,24 @@
 
 
       <div id="replyContainer" class="replyContainer" th:each="reply :${board.getYreplys()}">
-        <script th:inline="javascript">
-          // 보드 Id , Reply id가 들어가야함
-          var replyId = [[${reply.getId()}]]
 
-          document.getElementById('replyContainer').id = replyId
 
-        </script>
 
         <div class="replyDiv">
           <label th:text="'작성자:' + ${reply.getUser().getUsername()}"></label>
           <label th:text="${#dates.format(reply.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></label>
           <label th:text="${reply.getContent()}"></label>
         </div>
-        <div class="replyDeleteButton" th:if="${reply.getUser().getUsername()} == ${#authentication.getName()} or ${#authentication.getName()} == 'Y' ">
-
-          <button type="button" onclick="replyDelete(boardId,replyId)"><img src="/img/buttonLogo/removelogo.png"></button>
+        <div  class="replyDeleteButton" th:if="${reply.getUser().getUsername()} == ${#authentication.getName()} or ${#authentication.getName()} == 'Y' ">
+          <button id="delete_Button" type="button" onclick="replyDelete(boardId, this.id)"><img src="/img/buttonLogo/removelogo.png"></button>
         </div>
 
+        <script th:inline="javascript">
+          // 보드 Id , Reply id가 들어가야함
+          replyId = [[${reply.getId()}]]
+          document.getElementById('delete_Button').id = replyId
 
+        </script>
 
       </div>
 

@@ -156,11 +156,12 @@ public class MainController {
         }
 
         model.addAttribute("boardNumList" , listNum );
-        device = DeviceUtils.getCurrentDevice(request);
+
+        /* device = DeviceUtils.getCurrentDevice(request);
 
         if (device.isMobile() || device.isTablet()){
             return "board/mBoardMain";
-        }
+        }*/
 
         return "board/boardMain";
     }
@@ -174,7 +175,7 @@ public class MainController {
 
         if(cookies == null){
             Cookie cookie1 = new Cookie("visit",request.getParameter("id"));
-            cookie1.setMaxAge(1800);
+            cookie1.setMaxAge(60*60*24);
             response.addCookie(cookie1);
             boardService.boardCountUp(id);
         }else{
@@ -185,7 +186,7 @@ public class MainController {
                         // 이미 있는 쿠키라서 아무것도 안함
                     }else{
                         cookie.setValue((cookie.getValue()+"_"+request.getParameter("id")));
-                        cookie.setMaxAge(1800);
+                        cookie.setMaxAge(60*60*24);
                         response.addCookie(cookie);
                         boardService.boardCountUp(id);
                     }
@@ -194,7 +195,7 @@ public class MainController {
         }
         if(visit==0){
             Cookie cookie1 = new Cookie("visit",request.getParameter("id"));
-            cookie1.setMaxAge(1800);
+            cookie1.setMaxAge(60*60*24);
             response.addCookie(cookie1);
             boardService.boardCountUp(id);
         }
