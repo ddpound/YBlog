@@ -23,13 +23,9 @@
             margin: 16px auto;
             background-color: #c2b2f0;
             display: flex;
+            opacity: 0;
         }
-        .childmain2{
-            width: 100%;
-        }
-        .childmain3{
-            width: 100%;
-        }
+
         .childmain4{
             width: 100%;
         }
@@ -39,13 +35,11 @@
 
         .mainImage {
             width: 45%;
-
         }
 
         .mainImage img{
             width: 100%;
             height: 500px;
-
             margin: 12px 0 12px 12px;
         }
 
@@ -82,6 +76,120 @@
             width: 500px;
         }
 
+        /*여기서부터는 에니메이션을 위한 css문*/
+        @keyframes inout{
+            from{
+                opacity: 0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+
+        @keyframes outin {
+            from{
+                opacity: 1;
+            }
+            to{
+                opacity: 0;
+            }
+        }
+
+        .childmain2{
+            margin-top: 100px;
+            display: flex;
+            width: 100%;
+            font-family: 'Do Hyeon', sans-serif;
+            position: relative;
+        }
+
+        .childmain2Ptag{
+            position: absolute;
+            top: 25%;
+            right: 10%;
+            font-size: 2.5em;
+        }
+
+        @keyframes childmain2RightSlide {
+            from{
+                opacity: 0;
+                right: -300px;
+            }
+            to{
+                opacity: 1;
+                right: 10%;
+            }
+        }
+        @keyframes RightSlideOut {
+            from{
+                opacity: 1;
+                right: 10%;
+            }
+            to{
+                opacity: 0;
+                right: -300px;
+            }
+        }
+
+        @keyframes image2TopandBottom {
+            from{
+                opacity: 0;
+                top: -20px;
+            }
+            to{
+                opacity: 1;
+                top: 0;
+            }
+        }
+        @keyframes image2BottomandTop {
+            from{
+                opacity: 1;
+                top: 0;
+            }
+            to{
+                opacity: 0;
+                top: -20px;
+            }
+        }
+
+        .childmain3{
+            margin: 400px auto;
+            width: 100%;
+            align-content: center;
+            text-align: center;
+        }
+
+        .childmain3 p{
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 2.5em;
+        }
+
+        .childmain4{
+            margin: 400px auto;
+            width: 100%;
+            align-content: center;
+            text-align: center;
+        }
+
+        .childmain4 p{
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 2.5em;
+        }
+
+        .childmain5{
+            margin: 400px auto;
+            width: 100%;
+            align-content: center;
+            text-align: center;
+        }
+
+        .childmain5 p{
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 2.5em;
+        }
+
+
+
 
         @media screen and (max-width: 1100px) {
             .parentMain{
@@ -109,6 +217,25 @@
             .descriptionDiv{
                 width: 100%;
 
+            }
+            .childmain2{
+                display: block;
+            }
+
+        }
+
+        @media screen and (max-width: 1000px) {
+            .childmain2{
+                width: 100%;
+                display: block;
+            }
+            .childmain2 img{
+                width: 100%;
+            }
+            .childmain2Ptag{
+                position: static;
+                text-align: center;
+                font-size: 2.5em;
             }
 
         }
@@ -138,6 +265,23 @@
             }
 
 
+            .childmain2Ptag{
+                position: static;
+                text-align: center;
+                font-size: 1.5em;
+            }
+            .childmain3 p{
+                font-size: 1.5em;
+            }
+
+            .childmain4 p{
+                font-size: 1.5em;
+            }
+
+            .childmain5 p{
+                font-size: 1.5em;
+            }
+
         }
 
 
@@ -148,24 +292,20 @@
 <!-- index.html 고유 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
-
-    <script>
-
-    </script>
-
+    <script defer type="text/javascript" th:src="@{/js/indexAnima.js}"></script>
 </th:block>
 
 <div layout:fragment="content">
 
     <div class="parentMain">
-        <div class="childmain1">
-            <div class="mainImage">
+        <div id="childmain1" class="childmain1">
+            <div id="mainImage" class="mainImage">
                 <img src="/img/newBackpiture.jpg">
 
             </div>
 
-            <div class="descriptionDiv">
-                <div class="decripWrite">
+            <div id="descriptionDiv" class="descriptionDiv">
+                <div id="decripWrite" class="decripWrite">
                     <label class="firstLabel">YBLOGLAB</label><label>란?</label><br>
 
                     <label>포트폴리오와 공부를 위해서</label><br>
@@ -200,50 +340,53 @@
 
         <div class="childmain2">
             <div>
-                <img class="animaImage" src="/img/indexImage/ubuntuLogo.png">
+                <img id="animaImage2" class="animaImage2" src="/img/indexImage/ubuntuLogo.png">
             </div>
             <div>
-                서버는 어떻게 만들었나요? 서버컴퓨터의 os는 리눅스의 우분투입니다.
+                <p class="childmain2Ptag" id="childmain2Ptag">서버는 우분투를 사용했습니다. <br> 버전은 20.04.3 LTS입니다. </p>
             </div>
 
         </div>
 
-        <div class="childmain3">
+        <div id="childmain3" class="childmain3">
             <div>
                 <img class="animaImage" src="/img/indexImage/springbootLogo.png">
             </div>
             <div>
-                해당 블로그는 스프링부트를 통해 개발했습니다.
-                springframwork.boot 버전 2.5.2를 사용했습니다.
+                <p class="childmain3Ptag" id="childmain3Ptag">해당 블로그는 스프링부트를 통해 개발했습니다. <br>버전 2.5.2를 사용했습니다.</p>
             </div>
         </div>
 
-        <div class="childmain4">
+        <div id="childmain4" class="childmain4">
             <div>
                 <img class="animaImage" src="/img/indexImage/cssjshtmlLogo.png">
             </div>
             <div>
-                해당 블로그는 html, css, javascript로 별다른
-                라이브러리나 프레임워크 없이
-                프론트 작업을 했으나, 포트폴리오를 보시면
-                react로 진행한 프로젝트도 있습니다
+                <p>
+                    라이브러리나 프레임워크 없이<br>
+                    디자인, UI 작업을 했습니다. <br>
+                    포트폴리오를 보시면<br>
+                    react로 진행한 프로젝트도 있습니다<br>
+                </p>
+
             </div>
 
         </div>
 
-        <div class="childmain5">
+        <div  id="childmain5" class="childmain5">
             <div>
                 <img class="animaImage" src="/img/indexImage/ybloglabWrite.png">
             </div>
             <div>
-                자세한 내용은 github에서 확인해주세요!
+                <p>
+                    자세한 내용은 Github와 포트폴리오에서 확인해주세요!
+                </p>
+
             </div>
 
         </div>
 
 
     </div>
-
-
 </div>
 </html>

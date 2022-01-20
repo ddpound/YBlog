@@ -10,17 +10,33 @@
 
     <style th:inline="text">
 
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+        .emailauthMainDiv{
+            width: 1100px;
+            min-height: 500px;
+            margin: 50px auto;
+            text-align: center;
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 20px;
+        }
+        .emailauthMainDiv p:nth-child(1){
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .emailauthMainDiv button{
+            all: unset;
+        }
+
+        .,emailauthKaKaoButton button{
+            margin: 40px auto;
+            display: block;
+        }
 
 
-        body{
-            width: 100vw;
-            height: 100vh;
-            background-image: url([[@{/img/newBackpiture.jpg}]]);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        @media screen and (max-width: 1100px) {
+            .emailauthMainDiv{
+                width: 100vw;
+            }
         }
 
     </style>
@@ -68,10 +84,8 @@
                 }
             })
         }
+
     }
-
-
-
 </script>
 
 
@@ -79,21 +93,21 @@
 
 <div layout:fragment="content">
 
-    <div class="jumbotron mt-2 text-center" style="background-color: transparent;color: black ">
-        <div style="font-weight: bold; color: whitesmoke;">
-            <p style="letter-spacing: -13px; font-size: 150px; font-family: 'Noto Sans KR', sans-serif;">회원가입</p>
-            <p>카카오 회원가입으로 간편하게</p>
-            <p><label style="color: red">카카오톡 동의 쪽에 꼭 이메일 체크를 해주셔야 회원가입이 가능합니다!!</label></p>
-        </div>
+    <div class="emailauthMainDiv">
+        <p >회원가입</p>
+        <p>카카오 회원가입으로 간편하게</p>
+        <p>카카오톡 동의 쪽에 꼭 이메일 체크를 해주셔야 회원가입이 가능합니다!!</p>
+
+
+
+    <div class="emailauthKaKaoButton">
+        <script th:inline="javascript">
+            let loginRequestURI = [[${loginRequestURI}]]
+        </script>
+
+        <button type="button"  onclick="KaKaoLogin(loginRequestURI)"><img src="/img/kakao_start_medium_wide.png"></button>
+
     </div>
-
-
-    <div class="form-group">
-    <script th:inline="javascript">
-        let loginRequestURI = [[${loginRequestURI}]]
-    </script>
-    <button type="button" style="background-image: url('/img/kakaoJoin.png'); border-color: #FEE500 ;background-size: contain;height: 40px; width: 200px; margin-top: 2%; margin-left: 45%; border-radius: 15px;" onclick="KaKaoLogin(loginRequestURI)"></button>
-    <div id="alert"></div>
 
     </div>
 

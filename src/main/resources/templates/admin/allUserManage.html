@@ -8,50 +8,6 @@
 <th:block layout:fragment="css">
 
     <style th:inline="text">
-        body{
-            background-image: url([[@{/img/newBackpiture.jpg}]]);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .left-div{
-            float: left;
-            width: 70vw;
-            height: 100vh;
-        }
-
-        .left-div table{
-            margin-top: 10%;
-            margin-left: 25%;
-            background-color: white;
-            text-align: center;
-            border: solid 3px #c69500;
-        }
-
-        .left-div th, td{
-            border: solid 3px #c69500;
-        }
-
-        .right-div{
-            float: right;
-            background-color: black;
-            width: 30vw;
-            height: 100vh;
-        }
-
-        .right-div h3{
-            color: white;
-            text-align: center;
-            margin-top: 10%;
-
-        }
-
-        .right-div div{
-            margin-top: 10vh;
-            text-align: center;
-        }
-
 
     </style>
 
@@ -88,58 +44,7 @@
 
     </div>
 
-    <div class="right-div">
 
-        <h3>안녕하세요 관리자님</h3>
-
-        <div>
-            <ul>
-                <li> <a href="/admin/userManageView/find-all-user"> 유저관리하기  </a></li>
-                <li> 접속빈도 확인 </li>
-                <li> 로그확인 </li>
-                <li>  로그 텍스트로 저장 </li>
-            </ul>
-            <input type="text" id="userName"><br>
-            <button
-                    type="button"
-                    class="btn btn-outline-danger"
-                    id="userdelete"
-                    onclick="SearchUserDelete()">
-                해당 유저 삭제</button>
-            <br/>
-            <button type="button"
-                    class="btn btn-outline-danger"
-                    id="boarddelete"
-                    onclick="SearchUserBoardDelete()">
-                해당 유저의 게시판글 삭제</button>
-            <br />
-            <button
-                    type="button"
-                    class="btn btn-outline-danger"
-                    id="deleteip"
-                    onclick="deleteip()">해당 ip 벤 취소</button>
-            <br/>
-            <button
-                    type="button"
-                    class="btn btn-outline-danger"
-                    id="boarddeleteall"
-                    onclick="UserBoardDeleteAll()">게시판글 모두 삭제</button>
-            <br />
-            <button
-                    type="button"
-                    class="btn btn-outline-danger"
-                    id="alldeleteip"
-                    onclick="alldeleteip()">벤 ip 모두 취소</button>
-            <br>
-            <button
-                    type="button"
-                    class="btn btn-outline-danger"
-                    id="useremailban"
-                    onclick="useremailban()">해당 유저 이메일 벤하기</button>
-            <br/>
-        </div>
-
-    </div>
 
 
 </div>

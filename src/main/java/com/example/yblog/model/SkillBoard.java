@@ -59,6 +59,11 @@ public class SkillBoard {
     //카테고리 테이블 만들고 카테고리랑 조인 시킬꺼임
 
 
+    // 기술보드 카테고리 하나의 카테고리는 여러 게시판과 관계를 가진다
+    // null값이면 기본 아무소속없는 카테고리라고 칭한다
+    @ManyToOne
+    @JoinColumn(name = "category")
+    private BoardCategory boardCategory;
 
     @CreationTimestamp
     private Timestamp createDate;

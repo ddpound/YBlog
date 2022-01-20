@@ -13,14 +13,6 @@
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
 
-    body{
-      width: 100vw;
-      height: 100vh;
-      background-image: url([[@{/img/newBackpiture.jpg}]]);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
 
   </style>
 
@@ -71,16 +63,16 @@
 </th:block>
 
 <div layout:fragment="content">
-  <label style="color: #c82333">닉네임은 영어를 권장합니다, 닉네임은 아직 한번 정하면 바꿀수 없습니다</label><br>
+  <label>닉네임은 영어를 권장합니다, 닉네임은 아직 한번 정하면 바꿀수 없습니다</label><br>
   <div class="form-group">
-    <label for="email" style="color: whitesmoke">email:</label>
-    <input type="text" class="form-control" id="email" readonly="readonly"  th:value="${authEmail}">
+    <label for="email">email:</label>
+    <input type="text" id="email" readonly="readonly"  th:value="${authEmail}">
   </div>
   <div class="form-group">
-    <label for="username" style="color: whitesmoke">NickName:</label>
-    <input type="text" class="form-control" id="username" oninput=" handleOnInput(this)">
+    <label for="username" >NickName:</label>
+    <input type="text" id="username" oninput=" handleOnInput(this)">
   </div>
-  <button type="button" class="btn btn-dark btn-block" onclick="savekakaoUser()">회원가입</button>
+  <button type="button" onclick="savekakaoUser()">회원가입</button>
 
 
 </div>
