@@ -125,16 +125,32 @@
 
       document.title = boardtitle
       document.getElementById("ogTitle").setAttribute("content", boardtitle )
+      document.getElementById("twitterTitle").setAttribute("content", boardtitle )
+      document.getElementById("ogUrl").setAttribute("content", window.location.href)
+      document.getElementById("twitterUrl").setAttribute("content", window.location.href)
 
       var description = [[${board.getDescription()}]]
 
       if(description == "" || description == null){
         document.getElementById("description").setAttribute("content", "자유게시판글입니다.")
         document.getElementById("ogDescription").setAttribute("content", "자유게시판글입니다.")
+
       }else {
         document.getElementById("description").setAttribute("content", description)
         document.getElementById("ogDescription").setAttribute("content", description)
+        document.getElementById("twitterDescription").setAttribute("content", description)
       }
+
+      var thumbnail = [[${board.getThumbnail()}]]
+
+      if(thumbnail == "" || thumbnail == null){
+        document.getElementById("ogImage").setAttribute("content", "/img/thumbnailandimage/defaultthumbnail.png")
+        document.getElementById("twitterImage").setAttribute("content", "/img/thumbnailandimage/defaultthumbnail.png")
+      }else{
+        document.getElementById("ogImage").setAttribute("content", thumbnail)
+        document.getElementById("twitterImage").setAttribute("content", thumbnail)
+      }
+
 
     }
 
@@ -172,8 +188,6 @@
 
 
       <div id="replyContainer" class="replyContainer" th:each="reply :${board.getYreplys()}">
-
-
 
         <div class="replyDiv">
           <label th:text="'작성자:' + ${reply.getUser().getUsername()}"></label>

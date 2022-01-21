@@ -58,6 +58,12 @@ public class BoardController {
             return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultnum);
         }else  if(resultnum == -3){
             return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultnum);
+        }else  if(resultnum == -4){
+            return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultnum);
+        }else  if(resultnum == -5){
+            return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultnum);
+        }else  if(resultnum == -6){
+            return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,resultnum);
         }
 
 
@@ -98,8 +104,14 @@ public class BoardController {
     @ResponseBody
     public ResponseDto<Integer> boardModify(@RequestBody YBoard board){
 
-        boardService.boardModify(board);
-        return new ResponseDto<Integer>(HttpStatus.OK,1);
+        if(boardService.boardModify(board) ==1 ){
+            return new ResponseDto<Integer>(HttpStatus.OK,1);
+        }
+        else{
+            return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR,-1);
+        }
+
+
     }
 
     // 여기는 수정글

@@ -10,34 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 
     <style  th:inline="text">
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-        html{
-            width: 100vw;
-            height: 100vh;
-        }
-
-
-        body ,html{
-            width: 100vw;
-            height: 100%;
-            background-color: #153040;
-            background-image: url([[@{/img/newBackpiture.jpg}]]);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .summernote{
-            background-color: white;
-            width: 100vw;
-            height: 70vh;
-        }
-
-        .summernote img{
-            max-width: 100%;
-        }
 
     </style>
 </th:block>
@@ -53,17 +26,20 @@
 
 <div layout:fragment="content">
 
-    <div class="form-group container">
-        <div class="form-group text-light font-weight-bold bg-dark text-center rounded">
+    <div class="">
+        <div class="">
             <label for="title">[제목]</label>
-            <input type="text" class="form-control bg-dark text-light text-center" id="title">
+            <input type="text" class="" id="title">
             <label for="boardDescription">설명(없어도 괜찮습니다.)</label>
-            <input type="text" class="form-control bg-dark text-light text-center" id="boardDescription">
+            <input type="text" class="" id="boardDescription">
         </div>
-        <textarea  class="summernote" rows="5" id="content" style=" resize: none;"></textarea>
+        <textarea  class="summernote" rows="5" id="content"></textarea>
 
         <button type="button" class="btn btn-warning btn-block" onclick="boardWrite()">작성</button>
     </div>
+
+
+
     <script>
         window.addEventListener('beforeunload', (event) => {
             // 즉 이동감지만 이루어지는걸 확인한다면 임시사진글들은 다 삭제하면 되니깐

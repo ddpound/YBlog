@@ -38,6 +38,25 @@ public class BoardService {
     @Transactional
     public int SaveBoard(YBoard yBoard, YUser yUser) {
 
+        if(scriptSearch(yBoard.getContent()) ||
+                scriptSearch(yBoard.getTitle()) ||
+                scriptSearch(yBoard.getDescription())){
+
+            return -4; // 스크립트문 검색 발견
+        }
+
+
+        if(yBoard.getTitle().replaceAll(" ", "").equals("") ||
+        yBoard.getContent().replaceAll(" ","").equals("") ||
+        yBoard.getContent().length()==0 ||
+        yBoard.getTitle().length()==0) {
+            return -5;// 제목이나 내용이 한개도 없을때
+        }
+
+        if(yBoard.getTitle().length()>50 || yBoard.getContent().length() > 2000){
+            return -6;
+        }
+
         globalThrowError.ErrorMaxSqlLength(yBoard.getContent().length());
         globalThrowError.ErrorNullBoardTitle(yBoard.getTitle());
 
@@ -161,23 +180,36 @@ public class BoardService {
     }
 
     @Transactional
-    public void boardModify(YBoard yBoard) {
-        YBoard board = yBoardRepository.findById(yBoard.getId())
-                .orElseThrow(() -> {
-                    return new IllegalArgumentException("글 찾기 실패 아이디를 찾을 수 없습니다");
-                }); // 영속화 시키기
-        YBoard board1 = ImageSearch(board.getUser().getUsername(), yBoard, board,true);
+    public int boardModify(YBoard yBoard) {
 
-        // 해당함수로  Service가 종료와 함게 트랜잭션 종료, 이때 더티체킹으로 자동 업데이트된다
-        board.setTitle(yBoard.getTitle());
-        board.setContent(board1.getContent());
-        board.setDescription(yBoard.getDescription());
+        if(scriptSearch(yBoard.getContent()) ||
+                scriptSearch(yBoard.getTitle()) ||
+                scriptSearch(yBoard.getDescription())){
 
-        // 이렇게 트랜잭션이 완료되고 여기서 yboard의  content를 받아서 현재 파일에 있는 이미지와 비교해서 없으면
-        // 삭제하고 놔두는 로직을 짜야한다
-        modifyImagefile(board.getContent(), board.getImagefileid());
-        // 해당 게시판의 썸네일 src값을 반환함
-        board.setThumbnail(thumbNailSrc(yBoard.getImagefileid()));
+            return -1; // 스크립트문 검색 발견
+        }else{
+
+            YBoard board = yBoardRepository.findById(yBoard.getId())
+                    .orElseThrow(() -> {
+                        return new IllegalArgumentException("글 찾기 실패 아이디를 찾을 수 없습니다");
+                    }); // 영속화 시키기
+            YBoard board1 = ImageSearch(board.getUser().getUsername(), yBoard, board,true);
+
+            // 해당함수로  Service가 종료와 함게 트랜잭션 종료, 이때 더티체킹으로 자동 업데이트된다
+            board.setTitle(yBoard.getTitle());
+            board.setContent(board1.getContent());
+            board.setDescription(yBoard.getDescription());
+
+            // 이렇게 트랜잭션이 완료되고 여기서 yboard의  content를 받아서 현재 파일에 있는 이미지와 비교해서 없으면
+            // 삭제하고 놔두는 로직을 짜야한다
+            modifyImagefile(board.getContent(), board.getImagefileid());
+            // 해당 게시판의 썸네일 src값을 반환함
+            board.setThumbnail(thumbNailSrc(yBoard.getImagefileid()));
+            return 1;
+
+        }
+
+
 
     }
 
@@ -484,6 +516,21 @@ public class BoardService {
             return savecon+files[0].getName();
         }
 
+
+    }
+
+
+    //본문과 제목, 그리고 description에 스크립트문이 있는지 없는지 파악하기 위한 검색기
+    public boolean scriptSearch(String content){
+        String con = content.toLowerCase();
+        if(con.contains("<script>") || con.contains("<iframe>")){
+            return true;
+        }
+        else if(con.contains("&lt;script&gt;") || con.contains("&lt;iframe&gt;")){
+            return true;
+        }else {
+            return false;
+        }
 
     }
 

@@ -19,10 +19,10 @@
     <!-- 카카오 메타데이터들-->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta property="og:url" content="https://ybloglab.shop/">
-    <meta id="ogTitle" property="og:title" content="YBlogLab">
+    <meta id="ogUrl" property="og:url" content="https://ybloglab.shop/">
+    <meta id="ogTitle" property="og:title" content="YBlogLab 스프링부트 포트폴리오, 기술, 개인 블로그">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://ybloglab.shop/img/YLabLogo.png">
+    <meta id="ogImage" property="og:image" content="https://ybloglab.shop/img/YLabLogo.png">
     <meta id="ogDescription" property="og:description" content="포트폴리오용 개인 블로그" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!-- 카카오 메타데이터들-->
@@ -33,12 +33,21 @@
     <meta
             id="description"
             name="description"
-            content="포트폴리오용 개인블로그, 스프링부트로 만들었습니다. 개인적으로 공부하는 내용과 기술등을 게시하고
+            content="포트폴리오용 개인블로그를 직접 스프링부트로 만들었습니다. 개인적으로 공부하는 내용과 기술등을 게시하고
             사소한 것이나 후기, 리뷰도 남기는 등 자유도 높은 개인블로그입니다.">
 
 
     <!--게시판을 다닐때마다 제목은 title과 descroption등 달라질 예정 -->
     <!-- 구글 검색 노출을 위한 meta,title 데이터들-->
+
+    <!-- 트위터 메타 태그들 -->
+    <meta id="twitterCard" name="twitter:card" content="summary">
+    <meta id="twitterUrl"  name="twitter:url" content="https://ybloglab.shop/">
+    <meta id="twitterTitle" name="twitter:title" content="YBlogLab 스프링부트 포트폴리오, 기술, 개인 블로그">
+    <meta id="twitterDescription" name="twitter:description" content="포트폴리오용 개인블로그를 직접 스프링부트로 만들었습니다. 개인적으로 공부하는 내용과 기술등을 게시하고
+            사소한 것이나 후기, 리뷰도 남기는 등 자유도 높은 개인블로그입니다.">
+    <meta id="twitterImage" name="twitter:image" content="https://ybloglab.shop/img/YLabLogo.png">
+    <!-- 트위터 메타 태그들 -->
 
 
     <!-- 공통으로 쓰이는 css파일을넣는다.-->
@@ -243,16 +252,19 @@
         }
 
         .footerTopButton{
+            font-size: 20px;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 100px;
+            right: 30px;
             transition: all 1s;
+            opacity: 0.7;
         }
 
         .footerTopButton button{
-            border-radius: 30px;
+            border-radius: 10px;
             color: white;
             background-color: black;
+            font-family: 'Gugi', cursive;
         }
 
         .menuDiv{
@@ -354,9 +366,10 @@
 
             .toggleDiv{
                 position: fixed;
-                left: 20px;
-                bottom: 40px;
-                width: 50px;
+                left: 30px;
+                bottom: 120px;
+                width: 80px;
+                height: 50px;
                 visibility: visible;
             }
 
@@ -365,8 +378,9 @@
             }
 
             .toggleDiv button{
-                border-radius: 50px;
-                background-color: white;
+                all: unset;
+                border-radius: 10px;
+                background-color: whitesmoke;
                 opacity: 0.8;
             }
 
@@ -402,10 +416,13 @@
             }
 
             .menuDivChild button{
-                display: block;
-                margin: 10px 0;
-                border-radius: 30px;
+                position: absolute;
+                bottom: 200px;
+                left: 8px;
+                border-radius: 5px;
                 color: white;
+                width: 120px;
+                height: 40px;
                 background-color: #c2b2f0;
                 font-family: 'Gugi', cursive;
             }

@@ -8,121 +8,134 @@
 <th:block layout:fragment="css">
 
     <style th:inline="text">
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
-
-        p{
-            color: white;
+        .mainBoardDiv{
+            width: 1100px;
+            margin: 100px auto;
+            position: relative;
         }
 
-        .mainDiv{
-            width: 100%;
-            height: 100vh;
+        .mainBoardDiv a{
+            color: black;
+            text-decoration: none;
         }
-
-        .leftDiv{
-            overflow: auto;
-            width: 70vw;
-            height: 100%;
-            float: left;
-            background-image: url([[@{/img/newBackpiture.jpg}]]);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-right: 1px solid white;
+        .mainBoardDiv a:hover{
+            text-decoration: none;
         }
-
-        .leftDiv::-webkit-scrollbar {
-            width: 7px;
+        .mainBoardDiv a:link{
+            text-decoration: none;
         }
-
-        .leftDiv::-webkit-scrollbar-thumb{
-            background-color: #983106;
-            border-radius: 10px;
-        }
-
-        .leftDiv::-webkit-scrollbar-track{
-            background-color: #153040;
-        }
-
-
-        .leftDiv h1{
-            color: white;
-            font-size: 2vw;
-            margin: 50px 50px;
-            font-family: 'Black Han Sans', sans-serif;
-        }
-
-        .rightDiv{
-            overflow: auto;
-            text-align: center;
-            width: 30vw;
-            height: 100%;
-            background-color: black;
-            display: inline-block;
-        }
-
-        .divHeader{
-            margin-top: 8.5vh;
-        }
-
-        .divHeader a{
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 1vw;
-            margin-left: 5%;
-            margin-right: 5%;
-        }
-
-        .divContent{
-            margin-top: 30vh;
-        }
-
-        .divContent p{
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 1.3vmax;
-        }
-
-        .divFooter{
-            position: absolute;
-            bottom: 2vw;
-            text-align: right;
-            display: inline-block;
-        }
-
-        .divFooter p{
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 1vw;
+        .mainBoardDiv a:visited{
+            text-decoration: none;
         }
 
         .boardDivs{
-            margin: 2% 20% 20% 10%;
-            text-align: center;
-            font-family: 'Noto Sans KR', sans-serif;
-
+            width: 100%;
+        }
+        .boardDivs a{
+            width: 50%;
         }
 
-        /* 각각의 게시판 글*/
         .boardDiv{
-            color: white;
-            border-bottom: solid 2px black;
-            border-top: solid 2px black;
-            margin-top: 2%;
-            background-color: #153040;
-            border-radius: 15px;
-        }
-        /* 라벨이 제목임*/
-        .title{
-            font-size: 1.2vw;
+            width: 100%;
+            margin: 30px auto;
         }
 
         .boardDiv span{
-            font-size: 1vw;
+            display: block;
         }
 
-        .boardDivs ul{
-            margin-top: 5%;
+        .boardDivs .dateSpan{
+            font-size: 15px;
+            font-family: 'Do Hyeon', sans-serif;
+            border-bottom: solid  2px  #c2b2f0;
         }
+
+        .boardDivs .spanTitle{
+            font-size: 30px;
+            font-family: 'Do Hyeon', sans-serif;
+
+        }
+
+        .boardDivs .spananother{
+            font-size: 20px;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        .boardThumImage{
+            width: 80%;
+            height: 300px;
+            margin: 30px auto;
+        }
+
+        .boardThumImage img{
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            max-height: 100%;
+        }
+
+        .boardListNumber{
+            position: absolute;
+            bottom: -40px;
+            width: 100%;
+            border: solid 2px black;
+            border-radius: 10px;
+            align-content: center;
+        }
+
+        .boardListNumber ul{
+            font-size: 20px;
+            font-family: 'Do Hyeon', sans-serif;
+            list-style: none;
+            display: inline;
+
+        }
+        .boardListNumber li{
+            list-style: none;
+            display: inline;
+            margin: 0 10px;
+            width: 10px;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        .writeButton{
+            position: absolute;
+            bottom: -100px;
+
+        }
+
+        .writeButton button{
+            all: unset;
+            width: 40px;
+            height: 40px;
+            float: right;
+        }
+        .writeButton img{
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+        .categorySpan{
+            font-size: 30px;
+            font-weight: bold;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+
+
+        @media screen and (max-width: 1100px){
+            .mainBoardDiv{
+                width: 100vw;
+                margin: 100px 0;
+                position: relative;
+            }
+
+            .boardDivs a{
+                width: 100%;
+            }
+        }
+
+
 
     </style>
 
@@ -135,79 +148,55 @@
 
 <div layout:fragment="content">
 
-    <div class="mainDiv">
-
-        <div class="leftDiv">
-            <a href="/"><h1>검색결과</h1></a>
+    <div class="mainBoardDiv">
 
             <div class="boardDivs" th:if="${yboardResult} != null">
-                <span style="color: white">자유게시판</span>
+                <span class="categorySpan">자유게시판</span>
                 <a th:href=" @{/auth/board/details(id=${board.getId()})}"  th:each="board :${yboardResult}">
                 <div class="boardDiv" >
-                    <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
-                    <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
-                    <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
-                    <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                    <span class="dateSpan" th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
+                    <span class="spanTitle" th:text="${board.getTitle()}"></span>
+                    <span class="spananother" th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;
+                    <span class="spananother" th:text="${board.getCount()}"></span>
                 </div>
                 </a>
             </div>
+
             <div class="boardDivs" th:if="${skillboardResult} != null">
-                <span style="color: white">기술게시판</span>
+                <span class="categorySpan">기술게시판</span>
                 <a th:href=" @{/auth/skillboard/details/{id}(id = ${board.getId()})}"  th:each="board :${skillboardResult}">
                     <div class="boardDiv" >
-                        <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
-                        <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
-                        <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
-                        <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                        <span class="dateSpan" th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
+                        <span class="spanTitle" th:text="${board.getTitle()}"></span>
+                        <span class="spananother" th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;
+                        <span class="spananother" th:text="${board.getCount()}"></span>
                     </div>
                 </a>
             </div>
             <div class="boardDivs" th:if="${portfolioboardResult} != null">
-                <span style="color: white">포트폴리오</span>
+                <span class="categorySpan">포트폴리오</span>
                 <a th:href=" @{/auth/portboard/details(id=${board.getId()})}"  th:each="board :${portfolioboardResult}">
                     <div class="boardDiv" >
-                        <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
-                        <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
-                        <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
-                        <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                        <span class="dateSpan" th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
+                        <span class="spanTitle" th:text="${board.getTitle()}"></span>
+                        <span class="spananother" th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;
+                        <span class="spananother" th:text="${board.getCount()}"></span>
                     </div>
                 </a>
             </div>
             <div class="boardDivs" th:if="${patchNoteboardResult} != null">
-                <span style="color: white">공지</span>
+                <span class="categorySpan">공지</span>
                 <a th:href=" @{/auth/patchnote/details(id=${board.getId()})}"  th:each="board :${patchNoteboardResult}">
                     <div class="boardDiv" >
-                        <span class="title">제목 :</span> &nbsp; <span th:text="${board.getTitle()}"></span> <br>
-                        <span>작성자 :</span> &nbsp; <span th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;&nbsp;
-                        <span>조회수: </span>  <span th:text="${board.getCount()}"></span> <br>
-                        <span>작성날짜 :</span>&nbsp;  <span th:text="${board.getCreateDate()}"></span>
+                        <span class="dateSpan" th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
+                        <span class="spanTitle" th:text="${board.getTitle()}"></span>
+                        <span class="spananother" th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;
+                        <span class="spananother" th:text="${board.getCount()}"></span>
                     </div>
                 </a>
             </div>
 
         </div>
-
-
-
-        <div class="rightDiv">
-            <div class="divHeader">
-                <a href="/auth/patchnote">공지</a>
-                <a href="/auth/boardmain">자유게시판</a>
-                <a href="/auth/skillboard">기술게시판</a>
-                <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
-                <a th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
-            </div>
-            <div class="divContent">
-                <p>개인적으로 공부하고 얻은 지식과 <br> 다양한 기능들을 보여주는 블로그입니다.</p>
-                <a href="/auth/Portfolio"><p>포트폴리오 보러가기</p></a>
-            </div>
-            <div class="divFooter">
-                <a href="/"><p>YBLOGLAB</p></a>
-                <a href="https://velog.io/@ddpound"><p>ddpound.log</p></a>
-            </div>
-        </div>
-    </div>
-
-
 </div>
+
 </html>

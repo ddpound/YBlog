@@ -70,7 +70,28 @@
             width: 400px;
             margin: 10px auto;
         }
+        .search_Div select{
+            all: unset;
+            border: 2px solid black;
+            transition: all 1s;
 
+        }
+
+        .search_Div input{
+            all: unset;
+            border-bottom: 2px solid black ;
+        }
+
+        .search_Div .searchLogo{
+            width: 30px;
+            height: 25px;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        .search_Div button{
+            all: unset;
+        }
 
         .animaImage{
             width: 500px;
@@ -157,6 +178,7 @@
             width: 100%;
             align-content: center;
             text-align: center;
+            opacity: 0;
         }
 
         .childmain3 p{
@@ -165,6 +187,7 @@
         }
 
         .childmain4{
+            opacity: 0;
             margin: 400px auto;
             width: 100%;
             align-content: center;
@@ -177,6 +200,7 @@
         }
 
         .childmain5{
+            opacity: 0;
             margin: 400px auto;
             width: 100%;
             align-content: center;
@@ -238,6 +262,7 @@
                 font-size: 2.5em;
             }
 
+
         }
 
         @media screen and (max-width: 560px) {
@@ -262,6 +287,19 @@
             .search_Div{
                 width: 100%;
                 margin: 10px auto;
+            }
+
+            .childmain2{
+                opacity: 1;
+            }
+            .childmain3{
+                opacity: 1;
+            }
+            .childmain4{
+                opacity: 1;
+            }
+            .childmain5{
+                opacity: 1;
             }
 
 
@@ -321,7 +359,12 @@
                 </div>
 
                 <div class="search_Div">
-                    <input id="searchTitle" type="text"> <button onclick="searchBoard()">검색</button>
+                    <input placeholder="Title" id="searchTitle" type="text"> <button onclick="searchBoard()"><img class="searchLogo" src="/img/buttonLogo/searchLogo.png"></button>
+                    <script defer>
+                        document.getElementById("searchTitle").addEventListener('keypress',function(){
+                                searchBoard()
+                        })
+                    </script>
                     <select id="categoryBoard" name="cate">
                         <!--value 값에 들어간건 Enum방식이기에 꼭 틀리지않게 해주셔야합니다-->
                         <option value="allboard">모두</option>

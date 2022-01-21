@@ -18,11 +18,13 @@ function uploadSummernoteImageFile(file, editor) {
 function boardWrite(){
     var titleName = $("#title").val()
     var description = $("#boardDescription").val() // 그냥 description 을 사용하면 헤드값에 이미 있기때문에 안남음
+    var content = $("#content").val()
+
 
     if(titleName != ""){
         let form = {
             title : titleName,
-            content : $("#content").val(),
+            content : content,
             description : description
         }
         $.ajax({
@@ -40,12 +42,19 @@ function boardWrite(){
                 location.href = "/"
             }else if(resp.data === -3){
                 alert(" 하루 최대 작성 30 개를 넘어갔습니다 초기화되기를 기다려주세요!")
+            }else if(resp.data === -4){
+                alert("스크립트문 발견! 스크립트문은 빼주세요!")
+            }else if(resp.data === -5){
+                alert("제목과 내용이 전부 공백입니다. 공백말고 내용을 넣어주세요!")
+            }else if(resp.data === -6){
+                alert("제목이나 글의 길이가 너무 길어요! 줄여주세요!")
             }
             else{
                 alert("글쓰기실패 : "+resp.status)
             }
-        }).fail(function (){
-            alert("글쓰기 실패 (문제확인 해주세요)")
+        }).fail(function (resp){
+
+            alert("글쓰기 실패 (문제확인 해주세요)" + resp.status)
         })
     }else if (titleName.length > 40){
         alert("제목이 너무 깁니다(공백포함 40자까지 가능합니다)")

@@ -253,12 +253,6 @@ public class MainController {
 
         mainService.listSearch(search_word, category,model);
 
-        device = DeviceUtils.getCurrentDevice(request);
-
-        if (device.isMobile() || device.isTablet()){
-            return "searchPage/mSearchPageMain";
-        }
-
 
         return "searchPage/searchPageMain";
     }

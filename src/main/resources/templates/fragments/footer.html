@@ -32,19 +32,19 @@
     </div>
 
     <div class="toggleDiv">
-        <button onclick="showMenuDiv()"><img src="/img/buttonLogo/toggleHambug.png"></button>
+        <button onclick="showMenuDiv()"><img src="/img/buttonLogo/menubutton.png"></button>
     </div>
 
     <div id="menuDiv" class="menuDiv">
         <div class="menuDivChild">
             <h3><a href="/" >YBLOGLAB</a></h3>
-            <a href="/auth/patchnote" >공지</a></li>
-            <a  href="/auth/boardmain">자유게시판</a></li>
-            <a href="/auth/skillboard">기술게시판</a></li>
-            <a href="/auth/portfolio">포트폴리오</a></li>
-            <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a></li>
-            <a  th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a></li>
-            <button onclick="closeMenuDiv()">ClOSE</button></li>
+            <a href="/auth/patchnote" >공지</a>
+            <a  href="/auth/boardmain">자유게시판</a>
+            <a href="/auth/skillboard">기술게시판</a>
+            <a href="/auth/portfolio">포트폴리오</a>
+            <a th:if="${#authorization.expr('isAuthenticated()')} == false" href="/auth/loginForm">로그인</a>
+            <a  th:if="${#authorization.expr('isAuthenticated()')} == true" href="/board/write">글쓰기</a>
+            <button onclick="closeMenuDiv()">닫기</button>
         </div>
 
 
@@ -53,7 +53,7 @@
     </div>
 
     <div class="footerTopButton">
-        <button onclick="uptop()">Top</button></li>
+        <button onclick="uptop()">TOP</button></li>
     </div>
 
 </footer>
