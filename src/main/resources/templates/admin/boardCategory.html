@@ -39,8 +39,17 @@
     <div class="mainCateDiv">
         <label for="categoryName">카테고리이름</label><input type="text" id="categoryName" placeholder="카테고리 이름 작성바람">
         <label for="thumbnailimage">카테고리 썸네일</label><input id="thumbnailimage" type="file">
-        <button onclick="">썸네일 추가하기</button>
+        <button onclick="saveCategory()">썸네일 추가하기</button>
 
+
+    </div>
+    <div class="listCateDiv" th:each="category : ${categoryList}">
+
+        <label th:text="${category.getId()}"></label>
+        <label th:text="${category.getCategoryName()}"></label>
+        <label th:text="${category.getCreateDate()}"></label>
+        <img th:src="${category.getCategoryThunmbnail()}">
+        <button th:id="${category.getId()}" onclick="thumbnailDelete(this.id)">해당 썸네일 삭제</button>
 
     </div>
 

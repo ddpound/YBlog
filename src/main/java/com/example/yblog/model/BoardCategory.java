@@ -24,7 +24,8 @@ public class BoardCategory {
     private String categoryName;
 
     // 썸네일은 따로 만들어서 올릴예정
-    @Column
+    // 썸네일 일단 이미지 컬럼명 잘못됨;; 필수 로 컬럼 변경할줄알아야할듯
+    @Column(length = 500)
     private String categoryThunmbnail;
 
     @CreationTimestamp // 시간이 자동으로 입력
