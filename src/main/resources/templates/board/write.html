@@ -11,6 +11,47 @@
 
     <style  th:inline="text">
 
+        .boardWriteMainDiv{
+            width: 1100px;
+            height: 900px;
+            min-height: 900px;
+            margin: 40px auto;
+        }
+
+        .writeinfoDiv{
+            text-align: center;
+            align-content: center;
+            display: block;
+            width: 100%;
+        }
+        .writeinfoDiv label{
+            display: block;
+            width: 100%;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+        .writeinfoDiv input{
+            width: 100%;
+            display: block;
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+
+        .summernote{
+            min-height: 800px;
+        }
+
+        textarea{
+            min-height: 800px;
+        }
+
+        @media screen and (max-width: 1100px) {
+            .boardWriteMainDiv{
+                width: 100%;
+                min-height: 1200px;
+                margin: 40px 0;
+            }
+        }
+
 
     </style>
 </th:block>
@@ -26,14 +67,14 @@
 
 <div layout:fragment="content">
 
-    <div class="">
-        <div class="">
+    <div class="boardWriteMainDiv">
+        <div class="writeinfoDiv">
             <label for="title">[제목]</label>
-            <input type="text" class="" id="title">
+            <input type="text" id="title">
             <label for="boardDescription">설명(없어도 괜찮습니다.)</label>
-            <input type="text" class="" id="boardDescription">
+            <input type="text" id="boardDescription">
         </div>
-        <textarea  class="summernote" rows="5" id="content"></textarea>
+        <textarea class="summernote" rows="5" id="content"></textarea>
 
         <button type="button" class="btn btn-warning btn-block" onclick="boardWrite()">작성</button>
     </div>
@@ -45,7 +86,6 @@
             // 즉 이동감지만 이루어지는걸 확인한다면 임시사진글들은 다 삭제하면 되니깐
             // 명세에 따라 preventDefault는 호출해야하며, 기본 동작을 방지합니다.
             event.preventDefault(); // 대표적으로 Chrome에서는 returnValue 설정이 필요합니다.
-            event.returnValue = '작성내용이 없어질수도있습니다. 작성버튼을 눌러주셨으면 나가셔도됩니다!';
             $.ajax({
                 type: "DELETE",
                 url : "/board/temporarydelete"
@@ -54,7 +94,8 @@
 
         $('.summernote').summernote({
             focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-            lang: "ko-KR",					// 한글 설정
+            lang: "ko-KR", // 한글 설정
+            height: 700,
             callbacks: {
                 //여기 부분이 이미지를 첨부하는 부분
                 // 업로드와 동시에 진행되는 콜백 함수

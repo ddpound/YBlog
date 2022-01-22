@@ -40,9 +40,6 @@ public class AdminController {
     @Value("${blogAdmin.adminName}")
     private  String adminName;
 
-
-
-
     @Autowired
     LoginService loginService;
 

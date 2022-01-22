@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="layouts/layout"
+>
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+
+    <style th:inline="text">
+
+        .mainCateDiv{
+            width: 1100px;
+            min-height: 700px;
+        }
+
+        @media screen and (max-width: 1100px) {
+            .mainCateDiv{
+                width: 100vw;
+
+            }
+        }
+    </style>
+
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/admin.js}"></script>
+    <script type="text/javascript" th:src="@{/js/boardCategory.js}"></script>
+
+</th:block>
+
+
+
+<div layout:fragment="content">
+
+
+    <div class="mainCateDiv">
+        <label for="categoryName">카테고리이름</label><input type="text" id="categoryName" placeholder="카테고리 이름 작성바람">
+        <label for="thumbnailimage">카테고리 썸네일</label><input id="thumbnailimage" type="file">
+        <button onclick="">썸네일 추가하기</button>
+
+
+    </div>
+
+
+
+</div>
+</html>
