@@ -15,16 +15,20 @@ function skillBoardWrite(){
     var skilltitle = $("#title").val()
     var content = $("#content").val()
     var description = $("#boardDescription").val()
+    var cateId = $("#cateListSelect").val()
 
+
+    // 여기서 그냥 ajax 를 한번 더하거나 아니면 url을 변경하는게 더 나을듯
+    console.log(cateListSelect + "아이디 값")
     let form= {
         title  : skilltitle,
         content : content,
         description : description
     }
-
+    console.log(JSON.stringify(form))
     $.ajax({
         type: "POST",
-        url: "/skillboard/skillboardwrite",
+        url: "/skillboard/skillboardwrite/"+cateId,
         data: JSON.stringify(form),
         contentType: "application/json; charset=utf-8",
         dataType: "json"
@@ -64,6 +68,7 @@ function gomodifyskillboard(boardId){
 function  skillboardModify(boardId){
     var titleName= $("#title").val()
     var description = $("#boardDescription").val()
+    var cateId = $("#cateListSelect").val()
 
     if( titleName !=null){
         let form = {
@@ -74,7 +79,7 @@ function  skillboardModify(boardId){
         }
         $.ajax({
             type: "PUT",
-            url: "/skillboard/modify",
+            url: "/skillboard/modify/"+cateId,
             data: JSON.stringify(form),
             contentType : "application/json; charset=utf-8", //body데이터가 어떤 타입인지 (MIME타입)
             dataType: "json" // 요청을 서버로 해서 응답이 왔을때, String문자열임
@@ -116,6 +121,10 @@ function skillBoarduploadSummernoteImageFile(file,editor){
 
 
 
+}
+
+function goCatePage(){
+    location.href = "/auth/skillboard/category/main"
 }
 
 

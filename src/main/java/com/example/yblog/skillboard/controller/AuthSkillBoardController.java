@@ -1,6 +1,7 @@
 package com.example.yblog.skillboard.controller;
 
 
+import com.example.yblog.admin.service.CategoryService;
 import com.example.yblog.skillboard.service.SkillBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +27,8 @@ public class AuthSkillBoardController {
     @Autowired
     SkillBoardService skillBoardService;
 
-    Device device;
+    @Autowired
+    CategoryService categoryService;
 
     @GetMapping("")
     public String mainView(Model model,
@@ -47,8 +49,6 @@ public class AuthSkillBoardController {
         if(device.isMobile() || device.isTablet()){
             return "skillBoard/mSkillBoardMain";
         }*/
-
-
 
         return "skillBoard/skillBoardMain";
     }
@@ -101,6 +101,18 @@ public class AuthSkillBoardController {
     }
 
 
+    @GetMapping(value = "category/main")
+    public String cateMainPage(Model model,
+                               @PageableDefault(size = 6, sort = "id" ,direction = Sort.Direction.DESC)
+                                       Pageable pageable,
+                               HttpServletRequest request){
+
+        model.addAttribute("categoryList" , categoryService.categoryList(pageable));
+
+
+
+        return "skillBoard/skillboardCateMain";
+    }
 
 
 }

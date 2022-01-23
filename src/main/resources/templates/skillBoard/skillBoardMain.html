@@ -17,6 +17,15 @@
             position: relative;
         }
 
+        .goCateButton{
+            all: unset;
+            font-family: 'Do Hyeon', sans-serif;
+            border: 2px solid black;
+            margin-left: 40px;
+            width: 120px;
+            text-align: center;
+        }
+
         .mainBoardDiv a{
             color: black;
             text-decoration: none;
@@ -47,6 +56,14 @@
 
         .boardDiv span{
             display: block;
+        }
+
+        .boardDiv span:nth-child(1){
+            display: inline;
+        }
+        .boardDiv span:nth-child(2){
+            float: right;
+            font-family: 'Do Hyeon', sans-serif;
         }
 
         .boardDivs .dateSpan{
@@ -154,6 +171,7 @@
 <div layout:fragment="content">
 
     <div class="mainBoardDiv">
+        <button class="goCateButton" onclick="goCatePage()">카테고리별로 보기</button>
             <div class="boardDivs" th:if="${boards.size() != 0}">
                 <a th:href=" @{/auth/skillboard/details/{id}(id = ${board.getId()})}"  th:each="board :${boards}">
                     <!-- 썸네일만 가져와주는 애를 만들고 여기다가 비교해서 있으면 썸넬사진 없으면 기본썸넬 사진 만들자 -->
@@ -161,7 +179,9 @@
                         <img id="thumnailImage">
                     </div>
                     <div class="boardDiv" >
-                       &nbsp;<span class="dateSpan" th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
+                        <span class="dateSpan" th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
+                        <span th:if="${board.getBoardCategory() != null}" th:text=" '['+${board.getBoardCategory().getCategoryName()}+']' "></span>
+                        <span th:if="${board.getBoardCategory() == null}">[기술]</span>
                         <span class="spanTitle" th:text="${board.getTitle()}"></span>
                         <span class="spananother" th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;
                         <span class="spananother" th:text="${board.getCount()}"></span>

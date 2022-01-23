@@ -1,8 +1,10 @@
 package com.example.yblog.skillboard.controller;
 
+import com.example.yblog.admin.service.CategoryService;
 import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.config.auth.PrincipalDetail;
 import com.example.yblog.dto.ResponseDto;
+import com.example.yblog.model.BoardCategory;
 import com.example.yblog.model.SkillBoard;
 import com.example.yblog.skillboard.service.SkillBoardService;
 import com.google.gson.JsonObject;
@@ -37,24 +39,37 @@ public class SkillBoardController {
     @Autowired
     SkillBoardService skillBoardService;
 
+
+    @Autowired
+    CategoryService categoryService;
+
     @Value("${blogAdmin.adminName}")
     private String adminName;
 
 
     @GetMapping(value = "writepage")
-    public String skillBoardWritePage(){
+    public String skillBoardWritePage(Model model){
+
+        model.addAttribute("cateAllList" , categoryService.allCategoryList());
+
 
         return "skillBoard/skillBoardWrite";
     }
 
     // 글쓰기
-    @PostMapping(value = "skillboardwrite")
+    @PostMapping(value = "skillboardwrite/{cateId}")
     @ResponseBody
     public ResponseDto<Integer> skillWrite(@RequestBody SkillBoard skillBoard,
+                                           @PathVariable("cateId") int cateId,
                                            @AuthenticationPrincipal PrincipalDetail principalDetail){
 
+        if(cateId == 0){
+            skillBoard.setBoardCategory(null);
+        }else{
+            skillBoard.setBoardCategory(categoryService.CategoryfindById(cateId));
+        }
+        skillBoardService.saveSkillBoard(skillBoard , principalDetail.getYUser());
 
-        skillBoardService.saveSkillBoard(skillBoard,principalDetail.getYUser());
 
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
@@ -83,8 +98,10 @@ public class SkillBoardController {
 
         SkillBoard skillBoard = skillBoardService.skillBoardDetails(boardId);
 
+
         if(principal.getUsername().equals(adminName)){
             model.addAttribute("board", skillBoard);
+            model.addAttribute("cateAllList" , categoryService.allCategoryList());
             return "skillBoard/skillBoardModify";
         }
 
@@ -93,12 +110,18 @@ public class SkillBoardController {
         return "redirect:/";
     }
 
-    @PutMapping(value = "modify")
+    @PutMapping(value = "modify/{cateId}")
     @ResponseBody
     public ResponseDto<Integer> skillBoardModify(@RequestBody SkillBoard skillBoard,
+                                                 @PathVariable("cateId") int cateId,
                                                  @AuthenticationPrincipal PrincipalDetail principal){
 
 
+        if(cateId == 0){
+            skillBoard.setBoardCategory(null);
+        }else{
+            skillBoard.setBoardCategory(categoryService.CategoryfindById(cateId));
+        }
 
         if(principal.getUsername().equals(adminName)){
 

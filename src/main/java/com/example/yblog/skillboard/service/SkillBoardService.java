@@ -1,11 +1,9 @@
 package com.example.yblog.skillboard.service;
 
+import com.example.yblog.admin.service.CategoryService;
 import com.example.yblog.allstatic.AllStaticElement;
 import com.example.yblog.handler.GlobalThrowError;
-import com.example.yblog.model.SkillBoard;
-import com.example.yblog.model.SkillBoardReply;
-import com.example.yblog.model.YBoard;
-import com.example.yblog.model.YUser;
+import com.example.yblog.model.*;
 import com.example.yblog.repository.SkillBoardReplyRepository;
 import com.example.yblog.repository.SkillBoardRepository;
 import org.apache.commons.io.FileUtils;
@@ -30,13 +28,15 @@ public class SkillBoardService {
     @Autowired
     private SkillBoardReplyRepository skillBoardReplyRepository;
 
-
+    @Autowired
+    private CategoryService categoryService;
 
     @Transactional
     // 사진이랑 같이 게시판 저장하기
     public int saveSkillBoard(SkillBoard skillBoard, YUser yUser){
 
         SkillBoard newSkillBoard;
+
 
         //사진 로직
 
@@ -113,6 +113,7 @@ public class SkillBoardService {
         board.setTitle(skillBoard.getTitle());
         board.setContent(skillBoard1.getContent());
         board.setDescription(skillBoard.getDescription());
+        board.setBoardCategory(skillBoard.getBoardCategory());
 
 
         // 다지우고 체킹해야지

@@ -20,9 +20,12 @@
             display: flex;
             flex-wrap: wrap;
         }
+        .listContainer a{
+            width: 50%;
+        }
 
         .listCateDiv{
-            width: 50%;
+            width: 100%;
 
         }
 
@@ -57,21 +60,18 @@
 
 
     <div class="mainCateDiv">
-        <label for="categoryName">카테고리이름</label><input type="text" id="categoryName" placeholder="카테고리 이름 작성바람">
-        <label for="thumbnailimage">카테고리 썸네일</label><input id="thumbnailimage" type="file">
-        <button onclick="saveCategory()">썸네일 추가하기</button>
 
         <div class="listContainer">
-            <div class="listCateDiv" th:each="category : ${categoryList}">
-                <img th:id="catethumbnail + ${category.getId()}"  th:src="${category.getCategoryThunmbnail()}">
-                <input th:id="thumbnailimage + ${category.getId()}" type="file">
-                <hr>
-                <input type="text" th:id="cateId + ${category.getId()}" th:value="${category.getId()}">
-                <input type="text" th:id="cateName + ${category.getId()}"  th:value="${category.getCategoryName()}">
-                <label th:text="${category.getCreateDate()}"></label>
-                <button th:id="${category.getId()}" onclick="modifyButton(this.id)" >해당 카테고리 수정</button>
-                <button th:id="${category.getId()}" onclick="thumbnailDelete(this.id)">해당 카테고리 삭제</button>
-            </div>
+
+            <a th:href=" @{/auth/skillboard/category/{id}(id = ${category.getId()})}" th:each="category : ${categoryList}">
+                <div class="thumimage">
+                    <img th:id="catethumbnail + ${category.getId()}"  th:src="${category.getCategoryThunmbnail()}">
+                </div>
+                <div class="listCateDiv" >
+                    <label type="text" th:id="cateId + ${category.getId()}" th:text="${category.getId()}"></label>
+                    <label type="text" th:id="cateName + ${category.getId()}"  th:text="${category.getCategoryName()}"></label>
+                </div>
+            </a>
         </div>
 
 

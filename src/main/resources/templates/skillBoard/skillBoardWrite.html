@@ -73,6 +73,10 @@
             <input type="text" id="title">
             <label for="boardDescription">설명(없어도 괜찮습니다.)</label>
             <input type="text" id="boardDescription">
+            <select id="cateListSelect">
+                <option value="0">noneCategory</option>
+                <option th:value="${cate.getId()}" th:text="${cate.getCategoryName()}" th:each="cate : ${cateAllList}"></option>
+            </select>
         </div>
         <textarea class="summernote" rows="5" id="content" style="resize: none;"></textarea>
         <button type="button" class="btn btn-warning btn-block" onclick="skillBoardWrite()">작성</button>

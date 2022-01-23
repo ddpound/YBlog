@@ -3,12 +3,14 @@ package com.example.yblog.admin.controller;
 
 import com.example.yblog.admin.service.CategoryService;
 import com.example.yblog.allstatic.AllStaticElement;
+import com.example.yblog.config.auth.PrincipalDetail;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,9 @@ import java.util.UUID;
 @Controller
 public class CategoryController {
 
+    @Value("${blogAdmin.adminName}")
+    private  String adminName;
+
     @Autowired
     CategoryService categoryService;
 
@@ -35,13 +40,16 @@ public class CategoryController {
     public String categoryPage(Model model,
                                @PageableDefault(size = 6, sort = "id" ,direction = Sort.Direction.DESC)
                                Pageable pageable,
-                               HttpServletRequest request){
+                               HttpServletRequest request,
+                               @AuthenticationPrincipal PrincipalDetail principal){
 
+        if(principal.getUsername().equals(adminName)){
+            model.addAttribute("categoryList", categoryService.categoryList(pageable));
+            return "admin/boardCategory";
+        }else{
+            return "redirect:/";
+        }
 
-       model.addAttribute("categoryList", categoryService.categoryList(pageable));
-
-
-        return "admin/boardCategory";
     }
 
     // 카테고리관리창의 요청
@@ -50,7 +58,13 @@ public class CategoryController {
     // 카테고리 추가;
     @PostMapping(value = "admin/category/save")
     public String UploadThumbnail(@RequestParam("file")MultipartFile multipartFile,
-                                  @RequestParam("categoryName")String categoryName){
+                                  @RequestParam("categoryName")String categoryName,
+                                  @AuthenticationPrincipal PrincipalDetail principal){
+
+        if(!principal.getUsername().equals(adminName)){
+            return "redirect:/";
+        }
+
         String fileRoot = null;
         if(AllStaticElement.OsName.equals("window")){
             // os를 파악해서 매번 반복하지않도록 만들자 (static에 필요사항임)
@@ -82,11 +96,35 @@ public class CategoryController {
         return "admin/boardCategory";
     }
 
-    @DeleteMapping(value = "admin/category/delete/{id}")
-    public String categoryDelete(@PathVariable(value = "id") int id){
-        categoryService.delteCategory(id);
+    @PutMapping(value = "admin/category/modify")
+    public String modifyCategory(@RequestParam("file")MultipartFile multipartFile,
+                                 @RequestParam("categoryName")String categoryName,
+                                 @RequestParam("categoryId")int categoryId,
+                                 @AuthenticationPrincipal PrincipalDetail principal){
 
-        return "redirect:/admin/boardCategory";
+        if(!principal.getUsername().equals(adminName)){
+            return "redirect:/";
+        }
+
+
+        categoryService.modifyCategory(multipartFile,categoryName,categoryId);
+
+
+        return "admin/boardCategory";
+    }
+
+    @DeleteMapping(value = "admin/category/delete/{id}")
+    public String categoryDelete(@AuthenticationPrincipal PrincipalDetail principal,
+                                 @PathVariable(value = "id") int id){
+
+        if(!principal.getUsername().equals(adminName)){
+            return "redirect:/";
+        }
+
+
+        categoryService.deleteCategory(id);
+
+        return "/admin/boardCategory";
     }
 
 

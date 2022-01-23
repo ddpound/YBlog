@@ -20,7 +20,6 @@ function boardWrite(){
     var description = $("#boardDescription").val() // 그냥 description 을 사용하면 헤드값에 이미 있기때문에 안남음
     var content = $("#content").val()
 
-
     if(titleName != ""){
         let form = {
             title : titleName,

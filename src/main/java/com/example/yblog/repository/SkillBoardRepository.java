@@ -1,5 +1,6 @@
 package com.example.yblog.repository;
 
+import com.example.yblog.model.BoardCategory;
 import com.example.yblog.model.SkillBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +20,8 @@ public interface SkillBoardRepository extends JpaRepository<SkillBoard, Integer>
             value = "select *  from SkillBoard where title like %:title%",
             nativeQuery = true)
     List<SkillBoard> searchBoardTitle(@Param("title") String title);
+
+
+    List<SkillBoard> findByBoardCategory(BoardCategory boardCategory);
 
 }
