@@ -81,6 +81,7 @@ public class SkillBoardService {
 
     @Transactional(readOnly = true)
     public Page<SkillBoard> skillBoardPage(Pageable pageable){
+
         return  skillBoardRepository.findAll(pageable);
     }
 
@@ -91,6 +92,16 @@ public class SkillBoardService {
                 .orElseThrow(()->{
                     return new IllegalArgumentException("글 상세보기 실패, 아이디를 찾을수없음");
                 });
+    }
+
+
+    // 카테고리별로 기술블로그 보여주기
+    @Transactional(readOnly = true)
+    public Page<SkillBoard> showCategorySkillboard(int cateId, Pageable pageable){
+        BoardCategory boardCategory =categoryService.findbyIdBoardCategory(cateId);
+
+
+        return skillBoardRepository.findAllByBoardCategory(boardCategory, pageable);
     }
 
 

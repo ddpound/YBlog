@@ -41,7 +41,6 @@
         }
 
 
-
         @media screen and (max-width: 1100px) {
             .boardDetailMainBox{
                 width: 100vw;
@@ -64,6 +63,8 @@
         function myFunction() {
             var boardtitle =  [[${board.getTitle()}]]
 
+            // console.log(window.location.origin) 지금당장 하드코딩이지만 이걸쓰셈 추후에는
+
             document.title = boardtitle
             document.getElementById("ogTitle").setAttribute("content", boardtitle )
             document.getElementById("twitterTitle").setAttribute("content", boardtitle )
@@ -85,11 +86,11 @@
             var thumbnail = [[${board.getThumbnail()}]]
 
             if(thumbnail == "" || thumbnail == null){
-                document.getElementById("ogImage").setAttribute("content", "/img/thumbnailandimage/defaultthumbnail.png")
-                document.getElementById("twitterImage").setAttribute("content", "/img/thumbnailandimage/defaultthumbnail.png")
+                document.getElementById("ogImage").setAttribute("content", "https://www.ybloglab.shop/img/thumbnailandimage/defaultthumbnail.png")
+                document.getElementById("twitterImage").setAttribute("content", "https://www.ybloglab.shop/img/thumbnailandimage/defaultthumbnail.png")
             }else{
-                document.getElementById("ogImage").setAttribute("content", thumbnail)
-                document.getElementById("twitterImage").setAttribute("content", thumbnail)
+                document.getElementById("ogImage").setAttribute("content", "https://www.ybloglab.shop"+thumbnail)
+                document.getElementById("twitterImage").setAttribute("content", "https://www.ybloglab.shop"+thumbnail)
             }
 
         }

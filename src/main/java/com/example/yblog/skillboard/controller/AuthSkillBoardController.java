@@ -114,5 +114,18 @@ public class AuthSkillBoardController {
         return "skillBoard/skillboardCateMain";
     }
 
+    @GetMapping(value = "category/{categoryId}")
+    public String showCagegoryBoard(@PathVariable("categoryId") int id,
+                                    Model model,
+                                    @PageableDefault(size = 6, sort = "id",direction = Sort.Direction.DESC)
+                                    Pageable pageable){
+
+        model.addAttribute("boards", skillBoardService.showCategorySkillboard(id,pageable));
+        model.addAttribute("cateId", id);
+
+
+        return "skillBoard/skillboardcateDetailsPage";
+    }
+
 
 }

@@ -30,6 +30,14 @@ public class CategoryService {
     SkillBoardRepository skillBoardRepository;
 
 
+    @Transactional(readOnly = true)
+    public BoardCategory findbyIdBoardCategory(int id){
+        return boardCategoryRepository.findById(id).
+                orElseThrow(()->{
+                    return new IllegalArgumentException("해당카테고리를 찾을수 없습니다");
+                });
+    }
+
 
     @Transactional(readOnly = true)
     public Page<BoardCategory> categoryList(Pageable pageable){

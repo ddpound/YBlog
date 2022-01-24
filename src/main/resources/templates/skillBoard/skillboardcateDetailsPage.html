@@ -98,7 +98,7 @@
 
         .boardListNumber{
             position: absolute;
-            bottom: -40px;
+            bottom: -20px;
             width: 100%;
             border: solid 2px black;
             border-radius: 10px;
@@ -172,56 +172,57 @@
 
     <div class="mainBoardDiv">
         <button class="goCateButton" onclick="goCatePage()">카테고리별로 보기</button>
-            <div class="boardDivs" th:if="${boards.size() != 0}">
-                <a th:href=" @{/auth/skillboard/details/{id}(id = ${board.getId()})}"  th:each="board :${boards}">
-                    <!-- 썸네일만 가져와주는 애를 만들고 여기다가 비교해서 있으면 썸넬사진 없으면 기본썸넬 사진 만들자 -->
-                    <div class="boardThumImage">
-                        <img id="thumnailImage">
-                    </div>
-                    <div class="boardDiv" >
-                        <span class="dateSpan" th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
-                        <span th:if="${board.getBoardCategory() != null}" th:text=" '['+${board.getBoardCategory().getCategoryName()}+']' "></span>
-                        <span th:if="${board.getBoardCategory() == null}">[기술]</span>
-                        <span class="spanTitle" th:text="${board.getTitle()}"></span>
-                        <span class="spananother" th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;
-                        <span class="spananother" th:text="${board.getCount()}"></span>
-                    </div>
-                    <script th:inline="javascript">
-                        // 여기다가 model attribute로 경로명 문자열 값을 받는다.
-                        // 자바 스크립트를 이용해 setattribute를 통해 문자열 대입한다.
-                        i =+ 1
-                        var getImageSrc = [[${board.getThumbnail()}]]
-                        var imagetag = document.getElementById('thumnailImage');
-                        imagetag.id = thumnailImage + i
-
-                        if(getImageSrc === null || getImageSrc.length ===0){
-                            imagetag.src = "/img/thumbnailandimage/defaultthumbnail.png"
-                        }else {
-                            imagetag.src =  getImageSrc
-                        }
-                    </script>
-                </a>
-
-                <div class="boardListNumber">
-                    <ul>
-                        <li th:if="${boardsPage.number != 0}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number - 1})}">Previous</a></li>
-                        <th:block th:each="num : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
-                            <li ><a th:href="@{/auth/skillboard/(page=${num})}" th:text="${num+1}"></a></li>
-                        </th:block>
-                        <li  th:if="${boardsPage.last != true}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number + 1})}">Next</a></li>
-                    </ul>
+        <div class="boardDivs" th:if="${boards != null}">
+            <a th:href=" @{/auth/skillboard/details/{id}(id = ${board.getId()})}"  th:each="board :${boards}">
+                <!-- 썸네일만 가져와주는 애를 만들고 여기다가 비교해서 있으면 썸넬사진 없으면 기본썸넬 사진 만들자 -->
+                <div class="boardThumImage">
+                    <img id="thumnailImage">
                 </div>
+                <div class="boardDiv" >
+                    <span class="dateSpan" th:text="${#dates.format(board.getCreateDate(), 'yyyy-MM-dd hh:mm:ss')}"></span>
+                    <span th:if="${board.getBoardCategory() != null}" th:text=" '['+${board.getBoardCategory().getCategoryName()}+']' "></span>
+                    <span th:if="${board.getBoardCategory() == null}">[기술]</span>
+                    <span class="spanTitle" th:text="${board.getTitle()}"></span>
+                    <span class="spananother" th:if="${board.getUser().getUsername() != 'Y'}" th:text="${board.getUser().getUsername()}"></span><span th:if="${board.getUser().getUsername() == 'Y'}" >관리자(Y)</span>&nbsp;
+                    <span class="spananother" th:text="${board.getCount()}"></span>
+                </div>
+                <script th:inline="javascript">
+                    // 여기다가 model attribute로 경로명 문자열 값을 받는다.
+                    // 자바 스크립트를 이용해 setattribute를 통해 문자열 대입한다.
+                    i =+ 1
+                    var getImageSrc = [[${board.getThumbnail()}]]
+                    var imagetag = document.getElementById('thumnailImage');
+                    imagetag.id = thumnailImage + i
 
+                    if(getImageSrc === null || getImageSrc.length ===0){
+                        imagetag.src = "/img/thumbnailandimage/defaultthumbnail.png"
+                    }else {
+                        imagetag.src =  getImageSrc
+                    }
 
+                </script>
+            </a>
+
+            <div class="boardListNumber">
+                <ul>
+                    <li th:if="${boards.number != 0}"><a th:href="@{/auth/skillboard/category/{cateId}/(cateId = ${cateId},page=${boards.number - 1})}">Previous</a></li>
+                    <th:block th:each="num : ${#numbers.sequence(0, boards.totalPages - 1)}">
+                        <li ><a th:href="@{/auth/skillboard/category/{cateId}/(cateId = ${cateId},page=${num})}" th:text="${num+1}"></a></li>
+                    </th:block>
+                    <li  th:if="${boards.last != true}"><a th:href="@{/auth/ skillboard/category/{cateId}/(cateId = ${cateId},page=${boards.number + 1})}">Next</a></li>
+                </ul>
             </div>
 
-            <div class="boardDivs" th:if="${boards.size() == 0}">
-                <span class="title"> 저장된 글이 없습니다.</span>
-            </div>
 
-            <div class="writeButton" th:if="${#authentication.getName()} == 'Y'">
-                <button type="button" onclick="skillBoardWriteGo()"><img src="/img/buttonLogo/writelogo.png"></button>
-            </div>
+        </div>
+
+        <div class="boardDivs" th:if="${boards.size() == 0}">
+            <span class="title"> 저장된 글이 없습니다.</span>
+        </div>
+
+        <div class="writeButton" th:if="${#authentication.getName()} == 'Y'">
+            <button type="button" onclick="skillBoardWriteGo()"><img src="/img/buttonLogo/writelogo.png"></button>
+        </div>
 
 
 

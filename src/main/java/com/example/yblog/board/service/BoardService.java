@@ -163,6 +163,7 @@ public class BoardService {
                 });
     }
 
+
     @Transactional
     public void delete(int id) {
         YBoard yBoard = yBoardRepository.findById(id)
