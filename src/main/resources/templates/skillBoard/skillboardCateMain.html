@@ -11,7 +11,6 @@
 
         .mainCateDiv{
             width: 1100px;
-            height: 1800px;
             min-height: 700px;
             margin: 100px auto;
             border-top: 3px solid #c2b2f0;
@@ -20,10 +19,8 @@
 
         .listContainer{
             width: 100%;
-            height: 300px;
             display: flex;
             flex-wrap: wrap;
-            text-align: center;
             margin: 60px auto;
         }
 
@@ -71,7 +68,7 @@
 
         .boardListNumber{
             position: absolute;
-            bottom: -20px;
+            bottom: -50px;
             width: 100%;
             border: solid 2px black;
             border-radius: 10px;
@@ -98,8 +95,11 @@
                 width: 100vw;
                 margin: 100px 0;
                 position: relative;
-
             }
+            .listContainer a{
+                width: 100%;
+            }
+
         }
     </style>
 
@@ -126,17 +126,22 @@
                     <label type="text" th:id="cateName + ${category.getId()}"  th:text="${category.getCategoryName()}"></label>
                 </div>
             </a>
+
+            <div class="boardListNumber">
+                <ul>
+                    <li th:if="${categoryList.number != 0}"><a th:href="@{/auth/skillboard/category/main(page=${categoryList.number - 1})}">Previous</a></li>
+                    <th:block th:each="num : ${#numbers.sequence(0, categoryList.totalPages - 1)}">
+                        <li ><a th:href="@{/auth/skillboard/category/main(page=${num})}" th:text="${num+1}"></a></li>
+                    </th:block>
+                    <li  th:if="${categoryList.last != true}"><a th:href="@{/auth/ skillboard/category/main(page=${categoryList.number + 1})}">Next</a></li>
+                </ul>
+            </div>
+
+
         </div>
 
-        <div class="boardListNumber">
-            <ul>
-                <li th:if="${categoryList.number != 0}"><a th:href="@{/auth/skillboard/category/main(page=${categoryList.number - 1})}">Previous</a></li>
-                <th:block th:each="num : ${#numbers.sequence(0, categoryList.totalPages - 1)}">
-                    <li ><a th:href="@{/auth/skillboard/category/main(page=${num})}" th:text="${num+1}"></a></li>
-                </th:block>
-                <li  th:if="${categoryList.last != true}"><a th:href="@{/auth/ skillboard/category/main(page=${categoryList.number + 1})}">Next</a></li>
-            </ul>
-        </div>
+
+
 
 
 
