@@ -128,8 +128,12 @@ public class MainController {
 
     // 보드 메인
     @GetMapping(value = "/auth/boardmain" )
-    public  String mainBoardView(Model model , @PageableDefault(size = 6 ,sort = "id",direction = Sort.Direction.DESC)Pageable pageable,
-                            HttpServletRequest request) {
+    public  String mainBoardView(Model model ,
+                                 @PageableDefault(size = 6 ,
+                                         sort = "id",
+                                         direction = Sort.Direction.DESC)
+                                         Pageable pageable,
+                                 HttpServletRequest request) {
 
         Page page =  boardService.boardListPage(pageable);
 

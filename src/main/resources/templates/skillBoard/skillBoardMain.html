@@ -8,9 +8,6 @@
 <th:block layout:fragment="css">
 
     <style th:inline="text">
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-
         .mainBoardDiv{
             width: 1100px;
             margin: 100px auto;
@@ -205,7 +202,7 @@
                 <div class="boardListNumber">
                     <ul>
                         <li th:if="${boardsPage.number != 0}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number - 1})}">Previous</a></li>
-                        <th:block th:each="num : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
+                        <th:block th:each="num : ${boardNumList}">
                             <li ><a th:href="@{/auth/skillboard/(page=${num})}" th:text="${num+1}"></a></li>
                         </th:block>
                         <li  th:if="${boardsPage.last != true}"><a th:href="@{/auth/skillboard/(page=${boardsPage.number + 1})}">Next</a></li>

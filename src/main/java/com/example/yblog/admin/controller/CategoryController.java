@@ -31,9 +31,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-
     //최신글, 카테고리별로 보기
-
 
     //카테고리 관리창
     @GetMapping(value = "/admin/category")
@@ -72,9 +70,6 @@ public class CategoryController {
         }else{
             fileRoot = "/home/youseongjung/Templates/Confirm_SaveImage/thumbnail/"+File.separator;	//저장될 외부 파일 경로
         }
-        System.out.println("파일 업로드테스트");
-        System.out.println(multipartFile);
-        System.out.println(categoryName);
 
         String originalFileName = multipartFile.getOriginalFilename();
         String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); //확장자 명 가져오기
@@ -82,7 +77,6 @@ public class CategoryController {
         String savedFileName = "Thumbnail-"+ UUID.randomUUID()+ extension;
 
         File targetFile = new File(fileRoot+savedFileName);
-
 
 
         try {
@@ -121,12 +115,9 @@ public class CategoryController {
             return "redirect:/";
         }
 
-
         categoryService.deleteCategory(id);
 
-        return "/admin/boardCategory";
+        return "admin/boardCategory";
     }
-
-
 
 }
