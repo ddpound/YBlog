@@ -137,8 +137,16 @@ function searchBoard(key){
     }
 
 
+}
 
 
+function cllickSearchBoard(){
+    var searchTitle = $("#searchTitle").val()
+    var category = $("#categoryBoard").val()
 
-
+    if (searchTitle === "" || searchTitle ===null){
+        alert("검색어를 하나라도 입력해주세요")
+    }else{
+        location.href ="/auth/search/"+category+"/"+searchTitle
+    }
 }

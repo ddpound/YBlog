@@ -359,7 +359,7 @@
                 </div>
 
                 <div class="search_Div">
-                    <input placeholder="Title" id="searchTitle" type="text"> <button onclick="searchBoard()"><img class="searchLogo" src="/img/buttonLogo/searchLogo.png"></button>
+                    <input placeholder="Title" id="searchTitle" type="text"> <button onkeyup="searchBoard()"  onclick="cllickSearchBoard()"><img class="searchLogo" src="/img/buttonLogo/searchLogo.png"></button>
                     <script defer>
                         document.getElementById("searchTitle").addEventListener('keypress',function(){
                                 searchBoard()
