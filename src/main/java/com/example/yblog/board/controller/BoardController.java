@@ -76,7 +76,7 @@ public class BoardController {
                                             @AuthenticationPrincipal PrincipalDetail principal){
 
         String userName =  boardService.boardDetails(id).getUser().getUsername();
-        if(userName.equals(principal.getUsername())){
+        if(userName.equals(principal.getUsername()) || principal.getUsername().equals(AllStaticElement.adminUser) ){
             boardService.delete(id);
             return new ResponseDto<Integer>(HttpStatus.OK,1);
         }

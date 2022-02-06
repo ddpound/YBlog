@@ -12,7 +12,6 @@
     <style  th:inline="text">
         .boardWriteMainDiv{
             width: 1100px;
-            height: 900px;
             min-height: 900px;
             margin: 40px auto;
         }
@@ -97,7 +96,8 @@
         $('.summernote').summernote({
             focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
             lang: "ko-KR",					// 한글 설정
-            height: 700,
+            height: 900,
+            maxHeight: 1100,
             placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
             callbacks: {
                 //여기 부분이 이미지를 첨부하는 부분

@@ -9,6 +9,7 @@ import com.example.yblog.model.YReply;
 import com.example.yblog.model.YUser;
 import com.example.yblog.repository.YBoardRepository;
 import com.example.yblog.repository.YReplyRepository;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Log4j2
 public class BoardService {
     @Autowired
     private YBoardRepository yBoardRepository;
@@ -176,7 +178,9 @@ public class BoardService {
         // 관련된 사진파일을 삭제하기
         deleteConfirmfile(yBoard.getImagefileid());
 
+        log.info("Delete USE from ID : " + id);
         yBoardRepository.deleteById(id);
+
 
     }
 
