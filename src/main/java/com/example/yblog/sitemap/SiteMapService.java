@@ -97,7 +97,7 @@ public class SiteMapService {
         urlSet.getUrl().add(url);
 
         url = new Url();
-        url.setLoc("https://www.ybloglab.shop/auth/Portfolio");
+        url.setLoc("https://www.ybloglab.shop/auth/portfolio");
         url.setLastmod(new Date());
         urlSet.getUrl().add(url);
 
