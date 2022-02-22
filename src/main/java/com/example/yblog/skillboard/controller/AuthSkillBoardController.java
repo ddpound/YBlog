@@ -2,6 +2,8 @@ package com.example.yblog.skillboard.controller;
 
 
 import com.example.yblog.admin.service.CategoryService;
+import com.example.yblog.allstatic.AllStaticElement;
+import com.example.yblog.model.SkillBoard;
 import com.example.yblog.skillboard.service.SkillBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -113,9 +115,21 @@ public class AuthSkillBoardController {
         }
 
 
+        SkillBoard skillBoard = skillBoardService.skillBoardDetails(skillboardId);
 
-        model.addAttribute("board", skillBoardService.skillBoardDetails(skillboardId));
+        model.addAttribute("board", skillBoard);
 
+        // metaData 추가
+        model.addAttribute("ogUrl","https://ybloglab.shop/auth/skillboard/details/"+skillboardId);
+        model.addAttribute("title", skillBoard.getTitle());
+        model.addAttribute("ogTitle",skillBoard.getTitle());
+        model.addAttribute("ogDescription",skillBoard.getDescription());
+        model.addAttribute("description",skillBoard.getDescription());
+
+        // getThumnail 안의 \ 문자를 / 로변경해야함
+        String thumbnailSlash = skillBoard.getThumbnail().replace("\\","/");
+
+        model.addAttribute("ogImage","https://ybloglab.shop"+thumbnailSlash);
 
         return "skillBoard/skillBoardDetails";
     }

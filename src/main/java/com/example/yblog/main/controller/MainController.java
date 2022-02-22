@@ -8,6 +8,7 @@ import com.example.yblog.join.service.JoinService;
 import com.example.yblog.login.service.LoginService;
 import com.example.yblog.main.service.MainService;
 import com.example.yblog.model.Status;
+import com.example.yblog.model.YBoard;
 import com.example.yblog.model.YUser;
 import com.example.yblog.sitemap.SiteMapService;
 import com.example.yblog.sitemap.Url;
@@ -212,14 +213,21 @@ public class MainController {
             response.addCookie(cookie1);
             boardService.boardCountUp(id);
         }
-        model.addAttribute("board", boardService.boardDetails(id));
+
+        YBoard yBoard = boardService.boardDetails(id);
+        model.addAttribute("board", yBoard);
 
 
 
         // metaData 추가
         model.addAttribute("ogUrl","https://ybloglab.shop/auth/board/details"+"?id="+id);
+        model.addAttribute("title", yBoard.getTitle());
+        model.addAttribute("ogTitle",yBoard.getTitle());
+        model.addAttribute("ogDescription",yBoard.getDescription());
+        model.addAttribute("description",yBoard.getDescription());
+
         // getThumnail 안의 \ 문자를 / 로변경해야함
-        String thumbnailSlash = boardService.boardDetails(id).getThumbnail().replace("\\","/");
+        String thumbnailSlash = yBoard.getThumbnail().replace("\\","/");
         String rootHost = AllStaticElement.StaticURL;
         rootHost = rootHost.substring(0,rootHost.length()-1);
         model.addAttribute("ogImage","https://ybloglab.shop"+thumbnailSlash);

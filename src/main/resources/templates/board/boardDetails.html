@@ -123,21 +123,21 @@
     function myFunction() {
       var boardtitle =  [[${board.getTitle()}]]
 
-      document.title = boardtitle
-      document.getElementById("ogTitle").setAttribute("content", boardtitle )
+      //document.title = boardtitle
+      //document.getElementById("ogTitle").setAttribute("content", boardtitle )
       document.getElementById("twitterTitle").setAttribute("content", boardtitle )
-      document.getElementById("ogUrl").setAttribute("content", window.location.href)
+      //document.getElementById("ogUrl").setAttribute("content", window.location.href)
       document.getElementById("twitterUrl").setAttribute("content", window.location.href)
 
       var description = [[${board.getDescription()}]]
 
       if(description == "" || description == null){
-        document.getElementById("description").setAttribute("content", "자유게시판글입니다.")
-        document.getElementById("ogDescription").setAttribute("content", "자유게시판글입니다.")
+        //document.getElementById("description").setAttribute("content", "자유게시판글입니다.")
+        //document.getElementById("ogDescription").setAttribute("content", "자유게시판글입니다.")
 
       }else {
-        document.getElementById("description").setAttribute("content", description)
-        document.getElementById("ogDescription").setAttribute("content", description)
+        //document.getElementById("description").setAttribute("content", description)
+        //document.getElementById("ogDescription").setAttribute("content", description)
         document.getElementById("twitterDescription").setAttribute("content", description)
       }
 
