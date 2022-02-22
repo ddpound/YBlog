@@ -68,7 +68,7 @@ public class MainController {
 
     // 메인
     @GetMapping(value = {"/" , "/index"})
-    public  String mainView(HttpServletRequest request) {
+    public  String mainView(HttpServletRequest request,Model model) {
 
         // 메인을 불러오면서 딱 한번 하는 부분
         if(AllStaticElement.statusNum < 1){
@@ -123,6 +123,8 @@ public class MainController {
             return "mIndex";
         }*/
 
+        model.addAttribute("ogUrl",request.getRequestURL());
+
         return "index";
     }
 
@@ -140,6 +142,8 @@ public class MainController {
         model.addAttribute("boards", boardService.boardList(pageable));
         model.addAttribute("boardsPage", page);
         model.addAttribute("nowStatus" , statusService.statusReturn(1));
+
+
 
         int firstNumber = pageable.getPageNumber() - 2 ;
         int lastNumber = pageable.getPageNumber() + 2 ;
@@ -166,6 +170,11 @@ public class MainController {
         if (device.isMobile() || device.isTablet()){
             return "board/mBoardMain";
         }*/
+
+
+        // metaData 추가
+        model.addAttribute("ogUrl","https://ybloglab.shop/");
+
 
         return "board/boardMain";
     }
@@ -204,6 +213,16 @@ public class MainController {
             boardService.boardCountUp(id);
         }
         model.addAttribute("board", boardService.boardDetails(id));
+
+
+
+        // metaData 추가
+        model.addAttribute("ogUrl","https://ybloglab.shop/auth/board/details"+"?id="+id);
+        // getThumnail 안의 \ 문자를 / 로변경해야함
+        String thumbnailSlash = boardService.boardDetails(id).getThumbnail().replace("\\","/");
+        String rootHost = AllStaticElement.StaticURL;
+        rootHost = rootHost.substring(0,rootHost.length()-1);
+        model.addAttribute("ogImage","https://ybloglab.shop"+thumbnailSlash);
 
         return "board/boardDetails";
     }

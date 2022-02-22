@@ -38,7 +38,7 @@ public class KaKaoLoginServiceImpl implements KaKaoLoginService{
         HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(params,headers);
 
         ResponseEntity<String> response = rt.exchange(AllStaticElement.OauthToken_request,
-                HttpMethod.POST, kakaoTokenRequest,String.class);
+                HttpMethod.POST, kakaoTokenRequest, String.class);
 
         return response;
     }
