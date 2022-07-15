@@ -216,15 +216,6 @@
 
         </div>
 
-        <div class="boardDivs" th:if="${boards.size() == 0}">
-            <span class="title"> 저장된 글이 없습니다.</span>
-        </div>
-
-        <div class="writeButton" th:if="${#authentication.getName()} == 'Y'">
-            <button type="button" onclick="skillBoardWriteGo()"><img src="/img/buttonLogo/writelogo.png"></button>
-        </div>
-
-
 
     </div>
 

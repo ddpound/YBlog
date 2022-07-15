@@ -44,7 +44,7 @@ public class SiteMapService {
         //패치노트
         for (int id : patchNoteRepository.selectId()) {
             url = new Url();
-            url.setLoc("https://www.ybloglab.shop/auth/patchnote/details?id="+id);
+            url.setLoc("https://www.youseong.me/auth/patchnote/details?id="+id);
             url.setLastmod(new Date());
             urlSet.getUrl().add(url);
         }
@@ -52,7 +52,7 @@ public class SiteMapService {
         //보드메인
         for (int id : yBoardRepository.selectId()) {
             url = new Url();
-            url.setLoc("https://www.ybloglab.shop/auth/board/details?id="+id);
+            url.setLoc("https://www.youseong.me/auth/board/details?id="+id);
             url.setLastmod(new Date());
             urlSet.getUrl().add(url);
         }
@@ -61,7 +61,7 @@ public class SiteMapService {
         //스킬보드
         for (int id : skillBoardRepository.selectId()) {
             url = new Url();
-            url.setLoc("https://www.ybloglab.shop/auth/skillboard/details/"+id);
+            url.setLoc("https://www.youseong.me/auth/skillboard/details/"+id);
             url.setLastmod(new Date());
             urlSet.getUrl().add(url);
         }
@@ -70,7 +70,7 @@ public class SiteMapService {
         //포트폴리오
         for (int id : portfolioRepository.selectId()) {
             url = new Url();
-            url.setLoc("https://www.ybloglab.shop/auth/portboard/details?id="+id);
+            url.setLoc("https://www.youseong.me/auth/portboard/details?id="+id);
             url.setLastmod(new Date());
             urlSet.getUrl().add(url);
         }
@@ -82,27 +82,27 @@ public class SiteMapService {
 
     public void defultSetUrlSet(){
         url = new Url();
-        url.setLoc("https://www.ybloglab.shop/");
+        url.setLoc("https://www.youseong.me/");
         url.setLastmod(new Date());
         urlSet.getUrl().add(url);
 
         url = new Url();
-        url.setLoc("https://www.ybloglab.shop/auth/patchnote/");
+        url.setLoc("https://www.youseong.me/auth/patchnote/");
         url.setLastmod(new Date());
         urlSet.getUrl().add(url);
 
         url = new Url();
-        url.setLoc("https://www.ybloglab.shop/auth/skillboard");
+        url.setLoc("https://www.youseong.me/auth/skillboard");
         url.setLastmod(new Date());
         urlSet.getUrl().add(url);
 
         url = new Url();
-        url.setLoc("https://www.ybloglab.shop/auth/portfolio");
+        url.setLoc("https://www.youseong.me/auth/portfolio");
         url.setLastmod(new Date());
         urlSet.getUrl().add(url);
 
         url = new Url();
-        url.setLoc("https://www.ybloglab.shop/auth/boardmain");
+        url.setLoc("https://www.youseong.me/auth/boardmain");
         url.setLastmod(new Date());
         urlSet.getUrl().add(url);
 

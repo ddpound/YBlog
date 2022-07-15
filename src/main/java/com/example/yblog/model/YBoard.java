@@ -39,6 +39,7 @@ public class YBoard {
     @JoinColumn(name = "userId") // board 테이블값에 YUser를 참조하는 userId를 생성한다
     private  YUser user; // DB는 오브젝트를 저장할 수 없다. FK 자바는 오브젝트를 저장할 수 있다.
 
+    // 연관관계의 주인이 누구인지
     @OneToMany(mappedBy = "board" , fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"board"})
     @OrderBy("id desc")

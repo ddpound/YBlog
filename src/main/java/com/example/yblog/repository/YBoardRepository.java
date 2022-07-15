@@ -24,7 +24,7 @@ public interface YBoardRepository extends JpaRepository<YBoard,Integer> {
             value = "select *  from YBoard where title like %:title%",
             nativeQuery = true)
     List<YBoard> searchBoardTitle(@Param("title") String title);
-    
+
 
 
 }

@@ -8,6 +8,7 @@ import com.example.yblog.kakaoLogin.service.KaKaoLoginService;
 import com.example.yblog.login.service.LoginService;
 
 import com.example.yblog.model.YUser;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 // 인증이 안된 사용자들도 접속할수 있게 만드는 경로 를 /auth/**로 할꺼임
 
+@Log4j2
 @Controller
 public class LoginController {
 
@@ -41,8 +43,9 @@ public class LoginController {
     // 로그인창
     @GetMapping(value = "/auth/loginForm")
     public String loginView(Model model){
-        model.addAttribute("Loginredirect_uri", AllStaticElement.LoginRequestURI);
 
+
+        model.addAttribute("Loginredirect_uri", AllStaticElement.LoginRequestURI);
         return "loginJoin/login";
     }
 

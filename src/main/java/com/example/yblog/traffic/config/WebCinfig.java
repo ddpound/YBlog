@@ -70,8 +70,6 @@ public class WebCinfig  implements WebMvcConfigurer {
                     .addResourceLocations("file:///home/youseongjung/Templates/Confirm_SaveImage/");
         }
 
-
-
     }
 
 

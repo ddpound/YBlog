@@ -30,10 +30,7 @@
 
     <!-- 구글 검색 노출을 위한 meta,title 데이터들-->
     <title th:text="${title}?:'스프링부트 포트폴리오, 기술, 개인 블로그'"></title>
-    <meta
-            id="description"
-            name="description"
-            th:content="${description}?:'포트폴리오용 개인블로그를 직접 스프링부트로 만들었습니다. 개인적으로 공부하는 내용과 기술등을 게시하고 사소한 것이나 후기, 리뷰도 남기는 등 자유도 높은 개인블로그입니다.'">
+    <meta name="description" th:content="${description}?:'포트폴리오용 개인블로그를 직접 스프링부트로 만들었습니다. 개인적으로 공부하는 내용과 기술등을 게시하고 사소한 것이나 후기, 리뷰도 남기는 등 자유도 높은 개인블로그입니다.'">
 
 
     <!--게시판을 다닐때마다 제목은 title과 descroption등 달라질 예정 -->
